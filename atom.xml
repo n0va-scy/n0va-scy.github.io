@@ -31,16 +31,15 @@
   </entry>
   
   <entry>
-    <title></title>
+    <title>hackme.inndy之pwn</title>
     <link href="http://yoursite.com/2019/03/28/hackme.inndy%E4%B9%8Bpwn/"/>
     <id>http://yoursite.com/2019/03/28/hackme.inndy之pwn/</id>
     <published>2019-03-28T13:59:21.457Z</published>
-    <updated>2019-03-30T11:11:38.680Z</updated>
+    <updated>2019-03-30T11:21:01.133Z</updated>
     
     <summary type="html">
     
-      &lt;hr&gt;
-&lt;h2 id=&quot;title-hackme-inndy之pwn&quot;&gt;&lt;a href=&quot;#title-hackme-inndy之pwn&quot; class=&quot;headerlink&quot; title=&quot;title:hackme.inndy之pwn&quot;&gt;&lt;/a&gt;title:hackme.inndy之pwn&lt;/h2&gt;&lt;h2 id=&quot;catflag&quot;&gt;&lt;a href=&quot;#catflag&quot; class=&quot;headerlink&quot; title=&quot;catflag&quot;&gt;&lt;/a&gt;catflag&lt;/h2&gt;&lt;p&gt;nc 连接直接get shell &lt;/p&gt;
+      &lt;h2 id=&quot;catflag&quot;&gt;&lt;a href=&quot;#catflag&quot; class=&quot;headerlink&quot; title=&quot;catflag&quot;&gt;&lt;/a&gt;catflag&lt;/h2&gt;&lt;p&gt;nc 连接直接get shell &lt;/p&gt;
 &lt;h2 id=&quot;homeosrk&quot;&gt;&lt;a href=&quot;#homeosrk&quot; class=&quot;headerlink&quot; title=&quot;homeosrk&quot;&gt;&lt;/a&gt;homeosrk&lt;/h2&gt;&lt;p&gt;数组下标溢出，绕过canary保护直接修改ret地址为后门函数&lt;code&gt;call_me_mabe&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;C:\Users\nova\AppData\Roaming\Typora\typora-user-images\1553861402745.png&quot; alt=&quot;1553861402745&quot;&gt;&lt;/p&gt;
 &lt;p&gt;这里可以算出arr[14]为ret位置&lt;/p&gt;

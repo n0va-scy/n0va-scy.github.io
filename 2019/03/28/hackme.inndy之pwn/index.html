@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="title:hackme.inndy之pwncatflagnc 连接直接get shell  homeosrk数组下标溢出，绕过canary保护直接修改ret地址为后门函数call_me_mabe  这里可以算出arr[14]为ret位置 exp: 1234567891011121314151617from pwn import *# p = process(&apos;./homework&apos;)p = r">
+<meta name="description" content="catflagnc 连接直接get shell  homeosrk数组下标溢出，绕过canary保护直接修改ret地址为后门函数call_me_mabe  这里可以算出arr[14]为ret位置 exp: 1234567891011121314151617from pwn import *# p = process(&apos;./homework&apos;)p = remote(&apos;hackme.inndy.tw&apos;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="n0va">
+<meta property="og:title" content="hackme.inndy之pwn">
 <meta property="og:url" content="http://yoursite.com/2019/03/28/hackme.inndy之pwn/index.html">
 <meta property="og:site_name" content="n0va">
-<meta property="og:description" content="title:hackme.inndy之pwncatflagnc 连接直接get shell  homeosrk数组下标溢出，绕过canary保护直接修改ret地址为后门函数call_me_mabe  这里可以算出arr[14]为ret位置 exp: 1234567891011121314151617from pwn import *# p = process(&apos;./homework&apos;)p = r">
+<meta property="og:description" content="catflagnc 连接直接get shell  homeosrk数组下标溢出，绕过canary保护直接修改ret地址为后门函数call_me_mabe  这里可以算出arr[14]为ret位置 exp: 1234567891011121314151617from pwn import *# p = process(&apos;./homework&apos;)p = remote(&apos;hackme.inndy.tw&apos;">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553861402745.png">
 <meta property="og:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553863968382.png">
@@ -98,10 +98,10 @@
 <meta property="og:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553943748943.png">
 <meta property="og:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553943571947.png">
 <meta property="og:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553943960873.png">
-<meta property="og:updated_time" content="2019-03-30T11:11:38.680Z">
+<meta property="og:updated_time" content="2019-03-30T11:21:01.133Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="n0va">
-<meta name="twitter:description" content="title:hackme.inndy之pwncatflagnc 连接直接get shell  homeosrk数组下标溢出，绕过canary保护直接修改ret地址为后门函数call_me_mabe  这里可以算出arr[14]为ret位置 exp: 1234567891011121314151617from pwn import *# p = process(&apos;./homework&apos;)p = r">
+<meta name="twitter:title" content="hackme.inndy之pwn">
+<meta name="twitter:description" content="catflagnc 连接直接get shell  homeosrk数组下标溢出，绕过canary保护直接修改ret地址为后门函数call_me_mabe  这里可以算出arr[14]为ret位置 exp: 1234567891011121314151617from pwn import *# p = process(&apos;./homework&apos;)p = remote(&apos;hackme.inndy.tw&apos;">
 <meta name="twitter:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553861402745.png">
 
 
@@ -138,7 +138,7 @@
 
 
 
-  <title> | n0va</title>
+  <title>hackme.inndy之pwn | n0va</title>
   
 
 
@@ -324,7 +324,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">hackme.inndy之pwn</h1>
         
 
         <div class="post-meta">
@@ -374,8 +374,7 @@
       
 
       
-        <hr>
-<h2 id="title-hackme-inndy之pwn"><a href="#title-hackme-inndy之pwn" class="headerlink" title="title:hackme.inndy之pwn"></a>title:hackme.inndy之pwn</h2><h2 id="catflag"><a href="#catflag" class="headerlink" title="catflag"></a>catflag</h2><p>nc 连接直接get shell </p>
+        <h2 id="catflag"><a href="#catflag" class="headerlink" title="catflag"></a>catflag</h2><p>nc 连接直接get shell </p>
 <h2 id="homeosrk"><a href="#homeosrk" class="headerlink" title="homeosrk"></a>homeosrk</h2><p>数组下标溢出，绕过canary保护直接修改ret地址为后门函数<code>call_me_mabe</code></p>
 <p><img src="C:\Users\nova\AppData\Roaming\Typora\typora-user-images\1553861402745.png" alt="1553861402745"></p>
 <p>这里可以算出arr[14]为ret位置</p>
@@ -621,7 +620,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#title-hackme-inndy之pwn"><span class="nav-number">1.</span> <span class="nav-text">title:hackme.inndy之pwn</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#catflag"><span class="nav-number">2.</span> <span class="nav-text">catflag</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#homeosrk"><span class="nav-number">3.</span> <span class="nav-text">homeosrk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROP"><span class="nav-number">4.</span> <span class="nav-text">ROP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROP2"><span class="nav-number">5.</span> <span class="nav-text">ROP2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toooomuch"><span class="nav-number">6.</span> <span class="nav-text">toooomuch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toooomuch-2"><span class="nav-number">7.</span> <span class="nav-text">toooomuch-2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#echo"><span class="nav-number">8.</span> <span class="nav-text">echo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#echo2"><span class="nav-number">9.</span> <span class="nav-text">echo2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ehco3"><span class="nav-number">10.</span> <span class="nav-text">ehco3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#smash-the-stack"><span class="nav-number">11.</span> <span class="nav-text">smash-the-stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onepunch"><span class="nav-number">12.</span> <span class="nav-text">onepunch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tictactoe-1"><span class="nav-number">13.</span> <span class="nav-text">tictactoe-1</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#catflag"><span class="nav-number">1.</span> <span class="nav-text">catflag</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#homeosrk"><span class="nav-number">2.</span> <span class="nav-text">homeosrk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROP"><span class="nav-number">3.</span> <span class="nav-text">ROP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROP2"><span class="nav-number">4.</span> <span class="nav-text">ROP2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toooomuch"><span class="nav-number">5.</span> <span class="nav-text">toooomuch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toooomuch-2"><span class="nav-number">6.</span> <span class="nav-text">toooomuch-2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#echo"><span class="nav-number">7.</span> <span class="nav-text">echo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#echo2"><span class="nav-number">8.</span> <span class="nav-text">echo2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ehco3"><span class="nav-number">9.</span> <span class="nav-text">ehco3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#smash-the-stack"><span class="nav-number">10.</span> <span class="nav-text">smash-the-stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onepunch"><span class="nav-number">11.</span> <span class="nav-text">onepunch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tictactoe-1"><span class="nav-number">12.</span> <span class="nav-text">tictactoe-1</span></a></li></ol></div>
             
 
           </div>
