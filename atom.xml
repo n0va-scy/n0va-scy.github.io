@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-03-29T12:55:07.866Z</updated>
+  <updated>2019-04-04T08:43:34.634Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,73 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2019/04/04/2019%E5%AE%89%E6%81%92%E6%9D%AF1%E6%9C%88%E6%9C%88%E8%B5%9B/"/>
+    <id>http://yoursite.com/2019/04/04/2019安恒杯1月月赛/</id>
+    <published>2019-04-04T08:36:40.803Z</published>
+    <updated>2019-04-04T08:43:34.634Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;hr&gt;
+&lt;h2 id=&quot;2019安恒杯1月月赛&quot;&gt;&lt;a href=&quot;#2019安恒杯1月月赛&quot; class=&quot;headerlink&quot; title=&quot;2019安恒杯1月月赛&quot;&gt;&lt;/a&gt;2019安恒杯1月月赛&lt;/h2&gt;&lt;h2 id=&quot;python-crackme&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>pwn入门之ROP</title>
+    <link href="http://yoursite.com/2019/04/04/pwn%E5%85%A5%E9%97%A8%E4%B9%8BROP/"/>
+    <id>http://yoursite.com/2019/04/04/pwn入门之ROP/</id>
+    <published>2019-04-04T08:30:44.397Z</published>
+    <updated>2019-04-04T08:35:54.616Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;ret2win&quot;&gt;&lt;a href=&quot;#ret2win&quot; class=&quot;headerlink&quot; title=&quot;ret2win&quot;&gt;&lt;/a&gt;ret2win&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://ropemporium.com/&quot;
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hitcon-Training lab1~lab9</title>
+    <link href="http://yoursite.com/2019/04/04/Hitcon-Training/"/>
+    <id>http://yoursite.com/2019/04/04/Hitcon-Training/</id>
+    <published>2019-04-04T08:23:04.435Z</published>
+    <updated>2019-04-04T08:30:25.043Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;lab1&quot;&gt;&lt;a href=&quot;#lab1&quot; class=&quot;headerlink&quot; title=&quot;lab1&quot;&gt;&lt;/a&gt;lab1&lt;/h2&gt;&lt;p&gt;方法1：逆向破解，因为题目给了.c文件，里面有key和cipher可以直接用&lt;br&gt;&lt;figure
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>栈溢出总结</title>
