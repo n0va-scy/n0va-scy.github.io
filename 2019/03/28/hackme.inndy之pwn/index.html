@@ -113,7 +113,7 @@
 <meta property="og:image" content="http://yoursite.com/images/piture/24.jpg">
 <meta property="og:image" content="http://yoursite.com/images/piture/25.jpg">
 <meta property="og:image" content="http://yoursite.com/images/piture/26.jpg">
-<meta property="og:updated_time" content="2019-04-06T12:02:53.511Z">
+<meta property="og:updated_time" content="2019-04-06T12:06:20.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hackme.inndy之pwn">
 <meta name="twitter:description" content="catflagnc 连接直接get shell  homeosrk数组下标溢出，绕过canary保护直接修改ret地址为后门函数call_me_mabe  这里可以算出arr[14]为ret位置 exp: 1234567891011121314151617from pwn import *# p = process(&apos;./homework&apos;)p = remote(&apos;hackme.inndy.tw&apos;">
@@ -496,9 +496,9 @@
 <p>上图为栈的分布，我们可以看到，自己构造的esp也同样放在栈中，那么我们就可以通过pop,push操作控制esp的位置实现任意地址读，写，思路如下 ：</p>
 <ol>
 <li>将esp指向esp所以在位置的上方，push写入改变esp指向<code>libc_start_main+247</code>的位置</li>
-<li>pop出<code>libc_start_main+247</code>的值，利用偏移算出<code>system</code>即<code>&quot;/bin/sh&quot;</code>的真实地址</li>
+<li>pop出<code>libc_start_main+247</code>的值，利用偏移算出<code>system</code>及<code>&quot;/bin/sh&quot;</code>的真实地址</li>
 <li>继续控制esp指向<code>main的ret地址</code>位置，修改为<code>system</code>的地址，以及参数<code>&quot;/bin/sh&quot;</code></li>
-<li>退出 x 即可<code>get shell</code></li>
+<li>x 退出即可<code>get shell</code></li>
 </ol>
 <p>好了，接下来详细讲一下过程以及上图是怎么来的</p>
 <p><img src="\images\piture\18.jpg" alt></p>
