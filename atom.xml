@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-04-18T10:43:13.891Z</updated>
+  <updated>2019-04-18T10:46:23.684Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,19 +21,15 @@
     <link href="http://yoursite.com/2019/04/18/DDCTF%E4%B9%8Bre/"/>
     <id>http://yoursite.com/2019/04/18/DDCTF之re/</id>
     <published>2019-04-18T07:56:36.929Z</published>
-    <updated>2019-04-18T10:43:13.891Z</updated>
+    <updated>2019-04-18T10:46:23.684Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2 id=&quot;re1&quot;&gt;&lt;a href=&quot;#re1&quot; class=&quot;headerlink&quot; title=&quot;re1&quot;&gt;&lt;/a&gt;re1&lt;/h2&gt;&lt;p&gt;32位PE文件，加了upx壳，先脱壳，随便一个工具就可以&lt;/p&gt;
+      &lt;h2 id=&quot;re1&quot;&gt;&lt;a href=&quot;#re1&quot; class=&quot;headerlink&quot; title=&quot;re1&quot;&gt;&lt;/a&gt;re1&lt;/h2&gt;&lt;p&gt;32位PE文件，加了upx壳，先脱壳，随便一个工具就可以&lt;/p&gt;
 &lt;p&gt;脱完壳扔IDA，&lt;/p&gt;
-&lt;p&gt;&lt;img
-        
-      
+&lt;p&gt;&lt;img src=&quot;\images\DDCTF\1.jpg&quot; alt&gt;&lt;/p&gt;
+&lt;p&gt;逻辑其实很简单就是输入一串字符串，经过&lt;code&gt;sub_401000&lt;/code&gt;这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较&lt;/p&gt;
+&lt;p&gt;那么主要就是分析这个函数了，&lt;/p&gt;
     
     </summary>
     

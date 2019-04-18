@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，  虽然看起来干干净净，但是会发现有几个地方，v1定义了之后 直接用了，并没有任何的赋值，静态是看不出个所以然来的，所以我选择OD一波  这就是加密函数的汇编0">
+<meta name="description" content="re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DDCTF的两道简单逆向">
 <meta property="og:url" content="http://yoursite.com/2019/04/18/DDCTF之re/index.html">
 <meta property="og:site_name" content="n0va">
-<meta property="og:description" content="re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，  虽然看起来干干净净，但是会发现有几个地方，v1定义了之后 直接用了，并没有任何的赋值，静态是看不出个所以然来的，所以我选择OD一波  这就是加密函数的汇编0">
+<meta property="og:description" content="re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/1.jpg">
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/2.jpg">
@@ -101,10 +101,10 @@
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/12.jpg">
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/13.jpg">
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/14.jpg">
-<meta property="og:updated_time" content="2019-04-18T10:43:13.891Z">
+<meta property="og:updated_time" content="2019-04-18T10:46:23.684Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DDCTF的两道简单逆向">
-<meta name="twitter:description" content="re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，  虽然看起来干干净净，但是会发现有几个地方，v1定义了之后 直接用了，并没有任何的赋值，静态是看不出个所以然来的，所以我选择OD一波  这就是加密函数的汇编0">
+<meta name="twitter:description" content="re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，">
 <meta name="twitter:image" content="http://yoursite.com/images/DDCTF/1.jpg">
 
 
@@ -382,6 +382,7 @@
 <p><img src="\images\DDCTF\1.jpg" alt></p>
 <p>逻辑其实很简单就是输入一串字符串，经过<code>sub_401000</code>这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较</p>
 <p>那么主要就是分析这个函数了，</p>
+<a id="more"></a>
 <p><img src="\images\DDCTF\2.jpg" alt></p>
 <p>虽然看起来干干净净，但是会发现有几个地方，v1定义了之后 直接用了，并没有任何的赋值，静态是看不出个所以然来的，所以我选择OD一波</p>
 <p><img src="\images\DDCTF\3.jpg" alt></p>
