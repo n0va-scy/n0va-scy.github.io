@@ -91,6 +91,7 @@
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/1.jpg">
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/2.jpg">
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/DDCTF/4.jpg">
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/5.jpg">
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/6.jpg">
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/7.jpg">
@@ -101,7 +102,7 @@
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/12.jpg">
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/13.jpg">
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/14.jpg">
-<meta property="og:updated_time" content="2019-04-18T10:46:23.684Z">
+<meta property="og:updated_time" content="2019-04-18T10:48:00.476Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DDCTF的两道简单逆向">
 <meta name="twitter:description" content="re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，">
@@ -387,7 +388,7 @@
 <p>虽然看起来干干净净，但是会发现有几个地方，v1定义了之后 直接用了，并没有任何的赋值，静态是看不出个所以然来的，所以我选择OD一波</p>
 <p><img src="\images\DDCTF\3.jpg" alt></p>
 <p>这就是加密函数的汇编<code>0x402FF8</code>对应的就是数组 <code>byte_402FF8</code>，在IDA里可以看到，其实就是ASCII码表上的所以有值，</p>
-<p><img src alt></p>
+<p><img src="\images\DDCTF\4.jpg" alt></p>
 <p>从0x20到0x7e就是可见字符，这个函数里面最核心的就是这句汇编<code>mov dl byte ptr ds:[eax+0x402FF8]</code>，它就是通过你输入的字符，倒着来找，其实就是把0x20~0x7e倒一下然后一一对应就没了（所以就很类似异或），把DDCTF{reverseME}，扔进去再倒一下就能得到正确的输入了</p>
 <p><img src="\images\DDCTF\5.jpg" alt></p>
 <h2 id="re2"><a href="#re2" class="headerlink" title="re2"></a>re2</h2><p>这也是一道 32位PE逆向，加了aspack壳，也找个脱壳工具一脱就行，不过有个问题就是，脱完壳不能运行了，不过逻辑是没有错的，所以要动态调的话就用没脱壳的就行</p>
