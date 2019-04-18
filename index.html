@@ -312,7 +312,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/18/DDCTF之re/" itemprop="url">未命名</a></h1>
+                <a class="post-title-link" href="/2019/04/18/DDCTF之re/" itemprop="url">DDCTF的两道简单逆向</a></h1>
         
 
         <div class="post-meta">
@@ -364,8 +364,7 @@
       
         
           
-            <hr>
-<h2 id="title-DDCTF的两道简单逆向"><a href="#title-DDCTF的两道简单逆向" class="headerlink" title="title:DDCTF的两道简单逆向"></a>title:DDCTF的两道简单逆向</h2><h2 id="re1"><a href="#re1" class="headerlink" title="re1"></a>re1</h2><p>32位PE文件，加了upx壳，先脱壳，随便一个工具就可以</p>
+            <h2 id="re1"><a href="#re1" class="headerlink" title="re1"></a>re1</h2><p>32位PE文件，加了upx壳，先脱壳，随便一个工具就可以</p>
 <p>脱完壳扔IDA，</p>
 <p><img src="\images\DDCTF\1.jpg" alt></p>
 <p>逻辑其实很简单就是输入一串字符串，经过<code>sub_401000</code>这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较</p>

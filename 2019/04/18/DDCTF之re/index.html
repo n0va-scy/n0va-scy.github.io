@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="title:DDCTF的两道简单逆向re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，  虽然看起来干干净净，但是会发现有几个地方，v1定义了之后 直接用了，并没有任何的赋值，静态是看不出个所以然来的，所以我">
+<meta name="description" content="re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，  虽然看起来干干净净，但是会发现有几个地方，v1定义了之后 直接用了，并没有任何的赋值，静态是看不出个所以然来的，所以我选择OD一波  这就是加密函数的汇编0">
 <meta property="og:type" content="article">
-<meta property="og:title" content="n0va">
+<meta property="og:title" content="DDCTF的两道简单逆向">
 <meta property="og:url" content="http://yoursite.com/2019/04/18/DDCTF之re/index.html">
 <meta property="og:site_name" content="n0va">
-<meta property="og:description" content="title:DDCTF的两道简单逆向re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，  虽然看起来干干净净，但是会发现有几个地方，v1定义了之后 直接用了，并没有任何的赋值，静态是看不出个所以然来的，所以我">
+<meta property="og:description" content="re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，  虽然看起来干干净净，但是会发现有几个地方，v1定义了之后 直接用了，并没有任何的赋值，静态是看不出个所以然来的，所以我选择OD一波  这就是加密函数的汇编0">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/1.jpg">
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/2.jpg">
@@ -101,10 +101,10 @@
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/12.jpg">
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/13.jpg">
 <meta property="og:image" content="http://yoursite.com/images/DDCTF/14.jpg">
-<meta property="og:updated_time" content="2019-04-18T10:40:36.489Z">
+<meta property="og:updated_time" content="2019-04-18T10:43:13.891Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="n0va">
-<meta name="twitter:description" content="title:DDCTF的两道简单逆向re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，  虽然看起来干干净净，但是会发现有几个地方，v1定义了之后 直接用了，并没有任何的赋值，静态是看不出个所以然来的，所以我">
+<meta name="twitter:title" content="DDCTF的两道简单逆向">
+<meta name="twitter:description" content="re132位PE文件，加了upx壳，先脱壳，随便一个工具就可以 脱完壳扔IDA，  逻辑其实很简单就是输入一串字符串，经过sub_401000这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较 那么主要就是分析这个函数了，  虽然看起来干干净净，但是会发现有几个地方，v1定义了之后 直接用了，并没有任何的赋值，静态是看不出个所以然来的，所以我选择OD一波  这就是加密函数的汇编0">
 <meta name="twitter:image" content="http://yoursite.com/images/DDCTF/1.jpg">
 
 
@@ -141,7 +141,7 @@
 
 
 
-  <title> | n0va</title>
+  <title>DDCTF的两道简单逆向 | n0va</title>
   
 
 
@@ -327,7 +327,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">DDCTF的两道简单逆向</h1>
         
 
         <div class="post-meta">
@@ -377,8 +377,7 @@
       
 
       
-        <hr>
-<h2 id="title-DDCTF的两道简单逆向"><a href="#title-DDCTF的两道简单逆向" class="headerlink" title="title:DDCTF的两道简单逆向"></a>title:DDCTF的两道简单逆向</h2><h2 id="re1"><a href="#re1" class="headerlink" title="re1"></a>re1</h2><p>32位PE文件，加了upx壳，先脱壳，随便一个工具就可以</p>
+        <h2 id="re1"><a href="#re1" class="headerlink" title="re1"></a>re1</h2><p>32位PE文件，加了upx壳，先脱壳，随便一个工具就可以</p>
 <p>脱完壳扔IDA，</p>
 <p><img src="\images\DDCTF\1.jpg" alt></p>
 <p>逻辑其实很简单就是输入一串字符串，经过<code>sub_401000</code>这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较</p>
@@ -568,7 +567,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#title-DDCTF的两道简单逆向"><span class="nav-number">1.</span> <span class="nav-text">title:DDCTF的两道简单逆向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#re1"><span class="nav-number">2.</span> <span class="nav-text">re1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#re2"><span class="nav-number">3.</span> <span class="nav-text">re2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#汇编直接逆"><span class="nav-number">3.1.</span> <span class="nav-text">汇编直接逆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#base64"><span class="nav-number">3.2.</span> <span class="nav-text">base64</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#re1"><span class="nav-number">1.</span> <span class="nav-text">re1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#re2"><span class="nav-number">2.</span> <span class="nav-text">re2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#汇编直接逆"><span class="nav-number">2.1.</span> <span class="nav-text">汇编直接逆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#base64"><span class="nav-number">2.2.</span> <span class="nav-text">base64</span></a></li></ol></li></ol></div>
             
 
           </div>
