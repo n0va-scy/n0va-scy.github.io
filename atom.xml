@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-04-25T12:41:35.628Z</updated>
+  <updated>2019-05-04T13:42:09.403Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,28 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Off-By-One之Asis CTF 2016 b00s</title>
+    <link href="http://yoursite.com/2019/05/04/Off-By-One%E4%B9%8BAsis%20CTF%202016%20b00s/"/>
+    <id>http://yoursite.com/2019/05/04/Off-By-One之Asis CTF 2016 b00s/</id>
+    <published>2019-05-04T12:30:37.420Z</published>
+    <updated>2019-05-04T13:42:09.403Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;题目介绍&quot;&gt;&lt;a href=&quot;#题目介绍&quot; class=&quot;headerlink&quot; title=&quot;题目介绍&quot;&gt;&lt;/a&gt;题目介绍&lt;/h2&gt;&lt;p&gt;题目是一个表单程序，功能是一个图书管理系统。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1. Create a book&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2. Delete a book&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3. Edit a book&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4. Print book detail&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5. Change current author name&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6. Exit&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>国密加密算法sm4</title>
     <link href="http://yoursite.com/2019/04/25/sm4%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/"/>
     <id>http://yoursite.com/2019/04/25/sm4加密算法/</id>
     <published>2019-04-25T11:06:43.387Z</published>
-    <updated>2019-04-25T12:41:35.628Z</updated>
+    <updated>2019-04-25T12:44:19.275Z</updated>
     
     <summary type="html">
     
@@ -39,17 +56,14 @@
     <link href="http://yoursite.com/2019/04/23/2019%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B/"/>
     <id>http://yoursite.com/2019/04/23/2019全国大学生信息安全大赛/</id>
     <published>2019-04-23T11:23:17.725Z</published>
-    <updated>2019-04-23T12:25:54.596Z</updated>
+    <updated>2019-04-30T11:18:04.539Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2 id=&quot;pwn&quot;&gt;&lt;a href=&quot;#pwn&quot; class=&quot;headerlink&quot; title=&quot;pwn&quot;&gt;&lt;/a&gt;pwn&lt;/h2&gt;&lt;h3 id=&quot;your-pwn&quot;&gt;&lt;a href=&quot;#your-pwn&quot; class=&quot;headerlink&quot;
-        
-      
+      &lt;h2 id=&quot;pwn&quot;&gt;&lt;a href=&quot;#pwn&quot; class=&quot;headerlink&quot; title=&quot;pwn&quot;&gt;&lt;/a&gt;pwn&lt;/h2&gt;&lt;h3 id=&quot;your-pwn&quot;&gt;&lt;a href=&quot;#your-pwn&quot; class=&quot;headerlink&quot; title=&quot;your_pwn&quot;&gt;&lt;/a&gt;your_pwn&lt;/h3&gt;&lt;p&gt;先check 一下，发现保护全开，还是有点慌的&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;\images\2019全国大学生信息安全大赛\1.png&quot; alt&gt;&lt;/p&gt;
+&lt;p&gt;进入到IDA审计代码&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;\images\2019全国大学生信息安全大赛\2.jpg&quot; alt&gt;&lt;/p&gt;
     
     </summary>
     

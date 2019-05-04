@@ -81,12 +81,12 @@
 
 
 
-<meta name="description" content="pwnyour_pwn先check 一下，发现保护全开，还是有点慌的  进入到IDA审计代码  在其主要代码里存在下标溢出，很明显地可以进行任意地址读和写（因为对于数组v4的下标v1没有进行任何的限制)，思路其实就出来了，先利用任意地址读泄漏出真实地址，再通过任意地址写将返回地址修改成onegadget 只是这里的读和写处理有点麻烦而已，因为它是单个字节读取和写入的，所以每次都要进行6次操作。 先">
+<meta name="description" content="pwnyour_pwn先check 一下，发现保护全开，还是有点慌的  进入到IDA审计代码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2019全国大学生信息安全大赛部分Wp">
 <meta property="og:url" content="http://yoursite.com/2019/04/23/2019全国大学生信息安全大赛/index.html">
 <meta property="og:site_name" content="n0va的ctf博客">
-<meta property="og:description" content="pwnyour_pwn先check 一下，发现保护全开，还是有点慌的  进入到IDA审计代码  在其主要代码里存在下标溢出，很明显地可以进行任意地址读和写（因为对于数组v4的下标v1没有进行任何的限制)，思路其实就出来了，先利用任意地址读泄漏出真实地址，再通过任意地址写将返回地址修改成onegadget 只是这里的读和写处理有点麻烦而已，因为它是单个字节读取和写入的，所以每次都要进行6次操作。 先">
+<meta property="og:description" content="pwnyour_pwn先check 一下，发现保护全开，还是有点慌的  进入到IDA审计代码">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/2019全国大学生信息安全大赛/1.png">
 <meta property="og:image" content="http://yoursite.com/images/2019全国大学生信息安全大赛/2.jpg">
@@ -95,10 +95,10 @@
 <meta property="og:image" content="http://yoursite.com/images/2019全国大学生信息安全大赛/5.jpg">
 <meta property="og:image" content="http://yoursite.com/images/2019全国大学生信息安全大赛/6.jpg">
 <meta property="og:image" content="http://yoursite.com/images/2019全国大学生信息安全大赛/7.jpg">
-<meta property="og:updated_time" content="2019-04-23T12:25:54.596Z">
+<meta property="og:updated_time" content="2019-04-30T11:18:04.539Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2019全国大学生信息安全大赛部分Wp">
-<meta name="twitter:description" content="pwnyour_pwn先check 一下，发现保护全开，还是有点慌的  进入到IDA审计代码  在其主要代码里存在下标溢出，很明显地可以进行任意地址读和写（因为对于数组v4的下标v1没有进行任何的限制)，思路其实就出来了，先利用任意地址读泄漏出真实地址，再通过任意地址写将返回地址修改成onegadget 只是这里的读和写处理有点麻烦而已，因为它是单个字节读取和写入的，所以每次都要进行6次操作。 先">
+<meta name="twitter:description" content="pwnyour_pwn先check 一下，发现保护全开，还是有点慌的  进入到IDA审计代码">
 <meta name="twitter:image" content="http://yoursite.com/images/2019全国大学生信息安全大赛/1.png">
 
 
@@ -375,6 +375,7 @@
 <p><img src="\images\2019全国大学生信息安全大赛\1.png" alt></p>
 <p>进入到IDA审计代码</p>
 <p><img src="\images\2019全国大学生信息安全大赛\2.jpg" alt></p>
+<a id="more"></a>
 <p>在其主要代码里存在下标溢出，很明显地可以进行任意地址读和写（因为对于数组v4的下标v1没有进行任何的限制)，思路其实就出来了，先利用任意地址读泄漏出真实地址，再通过任意地址写将返回地址修改成onegadget</p>
 <p>只是这里的读和写处理有点麻烦而已，因为它是单个字节读取和写入的，所以每次都要进行6次操作。</p>
 <h4 id="先确定v4-0-的位置"><a href="#先确定v4-0-的位置" class="headerlink" title="先确定v4[0]的位置"></a>先确定v4[0]的位置</h4><p>gdb下断第一次输入v4[0]=100(0x64)单步跟踪找到0x64的位置</p>
@@ -508,7 +509,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
