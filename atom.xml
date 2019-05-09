@@ -118,7 +118,7 @@
     <link href="http://yoursite.com/2019/04/04/2019%E5%AE%89%E6%81%92%E6%9D%AF1%E6%9C%88%E6%9C%88%E8%B5%9B/"/>
     <id>http://yoursite.com/2019/04/04/2019安恒杯1月月赛/</id>
     <published>2019-04-04T08:36:40.803Z</published>
-    <updated>2019-05-09T12:01:02.501Z</updated>
+    <updated>2019-05-09T12:10:49.229Z</updated>
     
     <summary type="html">
     
@@ -131,6 +131,8 @@
 &lt;p&gt;添加上python3.6的.pyc文件的文件头（即前12字节）然后再加上后缀名.pyc&lt;/p&gt;
     
     </summary>
+    
+      <category term="pwn" scheme="http://yoursite.com/categories/pwn/"/>
     
     
       <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
