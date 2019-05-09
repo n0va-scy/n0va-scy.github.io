@@ -156,7 +156,16 @@
   
 
   <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
+    <div class="headband">
+      svg {
+        float: left;
+        transform: scale(-1, 1);
+        +mobile() { 
+            float: right;
+            transform: scale(1, 1);
+        }  
+      }
+    </div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
