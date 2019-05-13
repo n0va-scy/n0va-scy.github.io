@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-05-09T12:17:56.215Z</updated>
+  <updated>2019-05-13T09:51:14.848Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>某比赛的pwn02</title>
+    <link href="http://yoursite.com/2019/05/13/%E6%9F%90%E6%AF%94%E8%B5%9B%E7%9A%84pwn02/"/>
+    <id>http://yoursite.com/2019/05/13/某比赛的pwn02/</id>
+    <published>2019-05-13T08:25:45.284Z</published>
+    <updated>2019-05-13T09:51:14.848Z</updated>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Arch:     amd64-64-little&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   RELRO:    No RELRO&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   Stack:    No canary found&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   NX:       NX enabled&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   PIE:      No PIE (0x400000)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;保护只开启了NX，程序有3个功能：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1、malloc + get&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2、free&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3、puts&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="pwn" scheme="http://yoursite.com/categories/pwn/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>hctf2016-fheap</title>
