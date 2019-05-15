@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-05-13T09:53:29.924Z</updated>
+  <updated>2019-05-15T14:29:31.778Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hitcon-Training lab1~lab9</title>
+    <link href="http://yoursite.com/2019/05/15/Hitcon-Training(%E4%B8%8B)/"/>
+    <id>http://yoursite.com/2019/05/15/Hitcon-Training(下)/</id>
+    <published>2019-05-15T13:39:03.001Z</published>
+    <updated>2019-05-15T14:29:31.778Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;lab10&quot;&gt;&lt;a href=&quot;#lab10&quot; class=&quot;headerlink&quot; title=&quot;lab10&quot;&gt;&lt;/a&gt;lab10&lt;/h2&gt;&lt;p&gt;这一题开始就是堆的范畴了&lt;/p&gt;
+&lt;h3 id=&quot;题目介绍&quot;&gt;&lt;a href=&quot;#题目介绍&quot; class=&quot;headerlink&quot; title=&quot;题目介绍&quot;&gt;&lt;/a&gt;题目介绍&lt;/h3&gt;&lt;p&gt;程序只开启了NX保护&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;\images\堆\14.jpg&quot; alt&gt;&lt;/p&gt;
+&lt;p&gt;有三个功能，分别是add，delete跟print&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;----------------------&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;number&quot;&gt;1.&lt;/span&gt; Add note          &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;number&quot;&gt;2.&lt;/span&gt; Delete note       &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;number&quot;&gt;3.&lt;/span&gt; Print note        &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;number&quot;&gt;4.&lt;/span&gt; Exit              &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;----------------------&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;先一看一下add:&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="堆" scheme="http://yoursite.com/categories/%E5%A0%86/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>某比赛的pwn02</title>
@@ -193,8 +216,8 @@
   
   <entry>
     <title>Hitcon-Training lab1~lab9</title>
-    <link href="http://yoursite.com/2019/04/04/Hitcon-Training/"/>
-    <id>http://yoursite.com/2019/04/04/Hitcon-Training/</id>
+    <link href="http://yoursite.com/2019/04/04/Hitcon-Training(%E4%B8%8A)/"/>
+    <id>http://yoursite.com/2019/04/04/Hitcon-Training(上)/</id>
     <published>2019-04-04T08:23:04.435Z</published>
     <updated>2019-05-09T12:17:00.995Z</updated>
     
