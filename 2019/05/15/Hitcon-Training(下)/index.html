@@ -94,7 +94,7 @@
 <meta property="og:image" content="http://yoursite.com/images/堆/17.jpg">
 <meta property="og:image" content="http://yoursite.com/images/堆/18.jpg">
 <meta property="og:image" content="http://yoursite.com/images/堆/19.jpg">
-<meta property="og:updated_time" content="2019-05-15T14:31:19.459Z">
+<meta property="og:updated_time" content="2019-05-15T14:33:22.061Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hitcon-Training lab10~持续更新">
 <meta name="twitter:description" content="lab10这一题开始就是堆的范畴了 题目介绍程序只开启了NX保护  有三个功能，分别是add，delete跟print 123456---------------------- 1. Add note           2. Delete note        3. Print note         4. Exit              ---------------------- 先">
@@ -409,7 +409,7 @@
 <p>通过indext找到对应的printf 函数调用</p>
 <p>程序中还存在cat flag函数，所以我们只需要想方法调用这个函数就行了</p>
 <p><img src="\images\堆\19.jpg" alt></p>
-<h2 id="利用过程"><a href="#利用过程" class="headerlink" title="利用过程"></a>利用过程</h2><p>通过分析程序的功能我们发现存在uaf漏洞，具体但用过程：</p>
+<h3 id="利用过程"><a href="#利用过程" class="headerlink" title="利用过程"></a>利用过程</h3><p>通过分析程序的功能我们发现存在uaf漏洞，具体但用过程：</p>
 <p>1、先申请3个chunk块，大小为16（fast bin 范围内即可）</p>
 <p>2、free 掉chunk1、chunk2</p>
 <p>此时fast bin 中的分布是这样的：</p>
@@ -594,7 +594,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#lab10"><span class="nav-number">1.</span> <span class="nav-text">lab10</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目介绍"><span class="nav-number">1.1.</span> <span class="nav-text">题目介绍</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用过程"><span class="nav-number">2.</span> <span class="nav-text">利用过程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#lab10"><span class="nav-number">1.</span> <span class="nav-text">lab10</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目介绍"><span class="nav-number">1.1.</span> <span class="nav-text">题目介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用过程"><span class="nav-number">1.2.</span> <span class="nav-text">利用过程</span></a></li></ol></li></ol></div>
             
 
           </div>
