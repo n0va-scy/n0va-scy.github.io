@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-05-24T15:08:56.251Z</updated>
+  <updated>2019-07-03T14:12:04.833Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>pwnable.tw系列</title>
+    <link href="http://yoursite.com/2019/07/03/pwnable.tw/"/>
+    <id>http://yoursite.com/2019/07/03/pwnable.tw/</id>
+    <published>2019-07-02T16:00:00.000Z</published>
+    <updated>2019-07-03T14:12:04.833Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;calc&quot;&gt;&lt;a href=&quot;#calc&quot; class=&quot;headerlink&quot; title=&quot;calc&quot;&gt;&lt;/a&gt;calc&lt;/h2&gt;&lt;p&gt;不愧是pwnable，质量果然高，学到了不少姿势，看题目很明显程序是一个计算器，但漏洞点在哪，着实让我这个小菜鸡绞尽脑汁，起初试图独自解决，最后还是迫于现实膜一了波大佬的write up 。&lt;/p&gt;
+&lt;h3 id=&quot;程序分析&quot;&gt;&lt;a href=&quot;#程序分析&quot; class=&quot;headerlink&quot; title=&quot;程序分析&quot;&gt;&lt;/a&gt;程序分析&lt;/h3&gt;&lt;p&gt;保护&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;\images\pwnable.tw\2.jpg&quot; alt&gt;&lt;/p&gt;
+&lt;p&gt;开启了canary 跟NX&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>桂电2019 re write up</title>
