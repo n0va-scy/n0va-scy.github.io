@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-09-21T14:16:08.343Z</updated>
+  <updated>2019-09-22T06:19:42.901Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>IO_FILE泄露libc</title>
+    <link href="http://yoursite.com/2019/09/21/IO_FILE/"/>
+    <id>http://yoursite.com/2019/09/21/IO_FILE/</id>
+    <published>2019-09-20T16:00:00.000Z</published>
+    <updated>2019-09-22T06:19:42.901Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;最近经常遇到没有show函数的堆了，吃了不少没有地址的亏，在这里记录一下泄露的方法&lt;/p&gt;
+&lt;p&gt;其实主要思路就是修改stdout的flag位为&lt;code&gt;0xfbad1800&lt;/code&gt;,并且将&lt;code&gt;_IO_write_base&lt;/code&gt;的最后一个字节改小，从
+        
+      
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>bytectf部分wp</title>
