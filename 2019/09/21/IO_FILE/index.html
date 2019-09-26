@@ -81,19 +81,19 @@
 
 
 
-<meta name="description" content="最近经常遇到没有show函数的堆了，吃了不少没有地址的亏，在这里记录一下泄露的方法 其实主要思路就是修改stdout的flag位为0xfbad1800,并且将_IO_write_base的最后一个字节改小，从而实现多输出一些内容，这些内容里面就包含了libc地址。 为什么flag要改成0xfbad1800，看源码： puts函数在源码中是由_IO_puts实现的，而_IO_puts函数内部会调用_">
+<meta name="description" content="最近经常遇到没有show函数的堆了，吃了不少没有地址的亏，在这里记录一下泄露的方法 其实主要思路就是修改stdout的flag位为0xfbad1800,并且将_IO_write_base的最后一个字节改小，从而实现多输出一些内容，这些内容里面就包含了libc地址。 为什么flag要改成0xfbad1800，看源码：">
 <meta name="keywords" content="pwn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IO_FILE泄露libc">
 <meta property="og:url" content="http://yoursite.com/2019/09/21/IO_FILE/index.html">
 <meta property="og:site_name" content="n0va的ctf博客">
-<meta property="og:description" content="最近经常遇到没有show函数的堆了，吃了不少没有地址的亏，在这里记录一下泄露的方法 其实主要思路就是修改stdout的flag位为0xfbad1800,并且将_IO_write_base的最后一个字节改小，从而实现多输出一些内容，这些内容里面就包含了libc地址。 为什么flag要改成0xfbad1800，看源码： puts函数在源码中是由_IO_puts实现的，而_IO_puts函数内部会调用_">
+<meta property="og:description" content="最近经常遇到没有show函数的堆了，吃了不少没有地址的亏，在这里记录一下泄露的方法 其实主要思路就是修改stdout的flag位为0xfbad1800,并且将_IO_write_base的最后一个字节改小，从而实现多输出一些内容，这些内容里面就包含了libc地址。 为什么flag要改成0xfbad1800，看源码：">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/piture/32.jpg">
-<meta property="og:updated_time" content="2019-09-22T06:19:42.901Z">
+<meta property="og:updated_time" content="2019-09-25T05:10:07.680Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IO_FILE泄露libc">
-<meta name="twitter:description" content="最近经常遇到没有show函数的堆了，吃了不少没有地址的亏，在这里记录一下泄露的方法 其实主要思路就是修改stdout的flag位为0xfbad1800,并且将_IO_write_base的最后一个字节改小，从而实现多输出一些内容，这些内容里面就包含了libc地址。 为什么flag要改成0xfbad1800，看源码： puts函数在源码中是由_IO_puts实现的，而_IO_puts函数内部会调用_">
+<meta name="twitter:description" content="最近经常遇到没有show函数的堆了，吃了不少没有地址的亏，在这里记录一下泄露的方法 其实主要思路就是修改stdout的flag位为0xfbad1800,并且将_IO_write_base的最后一个字节改小，从而实现多输出一些内容，这些内容里面就包含了libc地址。 为什么flag要改成0xfbad1800，看源码：">
 <meta name="twitter:image" content="http://yoursite.com/images/piture/32.jpg">
 
 
@@ -390,6 +390,7 @@
         <p>最近经常遇到没有show函数的堆了，吃了不少没有地址的亏，在这里记录一下泄露的方法</p>
 <p>其实主要思路就是修改stdout的flag位为<code>0xfbad1800</code>,并且将<code>_IO_write_base</code>的最后一个字节改小，从而实现多输出一些内容，这些内容里面就包含了libc地址。</p>
 <p>为什么flag要改成<code>0xfbad1800</code>，看源码：</p>
+<a id="more"></a>
 <p>puts函数在源码中是由<code>_IO_puts</code>实现的，而<code>_IO_puts</code>函数内部会调用<code>_IO_sputn</code>，结果会执行<code>_IO_new_file_xsputn</code>，最终会执行<code>_IO_overflow</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> </span><br><span class="line">_IO_new_file_overflow (_IO_FILE *f, <span class="keyword">int</span> ch) </span><br><span class="line">&#123;  </span><br><span class="line">    <span class="keyword">if</span> (f-&gt;_flags &amp; _IO_NO_WRITES) <span class="comment">/* SET ERROR */</span>    </span><br><span class="line">    &#123;<span class="comment">//避免进入      </span></span><br><span class="line">     	f-&gt;_flags |= _IO_ERR_SEEN;      </span><br><span class="line">     	__set_errno (EBADF);      </span><br><span class="line">     	<span class="keyword">return</span> EOF;    </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="comment">/* If currently reading or no buffer allocated. */</span>  </span><br><span class="line">    <span class="keyword">if</span> ((f-&gt;_flags &amp; _IO_CURRENTLY_PUTTING) == <span class="number">0</span> || f-&gt;_IO_write_base == <span class="literal">NULL</span>)&#123; </span><br><span class="line">    	......<span class="comment">//避免进入    </span></span><br><span class="line">    	......    </span><br><span class="line">		&#125;  </span><br><span class="line">	<span class="keyword">if</span> (ch == EOF)    </span><br><span class="line">    	<span class="keyword">return</span> _IO_do_write (f, f-&gt;_IO_write_base, </span><br><span class="line">                             f-&gt;_IO_write_ptr - f-&gt;_IO_write_base); <span class="comment">//进入目标  </span></span><br><span class="line">    <span class="keyword">if</span> (f-&gt;_IO_write_ptr == f-&gt;_IO_buf_end ) <span class="comment">/* Buffer is really full */</span>    </span><br><span class="line">    	<span class="keyword">if</span> (_IO_do_flush (f) == EOF)      </span><br><span class="line">        	<span class="keyword">return</span> EOF;  </span><br><span class="line">     *f-&gt;_IO_write_ptr++ = ch;  </span><br><span class="line">     <span class="keyword">if</span> ((f-&gt;_flags &amp; _IO_UNBUFFERED)      </span><br><span class="line">         || ((f-&gt;_flags &amp; _IO_LINE_BUF) &amp;&amp; ch == <span class="string">'\n'</span>))    </span><br><span class="line">        <span class="keyword">if</span> (_IO_do_write (f, f-&gt;_IO_write_base,             </span><br><span class="line">                          f-&gt;_IO_write_ptr - f-&gt;_IO_write_base) == EOF) </span><br><span class="line">        	<span class="keyword">return</span> EOF;  </span><br><span class="line">      <span class="keyword">return</span> (<span class="keyword">unsigned</span> <span class="keyword">char</span>) ch; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以看到<code>_IO_do_write</code>是最后调用的函数，而<code>_IO_write_base</code>是我们要修改的目标。</p>
