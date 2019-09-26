@@ -81,19 +81,19 @@
 
 
 
-<meta name="description" content="mheap先贴上我觉得最可惜的一道题 程序自已定义了分配原则 12345struct chunk&amp;#123;    size_t size;    void* next; //only use after free    char buf[size];&amp;#125; 并且在程序一开始在0x23330000处申请了0x1000大小的空间当top chunk，以后的每次申请都从这个区域切割  12340">
+<meta name="description" content="mheap先贴上我觉得最可惜的一道题 程序自已定义了分配原则 12345struct chunk&amp;#123;    size_t size;    void* next; //only use after free    char buf[size];&amp;#125; 并且在程序一开始在0x23330000处申请了0x1000大小的空间当top chunk，以后的每次申请都从这个区域切割">
 <meta name="keywords" content="ctf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="bytectf部分wp">
 <meta property="og:url" content="http://yoursite.com/2019/09/12/bytectf/index.html">
 <meta property="og:site_name" content="n0va的ctf博客">
-<meta property="og:description" content="mheap先贴上我觉得最可惜的一道题 程序自已定义了分配原则 12345struct chunk&amp;#123;    size_t size;    void* next; //only use after free    char buf[size];&amp;#125; 并且在程序一开始在0x23330000处申请了0x1000大小的空间当top chunk，以后的每次申请都从这个区域切割  12340">
+<meta property="og:description" content="mheap先贴上我觉得最可惜的一道题 程序自已定义了分配原则 12345struct chunk&amp;#123;    size_t size;    void* next; //only use after free    char buf[size];&amp;#125; 并且在程序一开始在0x23330000处申请了0x1000大小的空间当top chunk，以后的每次申请都从这个区域切割">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/byte.jpg">
-<meta property="og:updated_time" content="2019-09-21T14:16:08.343Z">
+<meta property="og:updated_time" content="2019-09-26T15:06:02.275Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="bytectf部分wp">
-<meta name="twitter:description" content="mheap先贴上我觉得最可惜的一道题 程序自已定义了分配原则 12345struct chunk&amp;#123;    size_t size;    void* next; //only use after free    char buf[size];&amp;#125; 并且在程序一开始在0x23330000处申请了0x1000大小的空间当top chunk，以后的每次申请都从这个区域切割  12340">
+<meta name="twitter:description" content="mheap先贴上我觉得最可惜的一道题 程序自已定义了分配原则 12345struct chunk&amp;#123;    size_t size;    void* next; //only use after free    char buf[size];&amp;#125; 并且在程序一开始在0x23330000处申请了0x1000大小的空间当top chunk，以后的每次申请都从这个区域切割">
 <meta name="twitter:image" content="http://yoursite.com/images/byte.jpg">
 
 
@@ -369,6 +369,7 @@
 <p>程序自已定义了分配原则</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">chunk</span>&#123;</span></span><br><span class="line">    <span class="keyword">size_t</span> size;</span><br><span class="line">    <span class="keyword">void</span>* next; <span class="comment">//only use after free</span></span><br><span class="line">    <span class="keyword">char</span> buf[size];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>并且在程序一开始在0x23330000处申请了0x1000大小的空间当top chunk，以后的每次申请都从这个区域切割 </p>
+<a id="more"></a>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0x4040d0 --&gt; free列表：free掉的chunk按单链表的形式存放</span><br><span class="line">0x4040C0 --&gt; 存放top&apos;s size</span><br><span class="line">0x4040C8 --&gt; 存放top chunk</span><br><span class="line">0x4040E0 --&gt; chunk列表，最多可存放16个</span><br></pre></td></tr></table></figure>
 <p>漏洞点：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">__int64 __<span class="function">fastcall <span class="title">my_read</span><span class="params">(__int64 a1, <span class="keyword">signed</span> <span class="keyword">int</span> a2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 result; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">signed</span> <span class="keyword">int</span> v3; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line">  <span class="keyword">int</span> v4; <span class="comment">// [rsp+1Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  v3 = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">  &#123;</span><br><span class="line">    result = v3;</span><br><span class="line">    <span class="keyword">if</span> ( v3 &gt;= a2 )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    v4 = read(<span class="number">0</span>, (a1 + v3), a2 - v3);</span><br><span class="line">    <span class="keyword">if</span> ( !v4 )</span><br><span class="line">      <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    v3 += v4;</span><br><span class="line">    result = *(v3 - <span class="number">1L</span>L + a1);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">while</span> ( result != <span class="number">10</span> );</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

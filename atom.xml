@@ -43,19 +43,14 @@
     <link href="http://yoursite.com/2019/09/12/bytectf/"/>
     <id>http://yoursite.com/2019/09/12/bytectf/</id>
     <published>2019-09-12T14:25:36.208Z</published>
-    <updated>2019-09-21T14:16:08.343Z</updated>
+    <updated>2019-09-26T15:06:02.275Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h3 id=&quot;mheap&quot;&gt;&lt;a href=&quot;#mheap&quot; class=&quot;headerlink&quot; title=&quot;mheap&quot;&gt;&lt;/a&gt;mheap&lt;/h3&gt;&lt;p&gt;先贴上我觉得最可惜的一道题&lt;/p&gt;
+      &lt;h3 id=&quot;mheap&quot;&gt;&lt;a href=&quot;#mheap&quot; class=&quot;headerlink&quot; title=&quot;mheap&quot;&gt;&lt;/a&gt;mheap&lt;/h3&gt;&lt;p&gt;先贴上我觉得最可惜的一道题&lt;/p&gt;
 &lt;p&gt;程序自已定义了分配原则&lt;/p&gt;
-&lt;figure
-        
-      
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;chunk&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;size_t&lt;/span&gt; size;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt;* next; &lt;span class=&quot;comment&quot;&gt;//only use after free&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; buf[size];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;并且在程序一开始在0x23330000处申请了0x1000大小的空间当top chunk，以后的每次申请都从这个区域切割 &lt;/p&gt;
     
     </summary>
     
