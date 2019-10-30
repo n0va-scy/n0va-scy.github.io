@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-10-30T12:14:06.221Z</updated>
+  <updated>2019-10-30T12:18:14.291Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,18 +21,12 @@
     <link href="http://yoursite.com/2019/10/30/10.26%E6%98%9F%E7%9B%9Fawd/"/>
     <id>http://yoursite.com/2019/10/30/10.26星盟awd/</id>
     <published>2019-10-30T11:57:28.014Z</published>
-    <updated>2019-10-30T12:14:06.221Z</updated>
+    <updated>2019-10-30T12:18:14.291Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;p&gt;程序保护全开，程序功能：&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span
-        
-      
+      &lt;p&gt;程序保护全开，程序功能：&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;1.&lt;/span&gt;add&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2.&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;3.&lt;/span&gt;edit&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;4.&lt;/span&gt;&lt;span class=&quot;built_in&quot;&gt;exit&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
@@ -48,18 +42,12 @@
     <link href="http://yoursite.com/2019/10/26/shellcode%E7%9A%84%E8%89%BA%E6%9C%AF/"/>
     <id>http://yoursite.com/2019/10/26/shellcode的艺术/</id>
     <published>2019-10-26T10:24:47.510Z</published>
-    <updated>2019-10-30T12:13:51.149Z</updated>
+    <updated>2019-10-30T12:18:31.711Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;p&gt;这里总结一下shellcode的各种类型&lt;/p&gt;
-&lt;h2 id=&quot;一、直接调用&quot;&gt;&lt;a href=&quot;#一、直接调用&quot; class=&quot;headerlink&quot; title=&quot;一、直接调用&quot;&gt;&lt;/a&gt;一、直接调用&lt;/h2&gt;&lt;figure class=&quot;highlight
-        
-      
+      &lt;p&gt;这里总结一下shellcode的各种类型&lt;/p&gt;
+&lt;h2 id=&quot;一、直接调用&quot;&gt;&lt;a href=&quot;#一、直接调用&quot; class=&quot;headerlink&quot; title=&quot;一、直接调用&quot;&gt;&lt;/a&gt;一、直接调用&lt;/h2&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; argc, &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; *argv[])&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; s[&lt;span class=&quot;number&quot;&gt;0x500&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	gets(s);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	((&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt;(*)(&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt;))s)();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     

