@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-10-18T12:47:29.397Z</updated>
+  <updated>2019-10-30T12:14:06.221Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,60 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>10.26星盟awd之magic_heap</title>
+    <link href="http://yoursite.com/2019/10/30/10.26%E6%98%9F%E7%9B%9Fawd/"/>
+    <id>http://yoursite.com/2019/10/30/10.26星盟awd/</id>
+    <published>2019-10-30T11:57:28.014Z</published>
+    <updated>2019-10-30T12:14:06.221Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;程序保护全开，程序功能：&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span
+        
+      
+    
+    </summary>
+    
+      <category term="pwn" scheme="http://yoursite.com/categories/pwn/"/>
+    
+    
+      <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>shellcode 的艺术</title>
+    <link href="http://yoursite.com/2019/10/26/shellcode%E7%9A%84%E8%89%BA%E6%9C%AF/"/>
+    <id>http://yoursite.com/2019/10/26/shellcode的艺术/</id>
+    <published>2019-10-26T10:24:47.510Z</published>
+    <updated>2019-10-30T12:13:51.149Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;这里总结一下shellcode的各种类型&lt;/p&gt;
+&lt;h2 id=&quot;一、直接调用&quot;&gt;&lt;a href=&quot;#一、直接调用&quot; class=&quot;headerlink&quot; title=&quot;一、直接调用&quot;&gt;&lt;/a&gt;一、直接调用&lt;/h2&gt;&lt;figure class=&quot;highlight
+        
+      
+    
+    </summary>
+    
+      <category term="pwn" scheme="http://yoursite.com/categories/pwn/"/>
+    
+    
+      <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
+    
+  </entry>
   
   <entry>
     <title>RoarCtf - pwn</title>
