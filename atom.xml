@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-11-07T08:47:45.568Z</updated>
+  <updated>2019-11-07T08:50:02.859Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,18 +21,12 @@
     <link href="http://yoursite.com/2019/11/07/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2/"/>
     <id>http://yoursite.com/2019/11/07/巅峰极客/</id>
     <published>2019-11-07T08:32:42.172Z</published>
-    <updated>2019-11-07T08:47:45.568Z</updated>
+    <updated>2019-11-07T08:50:02.859Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2 id=&quot;pwn&quot;&gt;&lt;a href=&quot;#pwn&quot; class=&quot;headerlink&quot; title=&quot;pwn&quot;&gt;&lt;/a&gt;pwn&lt;/h2&gt;&lt;p&gt;很骚的一题，又是将system禁用的堆类型题目&lt;/p&gt;
-&lt;figure class=&quot;highlight
-        
-      
+      &lt;h2 id=&quot;pwn&quot;&gt;&lt;a href=&quot;#pwn&quot; class=&quot;headerlink&quot; title=&quot;pwn&quot;&gt;&lt;/a&gt;pwn&lt;/h2&gt;&lt;p&gt;很骚的一题，又是将system禁用的堆类型题目&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ seccomp-tools dump ./pwn2 &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; line  CODE  JT   JF      K&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;=================================&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0000: 0x20 0x00 0x00 0x00000004  A = arch&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0001: 0x15 0x00 0x06 0xc000003e  if (A != ARCH_X86_64) goto 0008&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0002: 0x20 0x00 0x00 0x00000000  A = sys_number&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0003: 0x35 0x04 0x00 0x40000000  if (A &amp;gt;= 0x40000000) goto 0008&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0004: 0x15 0x04 0x00 0x00000001  if (A == write) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0005: 0x15 0x03 0x00 0x00000000  if (A == read) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0006: 0x15 0x02 0x00 0x00000002  if (A == open) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0007: 0x15 0x01 0x00 0x0000003c  if (A == exit) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0008: 0x06 0x00 0x00 0x00000000  return KILL&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0009: 0x06 0x00 0x00 0x7fff0000  return ALLOW&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     

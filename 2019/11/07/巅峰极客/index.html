@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="R4bb1t的ctf博客">
 <meta property="og:description" content="pwn很骚的一题，又是将system禁用的堆类型题目 12345678910111213$ seccomp-tools dump ./pwn2  line  CODE  JT   JF      K================================= 0000: 0x20 0x00 0x00 0x00000004  A = arch 0001: 0x15 0x00 0x06 0xc0">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-07T08:47:45.568Z">
+<meta property="og:updated_time" content="2019-11-07T08:50:02.859Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="巅峰极客 pwn 题解">
 <meta name="twitter:description" content="pwn很骚的一题，又是将system禁用的堆类型题目 12345678910111213$ seccomp-tools dump ./pwn2  line  CODE  JT   JF      K================================= 0000: 0x20 0x00 0x00 0x00000004  A = arch 0001: 0x15 0x00 0x06 0xc0">
@@ -387,6 +387,7 @@
       
         <h2 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h2><p>很骚的一题，又是将system禁用的堆类型题目</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ seccomp-tools dump ./pwn2 </span><br><span class="line"> line  CODE  JT   JF      K</span><br><span class="line">=================================</span><br><span class="line"> 0000: 0x20 0x00 0x00 0x00000004  A = arch</span><br><span class="line"> 0001: 0x15 0x00 0x06 0xc000003e  if (A != ARCH_X86_64) goto 0008</span><br><span class="line"> 0002: 0x20 0x00 0x00 0x00000000  A = sys_number</span><br><span class="line"> 0003: 0x35 0x04 0x00 0x40000000  if (A &gt;= 0x40000000) goto 0008</span><br><span class="line"> 0004: 0x15 0x04 0x00 0x00000001  if (A == write) goto 0009</span><br><span class="line"> 0005: 0x15 0x03 0x00 0x00000000  if (A == read) goto 0009</span><br><span class="line"> 0006: 0x15 0x02 0x00 0x00000002  if (A == open) goto 0009</span><br><span class="line"> 0007: 0x15 0x01 0x00 0x0000003c  if (A == exit) goto 0009</span><br><span class="line"> 0008: 0x06 0x00 0x00 0x00000000  return KILL</span><br><span class="line"> 0009: 0x06 0x00 0x00 0x7fff0000  return ALLOW</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>程序功能：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. Add note</span><br><span class="line">2. Delete note</span><br><span class="line">3: Show note</span><br><span class="line">4. Change</span><br><span class="line">5. Exit</span><br></pre></td></tr></table></figure>
 <p>但是change函数并没有啥用，因为它只会读随机数进去<code>fread(v3, 1uLL, *v2, stream);</code>但是谁能想到最后就是拿它来打印flag的呢</p>
