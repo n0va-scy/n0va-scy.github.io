@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-11-08T14:16:08.765Z</updated>
+  <updated>2019-11-08T14:19:02.694Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,17 +21,11 @@
     <link href="http://yoursite.com/2019/11/08/TokyoWesterns-Asterisk-Alloc/"/>
     <id>http://yoursite.com/2019/11/08/TokyoWesterns-Asterisk-Alloc/</id>
     <published>2019-11-08T13:43:17.655Z</published>
-    <updated>2019-11-08T14:16:08.765Z</updated>
+    <updated>2019-11-08T14:19:02.694Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;p&gt;很有意思的一题，主要考察realloc函数&lt;br&gt;checksec:保护全开，libc2.27，引入了tcache 机制&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span
-        
-      
+      &lt;p&gt;很有意思的一题，主要考察realloc函数&lt;br&gt;checksec:保护全开，libc2.27，引入了tcache 机制&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Arch:     amd64-64-little&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   RELRO:    Full RELRO&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   Stack:    Canary found&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   NX:       NX enabled&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   PIE:      PIE enabled&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
     
     </summary>
     
