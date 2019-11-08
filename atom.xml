@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-11-07T08:50:02.859Z</updated>
+  <updated>2019-11-08T14:16:08.765Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,80 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>TokyoWesterns -- Asterisk_Alloc</title>
+    <link href="http://yoursite.com/2019/11/08/TokyoWesterns-Asterisk-Alloc/"/>
+    <id>http://yoursite.com/2019/11/08/TokyoWesterns-Asterisk-Alloc/</id>
+    <published>2019-11-08T13:43:17.655Z</published>
+    <updated>2019-11-08T14:16:08.765Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;很有意思的一题，主要考察realloc函数&lt;br&gt;checksec:保护全开，libc2.27，引入了tcache 机制&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span
+        
+      
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RSA学习</title>
+    <link href="http://yoursite.com/2019/11/07/RSA%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://yoursite.com/2019/11/07/RSA学习/</id>
+    <published>2019-11-07T11:08:43.244Z</published>
+    <updated>2019-11-07T12:21:11.458Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;一、RSA工作原理&quot;&gt;&lt;a href=&quot;#一、RSA工作原理&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="crypto" scheme="http://yoursite.com/tags/crypto/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2019/11/07/%E4%B8%8A%E6%B5%B7%E5%B8%82%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B/"/>
+    <id>http://yoursite.com/2019/11/07/上海市大学生信息安全竞赛/</id>
+    <published>2019-11-07T10:50:37.875Z</published>
+    <updated>2019-11-07T10:52:19.062Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;一、pwn&quot;&gt;&lt;a href=&quot;#一、pwn&quot; class=&quot;headerlink&quot; title=&quot;一、pwn&quot;&gt;&lt;/a&gt;&lt;strong&gt;一、pwn&lt;/strong&gt;&lt;/h1&gt;&lt;h3 id=&quot;1、boringheap-solved&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>巅峰极客 pwn 题解</title>
@@ -365,75 +439,6 @@
     
       <category term="crypto" scheme="http://yoursite.com/categories/crypto/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>2019全国大学生信息安全大赛部分Wp</title>
-    <link href="http://yoursite.com/2019/04/23/2019%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B/"/>
-    <id>http://yoursite.com/2019/04/23/2019全国大学生信息安全大赛/</id>
-    <published>2019-04-23T11:23:17.725Z</published>
-    <updated>2019-05-09T12:15:25.617Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;pwn&quot;&gt;&lt;a href=&quot;#pwn&quot; class=&quot;headerlink&quot; title=&quot;pwn&quot;&gt;&lt;/a&gt;pwn&lt;/h2&gt;&lt;h3 id=&quot;your-pwn&quot;&gt;&lt;a href=&quot;#your-pwn&quot; class=&quot;headerlink&quot; title=&quot;your_pwn&quot;&gt;&lt;/a&gt;your_pwn&lt;/h3&gt;&lt;p&gt;先check 一下，发现保护全开，还是有点慌的&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;\images\2019全国大学生信息安全大赛\1.png&quot; alt&gt;&lt;/p&gt;
-&lt;p&gt;进入到IDA审计代码&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;\images\2019全国大学生信息安全大赛\2.jpg&quot; alt&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="2019-iscc" scheme="http://yoursite.com/categories/2019-iscc/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>DDCTF的两道简单逆向</title>
-    <link href="http://yoursite.com/2019/04/18/DDCTF%E4%B9%8Bre/"/>
-    <id>http://yoursite.com/2019/04/18/DDCTF之re/</id>
-    <published>2019-04-18T07:56:36.929Z</published>
-    <updated>2019-05-09T12:16:15.143Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;re1&quot;&gt;&lt;a href=&quot;#re1&quot; class=&quot;headerlink&quot; title=&quot;re1&quot;&gt;&lt;/a&gt;re1&lt;/h2&gt;&lt;p&gt;32位PE文件，加了upx壳，先脱壳，随便一个工具就可以&lt;/p&gt;
-&lt;p&gt;脱完壳扔IDA，&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;\images\DDCTF\1.jpg&quot; alt&gt;&lt;/p&gt;
-&lt;p&gt;逻辑其实很简单就是输入一串字符串，经过&lt;code&gt;sub_401000&lt;/code&gt;这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较&lt;/p&gt;
-&lt;p&gt;那么主要就是分析这个函数了，&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>2019安恒杯1月月赛</title>
-    <link href="http://yoursite.com/2019/04/04/2019%E5%AE%89%E6%81%92%E6%9D%AF1%E6%9C%88%E6%9C%88%E8%B5%9B/"/>
-    <id>http://yoursite.com/2019/04/04/2019安恒杯1月月赛/</id>
-    <published>2019-04-04T08:36:40.803Z</published>
-    <updated>2019-05-09T12:15:01.781Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;python-crackme&quot;&gt;&lt;a href=&quot;#python-crackme&quot; class=&quot;headerlink&quot; title=&quot;python_crackme&quot;&gt;&lt;/a&gt;python_crackme&lt;/h2&gt;&lt;p&gt;（拿安恒杯1月月赛的题目she来讲）首先，你会拿到一个由python编译的exe文件，使用pyinstxtractor.py脚本（下载&lt;a href=&quot;https://sourceforge.net/projects/pyinstallerextractor/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;地址&lt;/a&gt;）反编译exe文件&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-5f176ccfca1b21e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;得到一个文件夹里面有一大堆东西&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-59a423ea37b08a40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;用010editor打开与exe文件同名的二进制文件&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-5256dca2bf529b4d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;添加上python3.6的.pyc文件的文件头（即前12字节）然后再加上后缀名.pyc&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="安恒杯" scheme="http://yoursite.com/categories/%E5%AE%89%E6%81%92%E6%9D%AF/"/>
-    
-    
-      <category term="reverse" scheme="http://yoursite.com/tags/reverse/"/>
     
   </entry>
   
