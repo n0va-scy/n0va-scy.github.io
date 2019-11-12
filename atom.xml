@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-11-12T02:15:22.358Z</updated>
+  <updated>2019-11-12T02:22:10.218Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,17 +21,12 @@
     <link href="http://yoursite.com/2019/11/12/2019-%E7%BA%A2%E5%B8%BD%E6%9D%AF/"/>
     <id>http://yoursite.com/2019/11/12/2019-红帽杯/</id>
     <published>2019-11-12T02:08:53.607Z</published>
-    <updated>2019-11-12T02:15:22.358Z</updated>
+    <updated>2019-11-12T02:22:10.218Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h1 id=&quot;pwn&quot;&gt;&lt;a href=&quot;#pwn&quot; class=&quot;headerlink&quot; title=&quot;pwn&quot;&gt;&lt;/a&gt;pwn&lt;/h1&gt;&lt;h2 id=&quot;three&quot;&gt;&lt;a href=&quot;#three&quot; class=&quot;headerlink&quot;
-        
-      
+      &lt;h1 id=&quot;pwn&quot;&gt;&lt;a href=&quot;#pwn&quot; class=&quot;headerlink&quot; title=&quot;pwn&quot;&gt;&lt;/a&gt;pwn&lt;/h1&gt;&lt;h2 id=&quot;three&quot;&gt;&lt;a href=&quot;#three&quot; class=&quot;headerlink&quot; title=&quot;three&quot;&gt;&lt;/a&gt;three&lt;/h2&gt;&lt;p&gt;静态编译文件，开了NX，&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://uploader.shimo.im/f/Xl9EZL6Ep4A5a2E8.png!thumbnail&quot; alt=&quot;图片&quot;&gt;&lt;/p&gt;
     
     </summary>
     
