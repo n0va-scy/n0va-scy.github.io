@@ -84,28 +84,6 @@
   </entry>
   
   <entry>
-    <title></title>
-    <link href="http://yoursite.com/2019/11/07/%E4%B8%8A%E6%B5%B7%E5%B8%82%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B/"/>
-    <id>http://yoursite.com/2019/11/07/上海市大学生信息安全竞赛/</id>
-    <published>2019-11-07T10:50:37.875Z</published>
-    <updated>2019-11-07T10:52:19.062Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;一、pwn&quot;&gt;&lt;a href=&quot;#一、pwn&quot; class=&quot;headerlink&quot; title=&quot;一、pwn&quot;&gt;&lt;/a&gt;&lt;strong&gt;一、pwn&lt;/strong&gt;&lt;/h1&gt;&lt;h3 id=&quot;1、boringheap-solved&quot;&gt;&lt;a
-        
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>巅峰极客 pwn 题解</title>
     <link href="http://yoursite.com/2019/11/07/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2/"/>
     <id>http://yoursite.com/2019/11/07/巅峰极客/</id>
@@ -433,6 +411,26 @@
     </summary>
     
       <category term="堆" scheme="http://yoursite.com/categories/%E5%A0%86/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>国密加密算法sm4</title>
+    <link href="http://yoursite.com/2019/04/25/sm4%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/"/>
+    <id>http://yoursite.com/2019/04/25/sm4加密算法/</id>
+    <published>2019-04-25T11:06:43.387Z</published>
+    <updated>2019-05-09T12:19:27.512Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;p&gt;SM4加密算法属于对称加密算法，2012年3月，国家密码管理局正式公布了包含SM4分组密码算法在内的《祖冲之序列密码算法》等6项密码行业标准。与DES和AES算法类似，SM4算法是一种分组密码算法。其分组长度为128bit，密钥长度也为128bit。加密算法与密钥扩展算法均采用32轮非线性迭代结构，以字（32位）为单位进行加密运算，每一次迭代运算均为一轮变换函数F。SM4算法加/解密算法的结构相同，只是使用轮密钥相反，其中解密轮密钥是加密轮密钥的逆序。&lt;/p&gt;
+&lt;p&gt;SM4算法结构图：(图片来源网上)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;\images\SM4\1.png&quot; alt&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="crypto" scheme="http://yoursite.com/categories/crypto/"/>
     
     
   </entry>
