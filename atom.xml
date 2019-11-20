@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-11-14T13:54:25.208Z</updated>
+  <updated>2019-11-20T14:20:37.679Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>house of orange 学习</title>
+    <link href="http://yoursite.com/2019/11/20/house%20of%20orange/"/>
+    <id>http://yoursite.com/2019/11/20/house of orange/</id>
+    <published>2019-11-20T10:54:56.066Z</published>
+    <updated>2019-11-20T14:20:37.679Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;大名鼎鼎 house of orange来自于Hitcon CTF 2016中的一道 同名题目，其可以在没有free的情况下得到一块unsorted bin，因为unsorted bin的fd,bk为main_arean+88，所以可以通过申请切割unsorted bin来泄漏libc地址（没有深入了解的我一直以为这是house of orange仅此而已的用处……汗……）&lt;/p&gt;
+&lt;h2 id=&quot;House-of-orange-–-2016Hitcon-CTF&quot;&gt;&lt;a href=&quot;#House-of-orange-–-2016Hitcon-CTF&quot; class=&quot;headerlink&quot; title=&quot;House_of_orange – 2016Hitcon CTF&quot;&gt;&lt;/a&gt;House_of_orange – 2016Hitcon CTF&lt;/h2&gt;&lt;p&gt;题目逻辑很简单，一共可以build 4次，每次build分进行3次堆分配，两次malloc，一次calloc，其中一次malloc是固定的0x10字节作为控制堆块，放着name和color的信息，另外按输入分配name 的大小。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>2019红帽杯wp</title>
@@ -270,7 +291,7 @@
     <link href="http://yoursite.com/2019/07/03/pwnable.tw/"/>
     <id>http://yoursite.com/2019/07/03/pwnable.tw/</id>
     <published>2019-07-02T16:00:00.000Z</published>
-    <updated>2019-11-15T15:02:42.986Z</updated>
+    <updated>2019-11-18T14:16:49.097Z</updated>
     
     <summary type="html">
     
@@ -405,27 +426,6 @@
     </summary>
     
       <category term="crypto" scheme="http://yoursite.com/categories/crypto/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>2019全国大学生信息安全大赛部分Wp</title>
-    <link href="http://yoursite.com/2019/04/23/2019%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9B/"/>
-    <id>http://yoursite.com/2019/04/23/2019全国大学生信息安全大赛/</id>
-    <published>2019-04-23T11:23:17.725Z</published>
-    <updated>2019-05-09T12:15:25.617Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;pwn&quot;&gt;&lt;a href=&quot;#pwn&quot; class=&quot;headerlink&quot; title=&quot;pwn&quot;&gt;&lt;/a&gt;pwn&lt;/h2&gt;&lt;h3 id=&quot;your-pwn&quot;&gt;&lt;a href=&quot;#your-pwn&quot; class=&quot;headerlink&quot; title=&quot;your_pwn&quot;&gt;&lt;/a&gt;your_pwn&lt;/h3&gt;&lt;p&gt;先check 一下，发现保护全开，还是有点慌的&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;\images\2019全国大学生信息安全大赛\1.png&quot; alt&gt;&lt;/p&gt;
-&lt;p&gt;进入到IDA审计代码&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;\images\2019全国大学生信息安全大赛\2.jpg&quot; alt&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="2019-iscc" scheme="http://yoursite.com/categories/2019-iscc/"/>
     
     
   </entry>
