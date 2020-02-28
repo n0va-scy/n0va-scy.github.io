@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-02-27T08:01:50.408Z</updated>
+  <updated>2020-02-28T08:06:15.548Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,17 +21,13 @@
     <link href="http://yoursite.com/2020/02/27/i%E6%98%A5%E7%A7%8B%E6%96%B0%E6%98%A5%E6%88%98%E5%BD%B9/"/>
     <id>http://yoursite.com/2020/02/27/i春秋新春战役/</id>
     <published>2020-02-27T07:02:14.624Z</published>
-    <updated>2020-02-27T08:01:50.408Z</updated>
+    <updated>2020-02-28T08:06:15.548Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2 id=&quot;2-21-–-BFnote&quot;&gt;&lt;a href=&quot;#2-21-–-BFnote&quot; class=&quot;headerlink&quot; title=&quot;2-21 – BFnote&quot;&gt;&lt;/a&gt;2-21 –
-        
-      
+      &lt;h2 id=&quot;2-21-–-BFnote&quot;&gt;&lt;a href=&quot;#2-21-–-BFnote&quot; class=&quot;headerlink&quot; title=&quot;2-21 – BFnote&quot;&gt;&lt;/a&gt;2-21 – BFnote&lt;/h2&gt;&lt;p&gt;这题很秀，我觉得有必要记录下来&lt;/p&gt;
+&lt;p&gt;简单分析一下程序不难发现程序存在很明显的栈溢出，但是因为开启了canary，得想办法绕过；还有在malloc(size)的时候，size大小不限&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;不仔细看还发现不了，下方还存在一个下标溢出，v4一开始被初始化后，在循环中只有i被重新赋值，而v4在后面又用到了&lt;/strong&gt;&lt;/p&gt;
     
     </summary>
     
