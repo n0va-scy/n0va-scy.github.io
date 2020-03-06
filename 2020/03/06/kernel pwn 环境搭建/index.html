@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="reverse,">
+  <meta name="keywords" content="pwn,">
 
 
 
@@ -81,26 +81,27 @@
 
 
 
-<meta name="description" content="python_crackme（拿安恒杯1月月赛的题目she来讲）首先，你会拿到一个由python编译的exe文件，使用pyinstxtractor.py脚本（下载地址）反编译exe文件  得到一个文件夹里面有一大堆东西  用010editor打开与exe文件同名的二进制文件  添加上python3.6的.pyc文件的文件头（即前12字节）然后再加上后缀名.pyc">
-<meta name="keywords" content="reverse">
+<meta name="description" content="编译生成内核镜像先下载一个内核源码 ：https://mirrors.edge.kernel.org/pub/linux/kernel/我下载的是linux-4.9.tar.gz然后安装一些依赖12sudo apt-get updatesudo apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev">
+<meta name="keywords" content="pwn">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2019安恒杯1月月赛">
-<meta property="og:url" content="http://yoursite.com/2019/04/04/2019安恒杯1月月赛/index.html">
+<meta property="og:title" content="kernel pwn 环境搭建">
+<meta property="og:url" content="http://yoursite.com/2020/03/06/kernel pwn 环境搭建/index.html">
 <meta property="og:site_name" content="R4bb1t的ctf博客">
-<meta property="og:description" content="python_crackme（拿安恒杯1月月赛的题目she来讲）首先，你会拿到一个由python编译的exe文件，使用pyinstxtractor.py脚本（下载地址）反编译exe文件  得到一个文件夹里面有一大堆东西  用010editor打开与exe文件同名的二进制文件  添加上python3.6的.pyc文件的文件头（即前12字节）然后再加上后缀名.pyc">
+<meta property="og:description" content="编译生成内核镜像先下载一个内核源码 ：https://mirrors.edge.kernel.org/pub/linux/kernel/我下载的是linux-4.9.tar.gz然后安装一些依赖12sudo apt-get updatesudo apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12343640-5f176ccfca1b21e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12343640-59a423ea37b08a40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12343640-5256dca2bf529b4d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12343640-6beeb59b641257b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12343640-feb262d8335155a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12343640-b69ae11674bdfd6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12343640-6f493f3401da79b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-05-09T12:15:01.781Z">
+<meta property="og:image" content="http://yoursite.com/images/内核环境搭建/1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/内核环境搭建/2.png">
+<meta property="og:image" content="http://yoursite.com/images/内核环境搭建/3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/内核环境搭建/4.jpg">
+<meta property="og:image" content="http://yoursite.com/images/内核环境搭建/5.jpg">
+<meta property="og:image" content="http://yoursite.com/images/内核环境搭建/6.jpg">
+<meta property="og:image" content="http://yoursite.com/images/内核环境搭建/7.jpg">
+<meta property="og:image" content="http://yoursite.com/images/内核环境搭建/8.jpg">
+<meta property="og:updated_time" content="2020-03-06T03:39:16.518Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2019安恒杯1月月赛">
-<meta name="twitter:description" content="python_crackme（拿安恒杯1月月赛的题目she来讲）首先，你会拿到一个由python编译的exe文件，使用pyinstxtractor.py脚本（下载地址）反编译exe文件  得到一个文件夹里面有一大堆东西  用010editor打开与exe文件同名的二进制文件  添加上python3.6的.pyc文件的文件头（即前12字节）然后再加上后缀名.pyc">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12343640-5f176ccfca1b21e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="kernel pwn 环境搭建">
+<meta name="twitter:description" content="编译生成内核镜像先下载一个内核源码 ：https://mirrors.edge.kernel.org/pub/linux/kernel/我下载的是linux-4.9.tar.gz然后安装一些依赖12sudo apt-get updatesudo apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev">
+<meta name="twitter:image" content="http://yoursite.com/images/内核环境搭建/1.jpg">
 
 
 
@@ -130,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/04/2019安恒杯1月月赛/">
+  <link rel="canonical" href="http://yoursite.com/2020/03/06/kernel pwn 环境搭建/">
 
 
 
 
 
-  <title>2019安恒杯1月月赛 | R4bb1t的ctf博客</title>
+  <title>kernel pwn 环境搭建 | R4bb1t的ctf博客</title>
   
 
 
@@ -304,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/04/2019安恒杯1月月赛/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/06/kernel pwn 环境搭建/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -321,7 +322,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">2019安恒杯1月月赛</h1>
+          <h1 class="post-title" itemprop="name headline">kernel pwn 环境搭建</h1>
         
 
         <div class="post-meta">
@@ -333,8 +334,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-04T16:36:40+08:00">
-                2019-04-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-06T10:34:17+08:00">
+                2020-03-06
               </time>
             
 
@@ -356,8 +357,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/安恒杯/" itemprop="url" rel="index">
-                    <span itemprop="name">安恒杯</span>
+                  <a href="/categories/ctf/" itemprop="url" rel="index">
+                    <span itemprop="name">ctf</span>
                   </a>
                 </span>
 
@@ -393,25 +394,74 @@
       
 
       
-        <h2 id="python-crackme"><a href="#python-crackme" class="headerlink" title="python_crackme"></a>python_crackme</h2><p>（拿安恒杯1月月赛的题目she来讲）首先，你会拿到一个由python编译的exe文件，使用pyinstxtractor.py脚本（下载<a href="https://sourceforge.net/projects/pyinstallerextractor/" target="_blank" rel="noopener">地址</a>）反编译exe文件</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12343640-5f176ccfca1b21e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>得到一个文件夹里面有一大堆东西</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12343640-59a423ea37b08a40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>用010editor打开与exe文件同名的二进制文件</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12343640-5256dca2bf529b4d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>添加上python3.6的.pyc文件的文件头（即前12字节）然后再加上后缀名.pyc</p>
+        <h3 id="编译生成内核镜像"><a href="#编译生成内核镜像" class="headerlink" title="编译生成内核镜像"></a>编译生成内核镜像</h3><p>先下载一个内核源码 ：<a href="https://mirrors.edge.kernel.org/pub/linux/kernel/" target="_blank" rel="noopener">https://mirrors.edge.kernel.org/pub/linux/kernel/</a><br>我下载的是linux-4.9.tar.gz<br>然后安装一些依赖<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
-<p><img src="https://upload-images.jianshu.io/upload_images/12343640-6beeb59b641257b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>再在线反编译一下（反编译<a href="https://tool.lu/pyc/" target="_blank" rel="noopener">地址</a>）即可得到python源码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># encoding: utf-8</span></span><br><span class="line"><span class="comment"># 如果觉得不错，可以推荐给你的朋友！http://tool.lu/pyc</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">n1 = input(<span class="string">'Tell me your name?'</span>)</span><br><span class="line">n2 = input(<span class="string">'Tell me your pasw'</span>)</span><br><span class="line">n11 = chr(ord(n1[<span class="number">0</span>]) + <span class="number">12</span>)</span><br><span class="line">s = <span class="string">''</span></span><br><span class="line">st3 = <span class="string">'51e'</span></span><br><span class="line">st2 = <span class="string">'9f1ff1e8b5b91110'</span></span><br><span class="line">st1 = <span class="string">'c4e21c11a2412'</span></span><br><span class="line">st0 = <span class="string">'wrong'</span></span><br><span class="line"><span class="keyword">if</span> n11 + <span class="string">'AnHeng'</span> == n2:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">4</span>):</span><br><span class="line">        s += st1[<span class="number">3</span> - i]</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Congratulations'</span>)</span><br><span class="line">    ts = st2[<span class="number">0</span>] + st3 + st2[<span class="number">1</span>] + s</span><br><span class="line">    print(<span class="string">'flag&#123;'</span> + st3[:<span class="number">1</span>] + st1 + st2 + st3[<span class="number">-2</span>:] + <span class="string">'&#125;'</span>)</span><br><span class="line">    os.system(<span class="string">'pause'</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'no,'</span> + st0)</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">n1 = input(<span class="string">'Tell me your name?'</span>)</span><br><span class="line">n2 = input(<span class="string">'Tell me your pasw'</span>)</span><br><span class="line">n11 = chr(ord(n1[<span class="number">0</span>]) + <span class="number">12</span>)</span><br><span class="line">s = <span class="string">''</span></span><br><span class="line">st3 = <span class="string">'51e'</span></span><br><span class="line">st2 = <span class="string">'9f1ff1e8b5b91110'</span></span><br><span class="line">st1 = <span class="string">'c4e21c11a2412'</span></span><br><span class="line">st0 = <span class="string">'wrong'</span></span><br><span class="line"><span class="keyword">if</span> n11 + <span class="string">'AnHeng'</span> == n2:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">4</span>):</span><br><span class="line">        s += st1[<span class="number">3</span> - i]</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Congratulations'</span>)</span><br><span class="line">    ts = st2[<span class="number">0</span>] + st3 + st2[<span class="number">1</span>] + s</span><br><span class="line">    print(<span class="string">'flag&#123;'</span> + st3[:<span class="number">1</span>] + st1 + st2 + st3[<span class="number">-2</span>:] + <span class="string">'&#125;'</span>)</span><br><span class="line">    os.system(<span class="string">'pause'</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'no,'</span> + st0)</span><br></pre></td></tr></table></figure></p>
-<h2 id="old-diver"><a href="#old-diver" class="headerlink" title="old-diver"></a>old-diver</h2><p>32位pe文件，无壳</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12343640-feb262d8335155a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>IDA分析：将v9的类型修改为char[]型，同时可以看到这里到401000处理的代码进行了加密异或，先解密一波：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">s = get_bytes(<span class="number">0x401000</span>,<span class="number">0x260</span>)</span><br><span class="line">buf = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> s:</span><br><span class="line">    buf += chr(ord(i)^<span class="number">0xbb</span>)</span><br><span class="line"><span class="keyword">from</span> idaapi <span class="keyword">import</span> *</span><br><span class="line">patch_bytes(<span class="number">0x401000</span>,buf)</span><br></pre></td></tr></table></figure></p>
-<p>重新构造解密部分函数，先undefine the current function（快捷键u）再 creat a function（快捷键p），重新F5，可以看到两个函数已经恢复正常</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/12343640-b69ae11674bdfd6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>可以开始分析程序了<br>第一步验证前5位：”flag{“然后进入sub_4010b0函数<br>第二步异或<img src="https://upload-images.jianshu.io/upload_images/12343640-6f493f3401da79b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>第三步：base64加密，”c19zbWNf”解码<br>第四步：走迷宫</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">--------  上下左右</span><br><span class="line">g +    +   <span class="number">2</span> a q w</span><br><span class="line">+ + ++ +</span><br><span class="line">+ + #+ +</span><br><span class="line">+ ++++ +</span><br><span class="line">+ ++++ +</span><br><span class="line">+      +</span><br><span class="line">--------</span><br><span class="line">waaaaawwwww22222qqqaaw</span><br></pre></td></tr></table></figure>
-<p>最终得到flag:<code>flag{this_is_smc_waaaaawwwww22222qqqaaw}</code></p>
+<p>解压源码后进入内核目录，输入命令:<code>sudo make menuconfig</code>进入内核编译设置</p>
+<p><img src="\images\内核环境搭建\1.jpg" alt></p>
+<p>进入kernel hacking，检查保证勾选了以下选项(其实默认都是勾选的，只是进去看一眼而已)</p>
+<ul>
+<li>Kernel debugging</li>
+<li>Compile-time checks and compiler options —&gt; Compile the kernel with debug info和Compile the kernel with frame pointers</li>
+<li>KGDB: kernel debugger</li>
+</ul>
+<p>保存并退出 </p>
+<p><code>sudo make bzImage</code>生成 bzImage，过程挺久的，完成后在boot下生成了一个bzImage文件</p>
+<p><img src="\images\内核环境搭建\2.png" alt></p>
+<p>这样，就算编译成功了这样我们就从<code>/arch/x86/boot</code>得到了 bzImage文件</p>
+<h3 id="下载内核镜像"><a href="#下载内核镜像" class="headerlink" title="下载内核镜像"></a>下载内核镜像</h3><p>根据版本号搜索 <code>sudo apt search linux-image-xxx</code></p>
+<p>然后下载  <code>sudo apt download linux-image-4.10.0-1004-gcp</code>，解压 </p>
+<p><img src="\images\内核环境搭建\3.jpg" alt></p>
+<h3 id="安装busybox"><a href="#安装busybox" class="headerlink" title="安装busybox"></a>安装busybox</h3><p>这里<a href="https://busybox.net/" target="_blank" rel="noopener">下载</a>，解压后进入目录，<code>make menuconfig</code>，同样会进入图形界面，在Settings 上勾选Build static binary (no shared libs),然后保存退出 </p>
+<p>编译，执行<code>make install</code>，根目录下会生成一个<code>_install</code>文件夹，进入文件夹配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd _install</span><br><span class="line">mkdir proc</span><br><span class="line">mkdir sys</span><br><span class="line">touch init</span><br><span class="line">touch packet</span><br><span class="line">chmod +x init</span><br></pre></td></tr></table></figure>
+<p>编辑init 文件，用于内核初始化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">echo <span class="string">"&#123;==DBG==&#125; INIT SCRIPT"</span></span><br><span class="line">mkdir /tmp</span><br><span class="line">mount -t proc none /proc</span><br><span class="line">mount -t sysfs none /sys</span><br><span class="line">mount -t debugfs none /sys/kernel/debug</span><br><span class="line">mount -t tmpfs none /tmp</span><br><span class="line"><span class="meta">#mount指令 挂载某个分区到某个文件，这样就将分区与文件建立联系从而访问文件时就可以访问分区。</span></span><br><span class="line"><span class="meta"># insmod /xxx.ko # 加载模块</span></span><br><span class="line"><span class="meta"># insmod /hello.ko # 加载hello.ko模块</span></span><br><span class="line">mdev -s </span><br><span class="line"># We need <span class="keyword">this</span> to find /dev/sda later</span><br><span class="line">echo -e <span class="string">"&#123;==DBG==&#125; Boot took $(cut -d' ' -f1 /proc/uptime) seconds"</span></span><br><span class="line">setsid /bin/cttyhack setuidgid <span class="number">1000</span> /bin/sh <span class="meta">#normal user</span></span><br><span class="line"><span class="meta"># exec /bin/sh #root</span></span><br></pre></td></tr></table></figure>
+<p>几个常见指令</p>
+<ul>
+<li>insmod: 指定模块加载到内核中</li>
+<li>rmmod: 从内核中卸载指定模块</li>
+<li>lsmod: 列出已经加载的模块</li>
+</ul>
+<p>在packet 中写入，用于将FileSystem 打包成映像</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Generate rootfs.img"</span></span><br><span class="line">find . | cpio -o --format=newc &gt; ./rootfs.img</span><br></pre></td></tr></table></figure>
+<p>运行 packet 将得到 rootfs.img文件</p>
+<h3 id="运行内核"><a href="#运行内核" class="headerlink" title="运行内核"></a>运行内核</h3><p>这里使用qemu进行运行，qemu 有多种运行模式，常见的有<code>User-mode emulation</code>和<code>System emulation</code>两种</p>
+<h4 id="安装-qemu"><a href="#安装-qemu" class="headerlink" title="安装 qemu"></a>安装 qemu</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">安装QEMU的依赖库</span><br><span class="line">sudo apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev</span><br><span class="line">sudo apt-get install qemu</span><br><span class="line">测试输入qemu + tab 如果有很多实例回显，就说明安装成功</span><br></pre></td></tr></table></figure>
+<p><img src="\images\内核环境搭建\4.jpg" alt></p>
+<p>接着写一个shell脚本boot.sh用来启动qemu，运行内核 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">qemu-system-x86_64 \</span><br><span class="line">-m 64M \</span><br><span class="line">-kernel ./bzImage \</span><br><span class="line">-initrd  ./rootfs.img \</span><br><span class="line">-append <span class="string">"root=/dev/ram rw oops=panic panic=1 kalsr"</span> \</span><br><span class="line">-netdev user,id=t0, -device e1000,netdev=t0,id=nic0 \</span><br><span class="line">-monitor /dev/null \</span><br><span class="line">-smp cores=2,threads=1 \</span><br><span class="line">-cpu kvm64,+smep \</span><br><span class="line"><span class="comment">#-S 启动gdb调试</span></span><br><span class="line"><span class="comment">#-gdb tcp:1234 等待gdb调试</span></span><br></pre></td></tr></table></figure>
+<p>将前面生成的bzImage，rootfs.img一起放到<code>_install</code>文件夹下，运行boot.sh</p>
+<p><img src="\images\内核环境搭建\5.jpg" alt></p>
+<p>这里解释一下shell命令中参数的意义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-m 是指定RMA大小(默认384)</span><br><span class="line">-kernel 是指定的内核镜像，这里是我们编译的镜像路径，也可以是我们下载好的镜像，如./vmlinuz-4.10.0-1004-gcp</span><br><span class="line">-initrd 设置刚刚利用 busybox 创建的 rootfs.img,作为内核启动的文件系统 </span><br><span class="line">-append 附加选项，指定no kaslr 可以关闭随机偏移</span><br><span class="line">--nographic和console=ttyS0一起使用，启动的界面就变成了当前终端</span><br><span class="line">-s 相当于-gdb tcp::1234的简写，可以直接通过主机的gdb远程连接</span><br><span class="line">-monitor 配置用户械的网络 // 将监视器重定向主机设备 /dev/null</span><br><span class="line">-smp 用于生明所以可能用的cps,ie,socket cores threads = maxcputs.</span><br><span class="line">-cpu 设置cpu的安全选项</span><br></pre></td></tr></table></figure>
+<p>到这里也说明了为什么kernel pwn 题目一般都会给出这3个文件<code>.sh ,bzImage,rootfs.cpio</code>，分别是启动脚本，kernel镜像以及文件系统映像</p>
+<p>一般来说kernel pwn 里面，漏洞通常是出现在ko文件，也就是模块文件，驱动 文件中，而kernel pwn 的最终目标一般是提权，拿到root才能读取flag</p>
+<h3 id="添加syscall"><a href="#添加syscall" class="headerlink" title="添加syscall"></a>添加syscall</h3><p>在内核源码下添加一个目录：mysyscall，在mysyscall文件夹下添加一个mysyscall.c 一个Makefile</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir mysyscall</span><br><span class="line">cd mysyscall</span><br><span class="line">touch mysyscall.c</span><br><span class="line">touch Makefile</span><br></pre></td></tr></table></figure>
+<p>编辑Makefile：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj-y=mysyscall.o</span><br></pre></td></tr></table></figure>
+<p>编辑mysyscall.c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line"><span class="function">asmlinkage <span class="keyword">long</span> <span class="title">sys_mysyscall</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    printk(<span class="string">"&#123;==== kernel ====&#125;this is my syscall!\n"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接着编辑源码根目录下的Makefile，添加mysyscall/</p>
+<p><img src="\images\内核环境搭建\6.jpg" alt></p>
+<p>然后编辑<code>include/linux/syscall.h</code>，在末尾添加函数原型</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">asmlinkage <span class="keyword">long</span> <span class="title">sys_mysyscall</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p><img src="\images\内核环境搭建\7.jpg" alt></p>
+<p>最后编辑<code>arch/x86/entry/syscalls/syscall_32.tbl</code>和<code>arch/x86/entry/syscalls/syscall_64.tbl</code>,添加系统 调用号</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//syscall_32.tbl</span></span><br><span class="line"><span class="number">2333</span> i386    mysyscall            sys_mysyscall</span><br><span class="line"><span class="comment">//syscall_64.tbl</span></span><br><span class="line"><span class="number">2333</span> common    mysyscall            sys_mysyscall</span><br></pre></td></tr></table></figure>
+<p>到这里，syscall就添加完了，如果调用了2333号就会输出 一句<code>{==== kernel ====}this is my syscall!</code>，不过要重新编译一次内核才能生效，make bzImage重新得到bzImage文件</p>
+<h3 id="编译ko"><a href="#编译ko" class="headerlink" title="编译ko"></a>编译ko</h3><p>在kernel 源码目录下创建一个新的文件夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir test_ko</span><br><span class="line">cd test_ko</span><br><span class="line">touch hello.c</span><br><span class="line">touch Makefile</span><br></pre></td></tr></table></figure>
+<p>编辑hello.c</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//hello.c</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/init.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/module.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/kernel.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;linux/cred.h&gt;</span></span></span><br><span class="line">MODULE_LICENSE(<span class="string">"Dual BSD/GPL"</span>);</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">cred</span> <span class="title">c1</span>;</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">hello_init</span><span class="params">(<span class="keyword">void</span>)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	printk(<span class="string">"================"</span>);</span><br><span class="line">    printk(<span class="string">"&lt;1&gt; Hello world!\n"</span>);</span><br><span class="line">    printk(<span class="string">"size of cred : %d \n"</span>,<span class="keyword">sizeof</span>(c1));</span><br><span class="line">    printk(<span class="string">"================"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">hello_exit</span><span class="params">(<span class="keyword">void</span>)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    printk(<span class="string">"&lt;1&gt; Bye, cruel world\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">module_init(hello_init);</span><br><span class="line">module_exit(hello_exit);</span><br></pre></td></tr></table></figure>
+<p>编辑Makefile，（写Makefile的时候注意要使用Tab而不是空格）</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">obj-m := hello.o</span><br><span class="line"></span><br><span class="line">KERNELDR := ~/linux-4.9</span><br><span class="line"></span><br><span class="line">PWD := <span class="variable">$(<span class="built_in">shell</span> pwd)</span>  </span><br><span class="line"></span><br><span class="line"><span class="section">modules:  </span></span><br><span class="line">	<span class="variable">$(MAKE)</span> -C <span class="variable">$(KERNELDR)</span> M=<span class="variable">$(PWD)</span> modules  </span><br><span class="line"></span><br><span class="line"><span class="section">moduels_install:  </span></span><br><span class="line">	<span class="variable">$(MAKE)</span> -C <span class="variable">$(KERNELDR)</span> M=<span class="variable">$(PWD)</span> modules_install  </span><br><span class="line"></span><br><span class="line"><span class="section">clean:  </span></span><br><span class="line">	rm -rf *.o *~ core .depend .*.cmd *.ko *.mod.c .tmp_versions</span><br></pre></td></tr></table></figure>
+<p>然后make 命令编译出一个hello.ko文件</p>
+<p>将编译好的hello.ko放到busybox的<code>_install</code>目录下，再写一个demo来调用前面添加的syscall，将demo也放到<code>_install</code>目录下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//demo  </span></span><br><span class="line"><span class="comment">//gcc demo.c -static -o demo</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    syscall(<span class="number">2333</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意这里我们需要加载自己编译的驱动 hello.ko，所以需要在init 文件中加入一句<code>insmod /hello.ko</code>然后再打包<code>./packet</code></p>
+<p>接着<code>./boot.sh</code>启动可以看到我们的ko模块和syscall都生效了</p>
+<p><img src="\images\内核环境搭建\8.jpg" alt></p>
 
       
     </div>
@@ -429,7 +479,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/reverse/" rel="tag"># reverse</a>
+            <a href="/tags/pwn/" rel="tag"># pwn</a>
           
         </div>
       
@@ -442,8 +492,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/04/pwn入门之ROP/" rel="next" title="pwn入门之ROP">
-                <i class="fa fa-chevron-left"></i> pwn入门之ROP
+              <a href="/2020/03/05/printf玩出了新花样/" rel="next" title="printf玩出了新花样">
+                <i class="fa fa-chevron-left"></i> printf玩出了新花样
               </a>
             
           </div>
@@ -451,10 +501,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/18/DDCTF之re/" rel="prev" title="DDCTF的两道简单逆向">
-                DDCTF的两道简单逆向 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -595,7 +641,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#python-crackme"><span class="nav-number">1.</span> <span class="nav-text">python_crackme</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#old-diver"><span class="nav-number">2.</span> <span class="nav-text">old-diver</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译生成内核镜像"><span class="nav-number">1.</span> <span class="nav-text">编译生成内核镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载内核镜像"><span class="nav-number">2.</span> <span class="nav-text">下载内核镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装busybox"><span class="nav-number">3.</span> <span class="nav-text">安装busybox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行内核"><span class="nav-number">4.</span> <span class="nav-text">运行内核</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-qemu"><span class="nav-number">4.1.</span> <span class="nav-text">安装 qemu</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加syscall"><span class="nav-number">5.</span> <span class="nav-text">添加syscall</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译ko"><span class="nav-number">6.</span> <span class="nav-text">编译ko</span></a></li></ol></div>
             
 
           </div>

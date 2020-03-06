@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-05T04:20:28.954Z</updated>
+  <updated>2020-03-06T03:39:16.518Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>kernel pwn 环境搭建</title>
+    <link href="http://yoursite.com/2020/03/06/kernel%20pwn%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    <id>http://yoursite.com/2020/03/06/kernel pwn 环境搭建/</id>
+    <published>2020-03-06T02:34:17.221Z</published>
+    <updated>2020-03-06T03:39:16.518Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;编译生成内核镜像&quot;&gt;&lt;a href=&quot;#编译生成内核镜像&quot; class=&quot;headerlink&quot; title=&quot;编译生成内核镜像&quot;&gt;&lt;/a&gt;编译生成内核镜像&lt;/h3&gt;&lt;p&gt;先下载一个内核源码 ：&lt;a href=&quot;https://mirrors.edge.kernel.org/pub/linux/kernel/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://mirrors.edge.kernel.org/pub/linux/kernel/&lt;/a&gt;&lt;br&gt;我下载的是linux-4.9.tar.gz&lt;br&gt;然后安装一些依赖&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;sudo apt-get update&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sudo apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>printf玩出了新花样</title>
@@ -409,29 +429,6 @@
     
       <category term="堆" scheme="http://yoursite.com/categories/%E5%A0%86/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>hctf2016-fheap</title>
-    <link href="http://yoursite.com/2019/05/08/how2heap%E7%B3%BB%E5%88%97/"/>
-    <id>http://yoursite.com/2019/05/08/how2heap系列/</id>
-    <published>2019-05-08T14:46:14.182Z</published>
-    <updated>2019-05-09T12:17:56.215Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;题目介绍&quot;&gt;&lt;a href=&quot;#题目介绍&quot; class=&quot;headerlink&quot; title=&quot;题目介绍&quot;&gt;&lt;/a&gt;题目介绍&lt;/h2&gt;&lt;p&gt;程序只有两个功能：&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;1.&lt;/span&gt;create &lt;span class=&quot;built_in&quot;&gt;string&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2.&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;string&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h3 id=&quot;1、create-功能&quot;&gt;&lt;a href=&quot;#1、create-功能&quot; class=&quot;headerlink&quot; title=&quot;1、create 功能&quot;&gt;&lt;/a&gt;1、create 功能&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;\images\堆\4.jpg&quot; alt&gt;&lt;/p&gt;
-&lt;p&gt;先申请一个0x20大小的
-    
-    </summary>
-    
-      <category term="堆" scheme="http://yoursite.com/categories/%E5%A0%86/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
     
   </entry>
   
