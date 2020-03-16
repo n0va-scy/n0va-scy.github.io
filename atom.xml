@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-06T03:39:16.518Z</updated>
+  <updated>2019-10-30T12:18:14.291Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,15 +17,78 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>kernel pwn 环境搭建</title>
-    <link href="http://yoursite.com/2020/03/06/kernel%20pwn%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
-    <id>http://yoursite.com/2020/03/06/kernel pwn 环境搭建/</id>
-    <published>2020-03-06T02:34:17.221Z</published>
-    <updated>2020-03-06T03:39:16.518Z</updated>
+    <title>10.26星盟awd之magic_heap</title>
+    <link href="http://yoursite.com/2020/03/15/10.26%E6%98%9F%E7%9B%9Fawd/"/>
+    <id>http://yoursite.com/2020/03/15/10.26星盟awd/</id>
+    <published>2020-03-15T03:59:40.550Z</published>
+    <updated>2019-10-30T12:18:14.291Z</updated>
     
     <summary type="html">
     
-      &lt;h3 id=&quot;编译生成内核镜像&quot;&gt;&lt;a href=&quot;#编译生成内核镜像&quot; class=&quot;headerlink&quot; title=&quot;编译生成内核镜像&quot;&gt;&lt;/a&gt;编译生成内核镜像&lt;/h3&gt;&lt;p&gt;先下载一个内核源码 ：&lt;a href=&quot;https://mirrors.edge.kernel.org/pub/linux/kernel/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://mirrors.edge.kernel.org/pub/linux/kernel/&lt;/a&gt;&lt;br&gt;我下载的是linux-4.9.tar.gz&lt;br&gt;然后安装一些依赖&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;sudo apt-get update&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sudo apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+      &lt;p&gt;程序保护全开，程序功能：&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;1.&lt;/span&gt;add&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2.&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;3.&lt;/span&gt;edit&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;4.&lt;/span&gt;&lt;span class=&quot;built_in&quot;&gt;exit&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="pwn" scheme="http://yoursite.com/categories/pwn/"/>
+    
+    
+      <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>第五**空间pwn部分wp</title>
+    <link href="http://yoursite.com/2020/03/14/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4/"/>
+    <id>http://yoursite.com/2020/03/14/第五空间/</id>
+    <published>2020-03-14T11:41:50.052Z</published>
+    <updated>2019-08-30T01:21:17.383Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;发现太久没有写博客了，就放一下刚打完的被喷得怪可怜的第5**空间的一点wp吧。&lt;/p&gt;
+&lt;h2 id=&quot;立雪&quot;&gt;&lt;a href=&quot;#立雪&quot; class=&quot;headerlink&quot; title=&quot;立雪&quot;&gt;&lt;/a&gt;立雪&lt;/h2&gt;&lt;p&gt;edit 函数没有对size进行检测，所以可以任意长度的堆溢出&lt;/p&gt;
+&lt;p&gt;​         &lt;img src=&quot;\images\第五空间\1.png&quot; alt&gt;       &lt;/p&gt;
+&lt;p&gt;而且程序存在后门函数，unlink到0x602088修改为0xffff即可(其实最快速的做法是unsortedbin attack到&lt;code&gt;0x602088&lt;/code&gt;)&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>桂电2019 re write up</title>
+    <link href="http://yoursite.com/2020/03/14/%E6%A1%82%E7%94%B52019re/"/>
+    <id>http://yoursite.com/2020/03/14/桂电2019re/</id>
+    <published>2020-03-14T11:41:50.019Z</published>
+    <updated>2019-05-24T15:08:56.251Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;re&quot;&gt;&lt;a href=&quot;#re&quot; class=&quot;headerlink&quot; title=&quot;re&quot;&gt;&lt;/a&gt;re&lt;/h2&gt;&lt;p&gt;checksec 一下发现加了upx壳，upx -d 脱壳&lt;/p&gt;
+&lt;p&gt;IDA f5发现&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;57&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;58&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;59&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;61&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;62&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;63&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;64&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;_BOOL8 __&lt;span class=&quot;function&quot;&gt;fastcall &lt;span class=&quot;title&quot;&gt;sub_4009AE&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; *a1)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;1629056&lt;/span&gt; * *a1 != &lt;span class=&quot;number&quot;&gt;166163712&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;6771600&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;731332800&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;3682944&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;357245568&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;10431000&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;1074393000&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;3977328&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;489211344&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;5138336&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;518971936&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;7532250&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;406741500&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;5551632&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;294236496&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;3409728&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;9&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;177305856&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;13013670&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;650683500&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;6088797&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;298351053&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;7884663&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;12&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;386348487&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;8944053&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;13&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;438258597&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;5198490&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;14&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;249527520&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;4544518&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;445362764&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;3645600&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;17&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;174988800&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;10115280&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;16&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;981182160&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;9667504&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;18&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;493042704&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;5364450&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;19&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;257493600&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;13464540&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;767478780&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;5488432&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;21&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;312840624&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;14479500&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;22&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;1404511500&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;6451830&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;23&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;316139670&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;6252576&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;24&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;619005024&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;7763364&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;25&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;372641472&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;7327320&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;26&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;373693320&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;8741520&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;27&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;498266640&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;8871876&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;28&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;452465676&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;4086720&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;29&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;208422720&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;9374400&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;] == &lt;span class=&quot;number&quot;&gt;515592000&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5759124&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;31&lt;/span&gt;] == &lt;span class=&quot;number&quot;&gt;719890500&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="re" scheme="http://yoursite.com/categories/re/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>巅峰极客 pwn 题解</title>
+    <link href="http://yoursite.com/2020/03/14/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2/"/>
+    <id>http://yoursite.com/2020/03/14/巅峰极客/</id>
+    <published>2020-03-14T11:41:50.012Z</published>
+    <updated>2019-11-07T08:50:02.859Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;pwn&quot;&gt;&lt;a href=&quot;#pwn&quot; class=&quot;headerlink&quot; title=&quot;pwn&quot;&gt;&lt;/a&gt;pwn&lt;/h2&gt;&lt;p&gt;很骚的一题，又是将system禁用的堆类型题目&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ seccomp-tools dump ./pwn2 &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; line  CODE  JT   JF      K&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;=================================&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0000: 0x20 0x00 0x00 0x00000004  A = arch&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0001: 0x15 0x00 0x06 0xc000003e  if (A != ARCH_X86_64) goto 0008&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0002: 0x20 0x00 0x00 0x00000000  A = sys_number&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0003: 0x35 0x04 0x00 0x40000000  if (A &amp;gt;= 0x40000000) goto 0008&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0004: 0x15 0x04 0x00 0x00000001  if (A == write) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0005: 0x15 0x03 0x00 0x00000000  if (A == read) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0006: 0x15 0x02 0x00 0x00000002  if (A == open) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0007: 0x15 0x01 0x00 0x0000003c  if (A == exit) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0008: 0x06 0x00 0x00 0x00000000  return KILL&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0009: 0x06 0x00 0x00 0x7fff0000  return ALLOW&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
@@ -37,10 +100,153 @@
   </entry>
   
   <entry>
+    <title>UNCTF-orwheap</title>
+    <link href="http://yoursite.com/2020/03/14/UNCTF-orwheap/"/>
+    <id>http://yoursite.com/2020/03/14/UNCTF-orwheap/</id>
+    <published>2020-03-14T11:41:50.005Z</published>
+    <updated>2019-10-31T11:39:52.424Z</updated>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ seccomp-tools dump ./pwn &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; line  CODE  JT   JF      K&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;=================================&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0000: 0x20 0x00 0x00 0x00000004  A = arch&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0001: 0x15 0x00 0x09 0xc000003e  if (A != ARCH_X86_64) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0002: 0x20 0x00 0x00 0x00000000  A = sys_number&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0003: 0x35 0x07 0x00 0x40000000  if (A &amp;gt;= 0x40000000) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0004: 0x15 0x06 0x00 0x0000003b  if (A == execve) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0005: 0x15 0x00 0x04 0x00000001  if (A != write) goto 0010&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0006: 0x20 0x00 0x00 0x00000024  A = count &amp;gt;&amp;gt; 32 # write(fd, buf, count)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0007: 0x15 0x00 0x02 0x00000000  if (A != 0x0) goto 0010&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0008: 0x20 0x00 0x00 0x00000020  A = count # write(fd, buf, count)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0009: 0x15 0x01 0x00 0x00000010  if (A == 0x10) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0010: 0x06 0x00 0x00 0x7fff0000  return ALLOW&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0011: 0x06 0x00 0x00 0x00000000  return KILL&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>TokyoWesterns -- Asterisk_Alloc</title>
+    <link href="http://yoursite.com/2020/03/14/TokyoWesterns-Asterisk-Alloc/"/>
+    <id>http://yoursite.com/2020/03/14/TokyoWesterns-Asterisk-Alloc/</id>
+    <published>2020-03-14T11:41:49.997Z</published>
+    <updated>2019-11-08T14:19:02.694Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;很有意思的一题，主要考察realloc函数&lt;br&gt;checksec:保护全开，libc2.27，引入了tcache 机制&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Arch:     amd64-64-little&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   RELRO:    Full RELRO&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   Stack:    Canary found&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   NX:       NX enabled&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   PIE:      PIE enabled&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>国密加密算法sm4</title>
+    <link href="http://yoursite.com/2020/03/14/sm4%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/"/>
+    <id>http://yoursite.com/2020/03/14/sm4加密算法/</id>
+    <published>2020-03-14T11:41:49.982Z</published>
+    <updated>2019-05-09T12:19:27.512Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;p&gt;SM4加密算法属于对称加密算法，2012年3月，国家密码管理局正式公布了包含SM4分组密码算法在内的《祖冲之序列密码算法》等6项密码行业标准。与DES和AES算法类似，SM4算法是一种分组密码算法。其分组长度为128bit，密钥长度也为128bit。加密算法与密钥扩展算法均采用32轮非线性迭代结构，以字（32位）为单位进行加密运算，每一次迭代运算均为一轮变换函数F。SM4算法加/解密算法的结构相同，只是使用轮密钥相反，其中解密轮密钥是加密轮密钥的逆序。&lt;/p&gt;
+&lt;p&gt;SM4算法结构图：(图片来源网上)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;\images\SM4\1.png&quot; alt&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="crypto" scheme="http://yoursite.com/categories/crypto/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>shellcode 的艺术</title>
+    <link href="http://yoursite.com/2020/03/14/shellcode%E7%9A%84%E8%89%BA%E6%9C%AF/"/>
+    <id>http://yoursite.com/2020/03/14/shellcode的艺术/</id>
+    <published>2020-03-14T11:41:49.975Z</published>
+    <updated>2019-10-30T12:18:31.711Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这里总结一下shellcode的各种类型&lt;/p&gt;
+&lt;h2 id=&quot;一、直接调用&quot;&gt;&lt;a href=&quot;#一、直接调用&quot; class=&quot;headerlink&quot; title=&quot;一、直接调用&quot;&gt;&lt;/a&gt;一、直接调用&lt;/h2&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; argc, &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; *argv[])&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; s[&lt;span class=&quot;number&quot;&gt;0x500&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	gets(s);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	((&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt;(*)(&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt;))s)();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="pwn" scheme="http://yoursite.com/categories/pwn/"/>
+    
+    
+      <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>setcontext 函数</title>
+    <link href="http://yoursite.com/2020/03/14/setcontext/"/>
+    <id>http://yoursite.com/2020/03/14/setcontext/</id>
+    <published>2020-03-14T11:41:49.968Z</published>
+    <updated>2019-10-31T11:35:28.128Z</updated>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;ucontext.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setcontext&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;ucontext_t&lt;/span&gt; *ucp)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RoarCtf - pwn</title>
+    <link href="http://yoursite.com/2020/03/14/RoarCTF/"/>
+    <id>http://yoursite.com/2020/03/14/RoarCTF/</id>
+    <published>2020-03-14T11:41:49.961Z</published>
+    <updated>2019-10-18T12:47:29.397Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;easy-pwn&quot;&gt;&lt;a href=&quot;#easy-pwn&quot; class=&quot;headerlink&quot; title=&quot;easy_pwn&quot;&gt;&lt;/a&gt;easy_pwn&lt;/h2&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// off-by-one&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;__int64 __&lt;span class=&quot;function&quot;&gt;fastcall &lt;span class=&quot;title&quot;&gt;sub_E26&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;signed&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; a1, &lt;span class=&quot;keyword&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; a2)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  __int64 result; &lt;span class=&quot;comment&quot;&gt;// rax&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( a1 &amp;gt; a2 )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; a2;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( a2 - a1 == &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    LODWORD(result) = a1 + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;   &lt;span class=&quot;comment&quot;&gt;//off-by-one&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    LODWORD(result) = a1;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; result;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pwn入门之ROP</title>
+    <link href="http://yoursite.com/2020/03/14/pwn%E5%85%A5%E9%97%A8%E4%B9%8BROP/"/>
+    <id>http://yoursite.com/2020/03/14/pwn入门之ROP/</id>
+    <published>2020-03-14T11:41:49.952Z</published>
+    <updated>2019-05-09T12:18:35.706Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;ret2win&quot;&gt;&lt;a href=&quot;#ret2win&quot; class=&quot;headerlink&quot; title=&quot;ret2win&quot;&gt;&lt;/a&gt;ret2win&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://ropemporium.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ROP Emporium&lt;/a&gt;&lt;br&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-e5fa6242a5dc0077.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;放到IDA很容易就找到溢出点&lt;br&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; s; &lt;span class=&quot;comment&quot;&gt;// [esp+0h] [ebp-28h] &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;可以看出s距ebp的偏移量为&lt;span class=&quot;number&quot;&gt;0x28&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;所以我们写入&lt;span class=&quot;number&quot;&gt;0x28&lt;/span&gt;正好可以写到ebp之前，要覆盖ebp还需要再写入&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;个字节（&lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;位）&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;有一点值得引起注意，我们回车换行符同样会输入进去，明确溢出点以及可溢出的字节后接下来我们就开始构造rop，但在之前我们还应该检查一下程序开户了哪些保护，这决定了我们该采取何种rop攻击方式&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-87d74ee929c3cf04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;exp 如下 ：&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; pwn &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; *&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh = process(&lt;span class=&quot;string&quot;&gt;&#39;./ret2win32&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ret2win32 = &lt;span class=&quot;number&quot;&gt;0x08048659&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;payload = &lt;span class=&quot;string&quot;&gt;&#39;A&#39;&lt;/span&gt; * &lt;span class=&quot;number&quot;&gt;0x28&lt;/span&gt; + p32(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) + p32(ret2win32)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh.sendline(payload)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh.interactive()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;64位的溢出点也一样&lt;br&gt;exp:&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; pwn &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; *&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh = process(&lt;span class=&quot;string&quot;&gt;&#39;./ret2win&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ret2win = &lt;span class=&quot;number&quot;&gt;0x400811&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;payload = &lt;span class=&quot;string&quot;&gt;&quot;A&quot;&lt;/span&gt; * &lt;span class=&quot;number&quot;&gt;0x20&lt;/span&gt; + p64(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) + p64(ret2win)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh.sendline(payload)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh.interactive()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>printf玩出了新花样</title>
-    <link href="http://yoursite.com/2020/03/05/printf%E7%8E%A9%E5%87%BA%E4%BA%86%E6%96%B0%E8%8A%B1%E6%A0%B7/"/>
-    <id>http://yoursite.com/2020/03/05/printf玩出了新花样/</id>
-    <published>2020-03-05T03:12:50.453Z</published>
+    <link href="http://yoursite.com/2020/03/14/printf%E7%8E%A9%E5%87%BA%E4%BA%86%E6%96%B0%E8%8A%B1%E6%A0%B7/"/>
+    <id>http://yoursite.com/2020/03/14/printf玩出了新花样/</id>
+    <published>2020-03-14T11:41:49.932Z</published>
     <updated>2020-03-05T04:20:28.954Z</updated>
     
     <summary type="html">
@@ -59,10 +265,49 @@
   </entry>
   
   <entry>
+    <title>Off-By-One之Asis CTF 2016 b00s</title>
+    <link href="http://yoursite.com/2020/03/14/Off-By-One%E4%B9%8BAsis%20CTF%202016%20b00s/"/>
+    <id>http://yoursite.com/2020/03/14/Off-By-One之Asis CTF 2016 b00s/</id>
+    <published>2020-03-14T11:41:49.922Z</published>
+    <updated>2019-05-09T12:17:53.182Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;题目介绍&quot;&gt;&lt;a href=&quot;#题目介绍&quot; class=&quot;headerlink&quot; title=&quot;题目介绍&quot;&gt;&lt;/a&gt;题目介绍&lt;/h2&gt;&lt;p&gt;题目是一个表单程序，功能是一个图书管理系统。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1. Create a book&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2. Delete a book&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3. Edit a book&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4. Print book detail&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5. Change current author name&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6. Exit&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="堆" scheme="http://yoursite.com/categories/%E5%A0%86/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>kernel pwn 环境搭建</title>
+    <link href="http://yoursite.com/2020/03/14/kernel%20pwn%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    <id>http://yoursite.com/2020/03/14/kernel pwn 环境搭建/</id>
+    <published>2020-03-14T11:41:49.914Z</published>
+    <updated>2020-03-06T03:39:16.518Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;编译生成内核镜像&quot;&gt;&lt;a href=&quot;#编译生成内核镜像&quot; class=&quot;headerlink&quot; title=&quot;编译生成内核镜像&quot;&gt;&lt;/a&gt;编译生成内核镜像&lt;/h3&gt;&lt;p&gt;先下载一个内核源码 ：&lt;a href=&quot;https://mirrors.edge.kernel.org/pub/linux/kernel/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://mirrors.edge.kernel.org/pub/linux/kernel/&lt;/a&gt;&lt;br&gt;我下载的是linux-4.9.tar.gz&lt;br&gt;然后安装一些依赖&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;sudo apt-get update&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sudo apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
     <title>2020年i春秋新春战役之 pwn 题解</title>
-    <link href="http://yoursite.com/2020/02/27/i%E6%98%A5%E7%A7%8B%E6%96%B0%E6%98%A5%E6%88%98%E5%BD%B9/"/>
-    <id>http://yoursite.com/2020/02/27/i春秋新春战役/</id>
-    <published>2020-02-27T07:02:14.624Z</published>
+    <link href="http://yoursite.com/2020/03/14/i%E6%98%A5%E7%A7%8B%E6%96%B0%E6%98%A5%E6%88%98%E5%BD%B9/"/>
+    <id>http://yoursite.com/2020/03/14/i春秋新春战役/</id>
+    <published>2020-03-14T11:41:49.907Z</published>
     <updated>2020-02-28T08:06:15.548Z</updated>
     
     <summary type="html">
@@ -81,10 +326,53 @@
   </entry>
   
   <entry>
+    <title>ISCC的pwn02</title>
+    <link href="http://yoursite.com/2020/03/14/ISCC%E7%9A%84pwn02/"/>
+    <id>http://yoursite.com/2020/03/14/ISCC的pwn02/</id>
+    <published>2020-03-14T11:41:49.899Z</published>
+    <updated>2019-07-03T14:15:41.439Z</updated>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Arch:     amd64-64-little&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   RELRO:    No RELRO&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   Stack:    No canary found&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   NX:       NX enabled&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   PIE:      No PIE (0x400000)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;保护只开启了NX，程序有3个功能：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1、malloc + get&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2、free&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3、puts&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="堆" scheme="http://yoursite.com/categories/%E5%A0%86/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>hctf2016-fheap</title>
+    <link href="http://yoursite.com/2020/03/14/how2heap%E7%B3%BB%E5%88%97/"/>
+    <id>http://yoursite.com/2020/03/14/how2heap系列/</id>
+    <published>2020-03-14T11:41:49.874Z</published>
+    <updated>2019-05-09T12:17:56.215Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;题目介绍&quot;&gt;&lt;a href=&quot;#题目介绍&quot; class=&quot;headerlink&quot; title=&quot;题目介绍&quot;&gt;&lt;/a&gt;题目介绍&lt;/h2&gt;&lt;p&gt;程序只有两个功能：&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;1.&lt;/span&gt;create &lt;span class=&quot;built_in&quot;&gt;string&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2.&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;string&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&quot;1、create-功能&quot;&gt;&lt;a href=&quot;#1、create-功能&quot; class=&quot;headerlink&quot; title=&quot;1、create 功能&quot;&gt;&lt;/a&gt;1、create 功能&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;\images\堆\4.jpg&quot; alt&gt;&lt;/p&gt;
+&lt;p&gt;先申请一个0x20大小的
+    
+    </summary>
+    
+      <category term="堆" scheme="http://yoursite.com/categories/%E5%A0%86/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
     <title>house of orange 学习</title>
-    <link href="http://yoursite.com/2019/11/20/house%20of%20orange/"/>
-    <id>http://yoursite.com/2019/11/20/house of orange/</id>
-    <published>2019-11-20T10:54:56.066Z</published>
+    <link href="http://yoursite.com/2020/03/14/house%20of%20orange/"/>
+    <id>http://yoursite.com/2020/03/14/house of orange/</id>
+    <published>2020-03-14T11:41:49.867Z</published>
     <updated>2019-11-20T14:48:29.653Z</updated>
     
     <summary type="html">
@@ -102,298 +390,10 @@
   </entry>
   
   <entry>
-    <title>2019红帽杯wp</title>
-    <link href="http://yoursite.com/2019/11/12/2019-%E7%BA%A2%E5%B8%BD%E6%9D%AF/"/>
-    <id>http://yoursite.com/2019/11/12/2019-红帽杯/</id>
-    <published>2019-11-12T02:08:53.607Z</published>
-    <updated>2019-11-14T13:54:25.208Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;pwn&quot;&gt;&lt;a href=&quot;#pwn&quot; class=&quot;headerlink&quot; title=&quot;pwn&quot;&gt;&lt;/a&gt;pwn&lt;/h1&gt;&lt;h2 id=&quot;three&quot;&gt;&lt;a href=&quot;#three&quot; class=&quot;headerlink&quot; title=&quot;three&quot;&gt;&lt;/a&gt;three&lt;/h2&gt;&lt;p&gt;静态编译文件，开了NX，&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;\images\2019redhat\1.jpg&quot; alt=&quot;图片&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-      <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>TokyoWesterns -- Asterisk_Alloc</title>
-    <link href="http://yoursite.com/2019/11/08/TokyoWesterns-Asterisk-Alloc/"/>
-    <id>http://yoursite.com/2019/11/08/TokyoWesterns-Asterisk-Alloc/</id>
-    <published>2019-11-08T13:43:17.655Z</published>
-    <updated>2019-11-08T14:19:02.694Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;很有意思的一题，主要考察realloc函数&lt;br&gt;checksec:保护全开，libc2.27，引入了tcache 机制&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Arch:     amd64-64-little&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   RELRO:    Full RELRO&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   Stack:    Canary found&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   NX:       NX enabled&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   PIE:      PIE enabled&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>巅峰极客 pwn 题解</title>
-    <link href="http://yoursite.com/2019/11/07/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2/"/>
-    <id>http://yoursite.com/2019/11/07/巅峰极客/</id>
-    <published>2019-11-07T08:32:42.172Z</published>
-    <updated>2019-11-07T08:50:02.859Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;pwn&quot;&gt;&lt;a href=&quot;#pwn&quot; class=&quot;headerlink&quot; title=&quot;pwn&quot;&gt;&lt;/a&gt;pwn&lt;/h2&gt;&lt;p&gt;很骚的一题，又是将system禁用的堆类型题目&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ seccomp-tools dump ./pwn2 &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; line  CODE  JT   JF      K&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;=================================&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0000: 0x20 0x00 0x00 0x00000004  A = arch&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0001: 0x15 0x00 0x06 0xc000003e  if (A != ARCH_X86_64) goto 0008&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0002: 0x20 0x00 0x00 0x00000000  A = sys_number&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0003: 0x35 0x04 0x00 0x40000000  if (A &amp;gt;= 0x40000000) goto 0008&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0004: 0x15 0x04 0x00 0x00000001  if (A == write) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0005: 0x15 0x03 0x00 0x00000000  if (A == read) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0006: 0x15 0x02 0x00 0x00000002  if (A == open) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0007: 0x15 0x01 0x00 0x0000003c  if (A == exit) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0008: 0x06 0x00 0x00 0x00000000  return KILL&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0009: 0x06 0x00 0x00 0x7fff0000  return ALLOW&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2019上海大学生信息安全竞赛pwn题解</title>
-    <link href="http://yoursite.com/2019/11/06/2019%E4%B8%8A%E6%B5%B7%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9Bpwn%E9%A2%98%E8%A7%A3/"/>
-    <id>http://yoursite.com/2019/11/06/2019上海大学生信息安全竞赛pwn题解/</id>
-    <published>2019-11-06T07:43:41.100Z</published>
-    <updated>2019-11-06T11:56:40.231Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;boring-heap&quot;&gt;&lt;a href=&quot;#boring-heap&quot; class=&quot;headerlink&quot; title=&quot;boring_heap&quot;&gt;&lt;/a&gt;boring_heap&lt;/h2&gt;&lt;p&gt;挺不错的一题&lt;/p&gt;
-&lt;p&gt;先看一眼保护–全开&lt;/p&gt;
-&lt;p&gt;程序功能：&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;1.&lt;/span&gt;Add&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2.&lt;/span&gt;Update&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;3.&lt;/span&gt;Delete&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;4.&lt;/span&gt;View&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;5.&lt;/span&gt;Exit&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>setcontext 函数</title>
-    <link href="http://yoursite.com/2019/10/31/setcontext/"/>
-    <id>http://yoursite.com/2019/10/31/setcontext/</id>
-    <published>2019-10-31T11:24:18.458Z</published>
-    <updated>2019-10-31T11:35:28.128Z</updated>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;ucontext.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setcontext&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;ucontext_t&lt;/span&gt; *ucp)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>UNCTF-orwheap</title>
-    <link href="http://yoursite.com/2019/10/31/UNCTF-orwheap/"/>
-    <id>http://yoursite.com/2019/10/31/UNCTF-orwheap/</id>
-    <published>2019-10-31T11:04:36.449Z</published>
-    <updated>2019-10-31T11:39:52.424Z</updated>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ seccomp-tools dump ./pwn &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; line  CODE  JT   JF      K&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;=================================&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0000: 0x20 0x00 0x00 0x00000004  A = arch&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0001: 0x15 0x00 0x09 0xc000003e  if (A != ARCH_X86_64) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0002: 0x20 0x00 0x00 0x00000000  A = sys_number&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0003: 0x35 0x07 0x00 0x40000000  if (A &amp;gt;= 0x40000000) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0004: 0x15 0x06 0x00 0x0000003b  if (A == execve) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0005: 0x15 0x00 0x04 0x00000001  if (A != write) goto 0010&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0006: 0x20 0x00 0x00 0x00000024  A = count &amp;gt;&amp;gt; 32 # write(fd, buf, count)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0007: 0x15 0x00 0x02 0x00000000  if (A != 0x0) goto 0010&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0008: 0x20 0x00 0x00 0x00000020  A = count # write(fd, buf, count)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0009: 0x15 0x01 0x00 0x00000010  if (A == 0x10) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0010: 0x06 0x00 0x00 0x7fff0000  return ALLOW&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0011: 0x06 0x00 0x00 0x00000000  return KILL&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>10.26星盟awd之magic_heap</title>
-    <link href="http://yoursite.com/2019/10/30/10.26%E6%98%9F%E7%9B%9Fawd/"/>
-    <id>http://yoursite.com/2019/10/30/10.26星盟awd/</id>
-    <published>2019-10-30T11:57:28.014Z</published>
-    <updated>2019-10-30T12:18:14.291Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;程序保护全开，程序功能：&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;1.&lt;/span&gt;add&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2.&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;delete&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;3.&lt;/span&gt;edit&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;4.&lt;/span&gt;&lt;span class=&quot;built_in&quot;&gt;exit&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="pwn" scheme="http://yoursite.com/categories/pwn/"/>
-    
-    
-      <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>shellcode 的艺术</title>
-    <link href="http://yoursite.com/2019/10/26/shellcode%E7%9A%84%E8%89%BA%E6%9C%AF/"/>
-    <id>http://yoursite.com/2019/10/26/shellcode的艺术/</id>
-    <published>2019-10-26T10:24:47.510Z</published>
-    <updated>2019-10-30T12:18:31.711Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这里总结一下shellcode的各种类型&lt;/p&gt;
-&lt;h2 id=&quot;一、直接调用&quot;&gt;&lt;a href=&quot;#一、直接调用&quot; class=&quot;headerlink&quot; title=&quot;一、直接调用&quot;&gt;&lt;/a&gt;一、直接调用&lt;/h2&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; argc, &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; *argv[])&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; s[&lt;span class=&quot;number&quot;&gt;0x500&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	gets(s);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	((&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt;(*)(&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt;))s)();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="pwn" scheme="http://yoursite.com/categories/pwn/"/>
-    
-    
-      <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>RoarCtf - pwn</title>
-    <link href="http://yoursite.com/2019/10/15/RoarCTF/"/>
-    <id>http://yoursite.com/2019/10/15/RoarCTF/</id>
-    <published>2019-10-15T08:57:25.590Z</published>
-    <updated>2019-10-18T12:47:29.397Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;easy-pwn&quot;&gt;&lt;a href=&quot;#easy-pwn&quot; class=&quot;headerlink&quot; title=&quot;easy_pwn&quot;&gt;&lt;/a&gt;easy_pwn&lt;/h2&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// off-by-one&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;__int64 __&lt;span class=&quot;function&quot;&gt;fastcall &lt;span class=&quot;title&quot;&gt;sub_E26&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;signed&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; a1, &lt;span class=&quot;keyword&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; a2)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  __int64 result; &lt;span class=&quot;comment&quot;&gt;// rax&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( a1 &amp;gt; a2 )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; a2;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( a2 - a1 == &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    LODWORD(result) = a1 + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;   &lt;span class=&quot;comment&quot;&gt;//off-by-one&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    LODWORD(result) = a1;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; result;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>IO_FILE泄露libc</title>
-    <link href="http://yoursite.com/2019/09/21/IO_FILE/"/>
-    <id>http://yoursite.com/2019/09/21/IO_FILE/</id>
-    <published>2019-09-20T16:00:00.000Z</published>
-    <updated>2019-09-25T05:10:07.680Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;最近经常遇到没有show函数的堆了，吃了不少没有地址的亏，在这里记录一下泄露的方法&lt;/p&gt;
-&lt;p&gt;其实主要思路就是修改stdout的flag位为&lt;code&gt;0xfbad1800&lt;/code&gt;,并且将&lt;code&gt;_IO_write_base&lt;/code&gt;的最后一个字节改小，从而实现多输出一些内容，这些内容里面就包含了libc地址。&lt;/p&gt;
-&lt;p&gt;为什么flag要改成&lt;code&gt;0xfbad1800&lt;/code&gt;，看源码：&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>bytectf部分wp</title>
-    <link href="http://yoursite.com/2019/09/12/bytectf/"/>
-    <id>http://yoursite.com/2019/09/12/bytectf/</id>
-    <published>2019-09-12T14:25:36.208Z</published>
-    <updated>2019-09-26T15:06:02.275Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;mheap&quot;&gt;&lt;a href=&quot;#mheap&quot; class=&quot;headerlink&quot; title=&quot;mheap&quot;&gt;&lt;/a&gt;mheap&lt;/h3&gt;&lt;p&gt;先贴上我觉得最可惜的一道题&lt;/p&gt;
-&lt;p&gt;程序自已定义了分配原则&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;chunk&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;size_t&lt;/span&gt; size;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt;* next; &lt;span class=&quot;comment&quot;&gt;//only use after free&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; buf[size];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;并且在程序一开始在0x23330000处申请了0x1000大小的空间当top chunk，以后的每次申请都从这个区域切割 &lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>第五**空间pwn部分wp</title>
-    <link href="http://yoursite.com/2019/08/29/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4/"/>
-    <id>http://yoursite.com/2019/08/29/第五空间/</id>
-    <published>2019-08-29T14:21:46.937Z</published>
-    <updated>2019-08-30T01:21:17.383Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;发现太久没有写博客了，就放一下刚打完的被喷得怪可怜的第5**空间的一点wp吧。&lt;/p&gt;
-&lt;h2 id=&quot;立雪&quot;&gt;&lt;a href=&quot;#立雪&quot; class=&quot;headerlink&quot; title=&quot;立雪&quot;&gt;&lt;/a&gt;立雪&lt;/h2&gt;&lt;p&gt;edit 函数没有对size进行检测，所以可以任意长度的堆溢出&lt;/p&gt;
-&lt;p&gt;​         &lt;img src=&quot;\images\第五空间\1.png&quot; alt&gt;       &lt;/p&gt;
-&lt;p&gt;而且程序存在后门函数，unlink到0x602088修改为0xffff即可(其实最快速的做法是unsortedbin attack到&lt;code&gt;0x602088&lt;/code&gt;)&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>pwnable.tw系列</title>
-    <link href="http://yoursite.com/2019/07/03/pwnable.tw/"/>
-    <id>http://yoursite.com/2019/07/03/pwnable.tw/</id>
-    <published>2019-07-02T16:00:00.000Z</published>
-    <updated>2019-11-18T14:16:49.097Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;calc&quot;&gt;&lt;a href=&quot;#calc&quot; class=&quot;headerlink&quot; title=&quot;calc&quot;&gt;&lt;/a&gt;calc&lt;/h2&gt;&lt;p&gt;不愧是pwnable，质量果然高，学到了不少姿势，看题目很明显程序是一个计算器，但漏洞点在哪，着实让我这个小菜鸡绞尽脑汁，起初试图独自解决，最后还是迫于现实膜一了波大佬的write up 。&lt;/p&gt;
-&lt;h3 id=&quot;程序分析&quot;&gt;&lt;a href=&quot;#程序分析&quot; class=&quot;headerlink&quot; title=&quot;程序分析&quot;&gt;&lt;/a&gt;程序分析&lt;/h3&gt;&lt;p&gt;保护&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;\images\pwnable.tw\2.jpg&quot; alt&gt;&lt;/p&gt;
-&lt;p&gt;开启了canary 跟NX&lt;/p&gt;
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>桂电2019 re write up</title>
-    <link href="http://yoursite.com/2019/05/24/%E6%A1%82%E7%94%B52019re/"/>
-    <id>http://yoursite.com/2019/05/24/桂电2019re/</id>
-    <published>2019-05-24T13:03:42.739Z</published>
-    <updated>2019-05-24T15:08:56.251Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;re&quot;&gt;&lt;a href=&quot;#re&quot; class=&quot;headerlink&quot; title=&quot;re&quot;&gt;&lt;/a&gt;re&lt;/h2&gt;&lt;p&gt;checksec 一下发现加了upx壳，upx -d 脱壳&lt;/p&gt;
-&lt;p&gt;IDA f5发现&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;44&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;45&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;46&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;47&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;48&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;49&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;50&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;51&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;52&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;53&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;54&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;55&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;56&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;57&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;58&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;59&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;60&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;61&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;62&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;63&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;64&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;_BOOL8 __&lt;span class=&quot;function&quot;&gt;fastcall &lt;span class=&quot;title&quot;&gt;sub_4009AE&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; *a1)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;1629056&lt;/span&gt; * *a1 != &lt;span class=&quot;number&quot;&gt;166163712&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;6771600&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;731332800&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;3682944&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;357245568&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;10431000&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;1074393000&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;3977328&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;489211344&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;5138336&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;518971936&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;7532250&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;406741500&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;5551632&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;294236496&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;3409728&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;9&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;177305856&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;13013670&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;650683500&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;6088797&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;298351053&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;7884663&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;12&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;386348487&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;8944053&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;13&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;438258597&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;5198490&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;14&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;249527520&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;4544518&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;445362764&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;3645600&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;17&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;174988800&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;10115280&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;16&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;981182160&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;9667504&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;18&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;493042704&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;5364450&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;19&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;257493600&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;13464540&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;767478780&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;5488432&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;21&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;312840624&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;14479500&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;22&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;1404511500&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;6451830&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;23&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;316139670&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;6252576&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;24&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;619005024&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;7763364&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;25&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;372641472&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;7327320&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;26&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;373693320&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;8741520&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;27&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;498266640&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;8871876&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;28&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;452465676&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;4086720&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;29&lt;/span&gt;] != &lt;span class=&quot;number&quot;&gt;208422720&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;number&quot;&gt;9374400&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;] == &lt;span class=&quot;number&quot;&gt;515592000&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5759124&lt;/span&gt; * a1[&lt;span class=&quot;number&quot;&gt;31&lt;/span&gt;] == &lt;span class=&quot;number&quot;&gt;719890500&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0L&lt;/span&gt;L;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="re" scheme="http://yoursite.com/categories/re/"/>
-    
-    
-  </entry>
-  
-  <entry>
     <title>Hitcon-Training lab10~lab15</title>
-    <link href="http://yoursite.com/2019/05/15/Hitcon-Training(%E4%B8%8B)/"/>
-    <id>http://yoursite.com/2019/05/15/Hitcon-Training(下)/</id>
-    <published>2019-05-15T13:39:03.001Z</published>
+    <link href="http://yoursite.com/2020/03/14/Hitcon-Training(%E4%B8%8B)/"/>
+    <id>http://yoursite.com/2020/03/14/Hitcon-Training(下)/</id>
+    <published>2020-03-14T11:41:49.860Z</published>
     <updated>2019-09-01T14:56:30.912Z</updated>
     
     <summary type="html">
@@ -413,21 +413,23 @@
   </entry>
   
   <entry>
-    <title>ISCC的pwn02</title>
-    <link href="http://yoursite.com/2019/05/13/ISCC%E7%9A%84pwn02/"/>
-    <id>http://yoursite.com/2019/05/13/ISCC的pwn02/</id>
-    <published>2019-05-13T08:25:45.284Z</published>
-    <updated>2019-07-03T14:15:41.439Z</updated>
+    <title>Hitcon-Training lab1~lab9</title>
+    <link href="http://yoursite.com/2020/03/14/Hitcon-Training(%E4%B8%8A)/"/>
+    <id>http://yoursite.com/2020/03/14/Hitcon-Training(上)/</id>
+    <published>2020-03-14T11:41:49.851Z</published>
+    <updated>2019-05-09T12:17:00.995Z</updated>
     
     <summary type="html">
     
-      &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Arch:     amd64-64-little&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   RELRO:    No RELRO&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   Stack:    No canary found&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   NX:       NX enabled&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   PIE:      No PIE (0x400000)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;保护只开启了NX，程序有3个功能：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1、malloc + get&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2、free&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3、puts&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+      &lt;h2 id=&quot;lab1&quot;&gt;&lt;a href=&quot;#lab1&quot; class=&quot;headerlink&quot; title=&quot;lab1&quot;&gt;&lt;/a&gt;lab1&lt;/h2&gt;&lt;p&gt;方法1：逆向破解，因为题目给了.c文件，里面有key和cipher可以直接用&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;key = &lt;span class=&quot;string&quot;&gt;&quot;Do_you_know_why_my_teammate_Orange_is_so_angry???&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cipher = [&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;59&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;25&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;16&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;61&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;9&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;18&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;45&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;40&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;89&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;22&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;85&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;22&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;31&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;9&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;126&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;28&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;62&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;107&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;66&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;60&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;44&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;91&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;49&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;85&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;33&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;16&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;76&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;66&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;flag = &lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; i &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; range(len(cipher)):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	flag += chr(cipher[i]^ord(key[i]))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;print&lt;/span&gt; flag&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;方法2：利用gdb动态调试，可以在已生成password且未输入magic的情况下获得password的值：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;在0x80486e7处下断点，可以看到ebp - 0x80就是password存放的地方&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;► 0x80486e7 &amp;lt;get_flag+332&amp;gt;    lea    eax, [ebp - 0x80]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  0x80486ea &amp;lt;get_flag+335&amp;gt;    push   eax&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  0x80486eb &amp;lt;get_flag+336&amp;gt;    push   dword ptr [ebp - 0x74]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  0x80486ee &amp;lt;get_flag+339&amp;gt;    call   read@plt &amp;lt;0x8048410&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;再运行到0x8048712处，可以查看 ebp - 0x80的值 &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;pwndbg&amp;gt; x/wx ($ebp -0x80)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;0xffffcd08:	0x4f77e43c&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;转成十进制，输入就能得到flag&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;pwndbg&amp;gt; c&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Continuing.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;1333257276  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;CTF&amp;#123;debugger_1s_so_p0werful_1n_dyn4m1c_4n4lySis!&amp;#125;[Inferior 1 (process 7593) exited normally]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;方法3：&lt;br&gt;同样利用gdb调试，但是这次不用获取password的值而直接在if跳转前设置eip的值指向flag输出的for 循环即可&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-e809aec7c4485e87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-9c69b4d18ca86e5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
     
     </summary>
     
-      <category term="堆" scheme="http://yoursite.com/categories/%E5%A0%86/"/>
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
     
     
   </entry>
