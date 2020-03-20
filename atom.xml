@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-10-30T12:18:14.291Z</updated>
+  <updated>2020-03-20T08:54:30.211Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,29 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Afl-Fuzz 初探</title>
+    <link href="http://yoursite.com/2020/03/16/Fuzz%E5%88%9D%E6%8E%A2/"/>
+    <id>http://yoursite.com/2020/03/16/Fuzz初探/</id>
+    <published>2020-03-16T07:45:16.875Z</published>
+    <updated>2020-03-20T08:54:30.211Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Afl-Fuzz&quot;&gt;&lt;a href=&quot;#Afl-Fuzz&quot; class=&quot;headerlink&quot; title=&quot;Afl-Fuzz&quot;&gt;&lt;/a&gt;Afl-Fuzz&lt;/h2&gt;&lt;p&gt;AFL(American fuzzy lop)号称是当前最高级的Fuzzing测试工具之一，由谷歌Michal Zalewski所开发。通过对源码编译时进行插桩（简称编译时插桩）的方式自动产生测试用例来探索二进制程序内部新的执行路径；与其它基于插桩技术的fuzz相比，afl-fuzz具有较低的性能消耗，有各种高效的fuzzing策略和tricks最小化技巧，不需要先进行复杂的配置。当然AFL也支持对没有源码的二进制程序进行学习方式，但是需要QEMU的支持。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="fuzz" scheme="http://yoursite.com/tags/fuzz/"/>
+    
+  </entry>
+  
+  <entry>
     <title>10.26星盟awd之magic_heap</title>
     <link href="http://yoursite.com/2020/03/15/10.26%E6%98%9F%E7%9B%9Fawd/"/>
     <id>http://yoursite.com/2020/03/15/10.26星盟awd/</id>
     <published>2020-03-15T03:59:40.550Z</published>
-    <updated>2019-10-30T12:18:14.291Z</updated>
+    <updated>2020-03-16T07:24:20.705Z</updated>
     
     <summary type="html">
     
@@ -42,7 +60,7 @@
     <link href="http://yoursite.com/2020/03/14/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4/"/>
     <id>http://yoursite.com/2020/03/14/第五空间/</id>
     <published>2020-03-14T11:41:50.052Z</published>
-    <updated>2019-08-30T01:21:17.383Z</updated>
+    <updated>2020-03-16T07:21:14.380Z</updated>
     
     <summary type="html">
     
@@ -408,28 +426,6 @@
     </summary>
     
       <category term="堆" scheme="http://yoursite.com/categories/%E5%A0%86/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Hitcon-Training lab1~lab9</title>
-    <link href="http://yoursite.com/2020/03/14/Hitcon-Training(%E4%B8%8A)/"/>
-    <id>http://yoursite.com/2020/03/14/Hitcon-Training(上)/</id>
-    <published>2020-03-14T11:41:49.851Z</published>
-    <updated>2019-05-09T12:17:00.995Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;lab1&quot;&gt;&lt;a href=&quot;#lab1&quot; class=&quot;headerlink&quot; title=&quot;lab1&quot;&gt;&lt;/a&gt;lab1&lt;/h2&gt;&lt;p&gt;方法1：逆向破解，因为题目给了.c文件，里面有key和cipher可以直接用&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;key = &lt;span class=&quot;string&quot;&gt;&quot;Do_you_know_why_my_teammate_Orange_is_so_angry???&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cipher = [&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;59&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;25&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;16&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;61&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;9&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;18&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;45&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;40&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;89&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;22&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;85&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;22&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;31&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;9&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;126&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;28&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;62&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;107&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;66&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;60&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;44&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;91&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;49&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;85&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;33&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;16&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;76&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;66&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;flag = &lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; i &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; range(len(cipher)):&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	flag += chr(cipher[i]^ord(key[i]))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;print&lt;/span&gt; flag&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;方法2：利用gdb动态调试，可以在已生成password且未输入magic的情况下获得password的值：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;在0x80486e7处下断点，可以看到ebp - 0x80就是password存放的地方&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;► 0x80486e7 &amp;lt;get_flag+332&amp;gt;    lea    eax, [ebp - 0x80]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  0x80486ea &amp;lt;get_flag+335&amp;gt;    push   eax&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  0x80486eb &amp;lt;get_flag+336&amp;gt;    push   dword ptr [ebp - 0x74]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  0x80486ee &amp;lt;get_flag+339&amp;gt;    call   read@plt &amp;lt;0x8048410&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;再运行到0x8048712处，可以查看 ebp - 0x80的值 &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;pwndbg&amp;gt; x/wx ($ebp -0x80)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;0xffffcd08:	0x4f77e43c&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;转成十进制，输入就能得到flag&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;pwndbg&amp;gt; c&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Continuing.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;1333257276  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;CTF&amp;#123;debugger_1s_so_p0werful_1n_dyn4m1c_4n4lySis!&amp;#125;[Inferior 1 (process 7593) exited normally]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;方法3：&lt;br&gt;同样利用gdb调试，但是这次不用获取password的值而直接在if跳转前设置eip的值指向flag输出的for 循环即可&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-e809aec7c4485e87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-9c69b4d18ca86e5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
     
     
   </entry>
