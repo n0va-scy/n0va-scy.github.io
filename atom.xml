@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-20T08:54:30.211Z</updated>
+  <updated>2020-03-27T08:19:43.956Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Bline rop填坑</title>
+    <link href="http://yoursite.com/2020/03/22/brop%E5%A1%AB%E5%9D%91/"/>
+    <id>http://yoursite.com/2020/03/22/brop填坑/</id>
+    <published>2020-03-22T13:27:48.754Z</published>
+    <updated>2020-03-27T08:19:43.956Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;由于初学也是因为太笨的原因一直没有彻底学习一下brop，今天因为某些原因必须做一道 brop 把自己逼出来了&lt;/p&gt;
+&lt;h2 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Afl-Fuzz 初探</title>
     <link href="http://yoursite.com/2020/03/16/Fuzz%E5%88%9D%E6%8E%A2/"/>
     <id>http://yoursite.com/2020/03/16/Fuzz初探/</id>
     <published>2020-03-16T07:45:16.875Z</published>
-    <updated>2020-03-20T08:54:30.211Z</updated>
+    <updated>2020-03-20T12:50:01.460Z</updated>
     
     <summary type="html">
     
@@ -404,29 +431,6 @@
     
     
       <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hitcon-Training lab10~lab15</title>
-    <link href="http://yoursite.com/2020/03/14/Hitcon-Training(%E4%B8%8B)/"/>
-    <id>http://yoursite.com/2020/03/14/Hitcon-Training(下)/</id>
-    <published>2020-03-14T11:41:49.860Z</published>
-    <updated>2019-09-01T14:56:30.912Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;lab10&quot;&gt;&lt;a href=&quot;#lab10&quot; class=&quot;headerlink&quot; title=&quot;lab10&quot;&gt;&lt;/a&gt;lab10&lt;/h2&gt;&lt;p&gt;这一题开始就是堆的范畴了&lt;/p&gt;
-&lt;h3 id=&quot;题目介绍&quot;&gt;&lt;a href=&quot;#题目介绍&quot; class=&quot;headerlink&quot; title=&quot;题目介绍&quot;&gt;&lt;/a&gt;题目介绍&lt;/h3&gt;&lt;p&gt;程序只开启了NX保护&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;\images\堆\14.jpg&quot; alt&gt;&lt;/p&gt;
-&lt;p&gt;有三个功能，分别是add，delete跟print&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;----------------------&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;number&quot;&gt;1.&lt;/span&gt; Add note          &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;number&quot;&gt;2.&lt;/span&gt; Delete note       &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;number&quot;&gt;3.&lt;/span&gt; Print note        &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;number&quot;&gt;4.&lt;/span&gt; Exit              &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;----------------------&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;先一看一下add:&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="堆" scheme="http://yoursite.com/categories/%E5%A0%86/"/>
-    
     
   </entry>
   

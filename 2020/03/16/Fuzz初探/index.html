@@ -98,9 +98,10 @@
 <meta property="og:image" content="http://yoursite.com/images/fuzz/7.jpg">
 <meta property="og:image" content="http://yoursite.com/images/fuzz/8.jpg">
 <meta property="og:image" content="http://yoursite.com/images/fuzz/9.jpg">
+<meta property="og:image" content="http://yoursite.com/images/fuzz/12.jpg">
 <meta property="og:image" content="http://yoursite.com/images/fuzz/10.jpg">
 <meta property="og:image" content="http://yoursite.com/images/fuzz/11.jpg">
-<meta property="og:updated_time" content="2020-03-20T08:54:30.211Z">
+<meta property="og:updated_time" content="2020-03-20T12:50:01.460Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Afl-Fuzz 初探">
 <meta name="twitter:description" content="Afl-FuzzAFL(American fuzzy lop)号称是当前最高级的Fuzzing测试工具之一，由谷歌Michal Zalewski所开发。通过对源码编译时进行插桩（简称编译时插桩）的方式自动产生测试用例来探索二进制程序内部新的执行路径；与其它基于插桩技术的fuzz相比，afl-fuzz具有较低的性能消耗，有各种高效的fuzzing策略和tricks最小化技巧，不需要先进行复杂的配置。">
@@ -429,6 +430,8 @@
 <p><img src="\images\fuzz\8.jpg" alt></p>
 <p>6、符合’A’开头且字符长度为66的异常退出情况</p>
 <p><img src="\images\fuzz\9.jpg" alt></p>
+<p>可以用cat将crashes样例输入到程序中检测：</p>
+<p><img src="\images\fuzz\12.jpg" alt></p>
 <h2 id="黑盒测试"><a href="#黑盒测试" class="headerlink" title="黑盒测试"></a>黑盒测试</h2><p>所谓黑盒测试，通俗地讲就是对没有源码的代码进行测试，这时就用到AFL的QEMU模式了；</p>
 <p>因为<code>afl-qemu-trace</code>默认不安装 ，所以要先手动安装一波</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> qemu_mode</span><br><span class="line">./build_qemu_support.sh</span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
@@ -486,6 +489,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/22/brop填坑/" rel="prev" title="Bline rop填坑">
+                Bline rop填坑 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -564,7 +571,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
