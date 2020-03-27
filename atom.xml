@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-27T08:19:43.956Z</updated>
+  <updated>2020-03-27T08:23:09.897Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,18 +21,15 @@
     <link href="http://yoursite.com/2020/03/22/brop%E5%A1%AB%E5%9D%91/"/>
     <id>http://yoursite.com/2020/03/22/brop填坑/</id>
     <published>2020-03-22T13:27:48.754Z</published>
-    <updated>2020-03-27T08:19:43.956Z</updated>
+    <updated>2020-03-27T08:23:09.897Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;p&gt;由于初学也是因为太笨的原因一直没有彻底学习一下brop，今天因为某些原因必须做一道 brop 把自己逼出来了&lt;/p&gt;
-&lt;h2 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot;
-        
-      
+      &lt;p&gt;由于初学也是因为太笨的原因一直没有彻底学习一下brop，今天因为某些原因必须做一道 brop 把自己逼出来了&lt;/p&gt;
+&lt;h2 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot; title=&quot;写在前面&quot;&gt;&lt;/a&gt;写在前面&lt;/h2&gt;&lt;p&gt;BROP攻击基于一篇发表在Oakland 2014的论文Hacking Blind，作者是Standford的Andrea Bittau，以下是相关的paper和slide链接：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.scs.stanford.edu/brop/bittau-brop.pdf&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;paper&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.scs.stanford.edu/brop/bittau-brop-slides.pdf&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;slide&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;以及BROP的原网站&lt;a href=&quot;http://www.scs.stanford.edu/brop/bittau-brop-slides.pdf&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;地址&lt;/a&gt;&lt;/p&gt;
     
     </summary>
     

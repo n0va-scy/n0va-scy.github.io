@@ -81,25 +81,25 @@
 
 
 
-<meta name="description" content="由于初学也是因为太笨的原因一直没有彻底学习一下brop，今天因为某些原因必须做一道 brop 把自己逼出来了 写在前面BROP攻击基于一篇发表在Oakland 2014的论文Hacking Blind，作者是Standford的Andrea Bittau，以下是相关的paper和slide链接： paper slide 以及BROP的原网站地址 BROP攻击的目标和前提条件目标：通过ROP的方法远">
+<meta name="description" content="由于初学也是因为太笨的原因一直没有彻底学习一下brop，今天因为某些原因必须做一道 brop 把自己逼出来了 写在前面BROP攻击基于一篇发表在Oakland 2014的论文Hacking Blind，作者是Standford的Andrea Bittau，以下是相关的paper和slide链接： paper slide 以及BROP的原网站地址">
 <meta name="keywords" content="pwn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Bline rop填坑">
 <meta property="og:url" content="http://yoursite.com/2020/03/22/brop填坑/index.html">
 <meta property="og:site_name" content="R4bb1t的ctf博客">
-<meta property="og:description" content="由于初学也是因为太笨的原因一直没有彻底学习一下brop，今天因为某些原因必须做一道 brop 把自己逼出来了 写在前面BROP攻击基于一篇发表在Oakland 2014的论文Hacking Blind，作者是Standford的Andrea Bittau，以下是相关的paper和slide链接： paper slide 以及BROP的原网站地址 BROP攻击的目标和前提条件目标：通过ROP的方法远">
+<meta property="og:description" content="由于初学也是因为太笨的原因一直没有彻底学习一下brop，今天因为某些原因必须做一道 brop 把自己逼出来了 写在前面BROP攻击基于一篇发表在Oakland 2014的论文Hacking Blind，作者是Standford的Andrea Bittau，以下是相关的paper和slide链接： paper slide 以及BROP的原网站地址">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="f:/n0va/themes/next/source/images/brop填坑/1.jpg">
-<meta property="og:image" content="f:/n0va/themes/next/source/images/brop填坑/2.jpg">
-<meta property="og:image" content="f:/n0va/themes/next/source/images/brop填坑/3.jpg">
-<meta property="og:image" content="f:/n0va/themes/next/source/images/brop填坑/4.jpg">
-<meta property="og:image" content="f:/n0va/themes/next/source/images/brop填坑/5.jpg">
-<meta property="og:image" content="f:/n0va/themes/next/source/images/brop填坑/6.jpg">
-<meta property="og:updated_time" content="2020-03-27T08:19:43.956Z">
+<meta property="og:image" content="http://yoursite.com/images/brop填坑/1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/brop填坑/2.jpg">
+<meta property="og:image" content="http://yoursite.com/images/brop填坑/3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/brop填坑/4.jpg">
+<meta property="og:image" content="http://yoursite.com/images/brop填坑/5.jpg">
+<meta property="og:image" content="http://yoursite.com/images/brop填坑/6.jpg">
+<meta property="og:updated_time" content="2020-03-27T08:23:09.897Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Bline rop填坑">
-<meta name="twitter:description" content="由于初学也是因为太笨的原因一直没有彻底学习一下brop，今天因为某些原因必须做一道 brop 把自己逼出来了 写在前面BROP攻击基于一篇发表在Oakland 2014的论文Hacking Blind，作者是Standford的Andrea Bittau，以下是相关的paper和slide链接： paper slide 以及BROP的原网站地址 BROP攻击的目标和前提条件目标：通过ROP的方法远">
-<meta name="twitter:image" content="f:/n0va/themes/next/source/images/brop填坑/1.jpg">
+<meta name="twitter:description" content="由于初学也是因为太笨的原因一直没有彻底学习一下brop，今天因为某些原因必须做一道 brop 把自己逼出来了 写在前面BROP攻击基于一篇发表在Oakland 2014的论文Hacking Blind，作者是Standford的Andrea Bittau，以下是相关的paper和slide链接： paper slide 以及BROP的原网站地址">
+<meta name="twitter:image" content="http://yoursite.com/images/brop填坑/1.jpg">
 
 
 
@@ -397,6 +397,7 @@
 <p><a href="http://www.scs.stanford.edu/brop/bittau-brop.pdf" target="_blank" rel="noopener">paper</a></p>
 <p><a href="http://www.scs.stanford.edu/brop/bittau-brop-slides.pdf" target="_blank" rel="noopener">slide</a></p>
 <p>以及BROP的原网站<a href="http://www.scs.stanford.edu/brop/bittau-brop-slides.pdf" target="_blank" rel="noopener">地址</a></p>
+<a id="more"></a>
 <h2 id="BROP攻击的目标和前提条件"><a href="#BROP攻击的目标和前提条件" class="headerlink" title="BROP攻击的目标和前提条件"></a>BROP攻击的目标和前提条件</h2><p>目标：通过ROP的方法远程攻击某个应用程序 ，劫持该应用程序的控制流。我们可以不需要知道该应用程序的源代码或者任何二进制代码，该应用程序可以被现有的一些保护机制如NX , ASLR , PIE , stack canaries等保护，应用程序所在的服务器可以是32位系统也可以是64位系统 。</p>
 <p>而这个攻击实现的两个前提条件是：</p>
 <p>1、必须先存在一个已知的stack overflow的漏洞，而且攻击者知道如何触发这个漏洞；</p>
@@ -405,22 +406,22 @@
 <p>所以我们先把这个问题放一放，先记着这个目标，先解决路上的障碍</p>
 <h3 id="攻破Stack-Canaries保护"><a href="#攻破Stack-Canaries保护" class="headerlink" title="攻破Stack Canaries保护"></a>攻破Stack Canaries保护</h3><p>作者提出了一种叫做”stack reading”的方法：</p>
 <p>假设这是我们要overflow的栈布局：</p>
-<p><img src="F:\n0va\themes\next\source\images\brop填坑\1.jpg" alt></p>
+<p><img src="\images\brop填坑\1.jpg" alt></p>
 <p>首先我们可以尝试任意多次判断overflow的长度（直到canary被破坏crash了）之后我们将buffer填上任意值，然后一个一个字节顺序地进行尝试来还原出真实的canary，（因为程序重启canary不变），由于一个字节只有256种可能，所以我们最多尝试256次就可以找到canary 的某个正确的字节，直到进8个字节的canary 都完整得找到</p>
 <h3 id="寻找stop-gadget"><a href="#寻找stop-gadget" class="headerlink" title="寻找stop gadget"></a>寻找stop gadget</h3><p>到目前为止，我们已经找到了合适的canary绕过stack canary 的保护，接下来我们需要寻找一个特殊的gadgets：stop gadget。</p>
 <p>一般情况下，如果我们把栈上的<code>return address</code>覆盖成某些我们随意选取的地址的话，程序 很大程度会crash掉，从而使得攻击者的连接(connection)被关闭，但是存在另外一种情况，即该<code>return address</code>指向了一块代码区域，当程序的执行流跳到那里之后，程序不会crash，而是进入了无限循环，（比如回到main函数，回到start函数）攻击者能一直保持连接状态。这样的地址我们称之为<code>stop gadget</code>，这种gadget对于寻找其它的gadgets取到了至关重要的作用</p>
 <h3 id="寻找brop-gadget"><a href="#寻找brop-gadget" class="headerlink" title="寻找brop_gadget"></a>寻找brop_gadget</h3><p>当有了<code>stop gadget</code>，我们就可以继续寻找其它有用的gadget（useful gadget)（比如pop rdi这些）</p>
 <p>在没有<code>stop gadget</code>之前 我们是无法确定<code>useful gadget</code>的；假设我们猜到一个useful gadget如<code>pop rdi ;ret</code>，但是由于执行完这个<code>gadget</code>后进程还是会跳到下一个地址，如果该地址是一个非法地址，那么进程到最后还是会carch，在这个过程中攻击者其实不知道这个userful gadget已经执行过了，他看到的结果是程序crash了，从而不认为这是个userful gadget而放弃它</p>
-<p><img src="F:\n0va\themes\next\source\images\brop填坑\2.jpg" alt></p>
+<p><img src="\images\brop填坑\2.jpg" alt></p>
 <p>但是如果我们有了stop gadget，那就不一样了，如果我们在需要尝试的gadgets 后面填上了足够多的<code>stop gadget</code>，如图</p>
-<p><img src="F:\n0va\themes\next\source\images\brop填坑\3.jpg" alt></p>
+<p><img src="\images\brop填坑\3.jpg" alt></p>
 <p>这样，如果尝试的gadget 是<code>useful gadget</code>的话程序 就不会crash。</p>
 <p><code>brop gadget</code>：在<code>libc_csu_init</code>的结尾有一长串的 gadget ，我们可以通过偏移来获取 <code>pop rdi;ret</code>和<code>pop rsi ; pop r15 ; ret</code>这两个gadget，如图：</p>
-<p><img src="F:\n0va\themes\next\source\images\brop填坑\4.jpg" alt></p>
+<p><img src="\images\brop填坑\4.jpg" alt></p>
 <p>用上面提到的找 <code>useful gatget</code>的方法就很容易找到这个<code>brop gadget</code>了</p>
-<p><img src="F:\n0va\themes\next\source\images\brop填坑\5.jpg" alt></p>
+<p><img src="\images\brop填坑\5.jpg" alt></p>
 <h3 id="寻找plt项"><a href="#寻找plt项" class="headerlink" title="寻找plt项"></a>寻找plt项</h3><p>程序的plt表具有比较规整的结构 ，第一个plt表项都是16字节。而且，在每一个表项的6字节偏移处，是该表项对应的韩寒苏解析路径，即程序最初执行该函数的时候，会执行该路径对函数的got 地址进行解析。</p>
-<p><img src="F:\n0va\themes\next\source\images\brop填坑\6.jpg" alt></p>
+<p><img src="\images\brop填坑\6.jpg" alt></p>
 <p>另外 ，对于大多数 plt 调用来说，一般都不容易崩溃，即使是使用了比较奇怪的参数。所以，如果我们发现了一系列的长度为16的没有使得程序崩溃的代码段，那么我们有一定的理由相信我们遇到了 plt 表。</p>
 <h3 id="控制-RDX"><a href="#控制-RDX" class="headerlink" title="控制 RDX"></a>控制 RDX</h3><p>对于没有puts函数的程序来说，一般用来dump 的函数是write，于是就有一个问题，write需要3个参数，也就是说rdx也需要控制 ，但是一般程序中是不存在<code>pop rdx;ret</code>这样的gadget的；所以作者提出，相比于寻找<code>pop rdx</code>指令，他认为可以利用strcmp这个函数调用，该函数调用会把字符串的长度赋值给<code>rdx</code>，从而达到相同的效果。需要提醒的是，并不是所有程序都会调用strcmp函数，当程序中没有strcmp 函数的情况下，我们就得利用其它的方式来控制 rdx 了</p>
 <p>那么，我们如何确定 strcmp 函数的plt地址呢？</p>
