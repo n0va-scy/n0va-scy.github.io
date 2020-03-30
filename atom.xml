@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-27T08:23:09.897Z</updated>
+  <updated>2020-03-30T07:47:37.654Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>DynELF实现无libc.so泄露函数地址</title>
+    <link href="http://yoursite.com/2020/03/29/DynELF%E5%AE%9E%E7%8E%B0%E6%97%A0libc%E6%B3%84%E9%9C%B2%E5%87%BD%E6%95%B0%E5%9C%B0%E5%9D%80/"/>
+    <id>http://yoursite.com/2020/03/29/DynELF实现无libc泄露函数地址/</id>
+    <published>2020-03-29T11:55:25.170Z</published>
+    <updated>2020-03-30T07:47:37.654Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;DynELF简介&quot;&gt;&lt;a href=&quot;#DynELF简介&quot; class=&quot;headerlink&quot; title=&quot;DynELF简介&quot;&gt;&lt;/a&gt;DynELF简介&lt;/h2&gt;&lt;p&gt;在做漏洞利用的时候，由于ASLR的影响，我们在获取某些函数地址的时候，需要一些特殊操作；一种方法是先泄露出libc.so中的某个函数，然后根据函数之间的偏移，计算我们需要的函数地址，但是这种方法局限于我们需要找到和目标服务器上一样的libc.so，而有些特殊情况下往往找不到对应的libc.so文件；另一种方法就是利用如pwntools的DynELF模块，对内存进行搜索，直到得到我们需要的函数。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>Bline rop填坑</title>
@@ -404,27 +424,6 @@
     </summary>
     
       <category term="堆" scheme="http://yoursite.com/categories/%E5%A0%86/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>house of orange 学习</title>
-    <link href="http://yoursite.com/2020/03/14/house%20of%20orange/"/>
-    <id>http://yoursite.com/2020/03/14/house of orange/</id>
-    <published>2020-03-14T11:41:49.867Z</published>
-    <updated>2019-11-20T14:48:29.653Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;大名鼎鼎 house of orange来自于Hitcon CTF 2016中的一道 同名题目，其可以在没有free的情况下得到一块unsorted bin，因为unsorted bin的fd,bk为main_arean+88，所以可以通过申请切割unsorted bin来泄漏libc地址（没有深入了解的我一直以为这是house of orange仅此而已的用处……汗……）&lt;/p&gt;
-&lt;h2 id=&quot;House-of-orange-–-2016Hitcon-CTF&quot;&gt;&lt;a href=&quot;#House-of-orange-–-2016Hitcon-CTF&quot; class=&quot;headerlink&quot; title=&quot;House_of_orange – 2016Hitcon CTF&quot;&gt;&lt;/a&gt;House_of_orange – 2016Hitcon CTF&lt;/h2&gt;&lt;p&gt;题目逻辑很简单，一共可以build 4次，每次build分进行3次堆分配，两次malloc，一次calloc，其中一次malloc是固定的0x10字节作为控制堆块，放着name和color的信息，另外按输入分配name 的大小。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
     
     
       <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
