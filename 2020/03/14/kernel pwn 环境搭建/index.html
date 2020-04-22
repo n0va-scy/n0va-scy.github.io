@@ -97,7 +97,7 @@
 <meta property="og:image" content="http://yoursite.com/images/内核环境搭建/6.jpg">
 <meta property="og:image" content="http://yoursite.com/images/内核环境搭建/7.jpg">
 <meta property="og:image" content="http://yoursite.com/images/内核环境搭建/8.jpg">
-<meta property="og:updated_time" content="2020-03-06T03:39:16.518Z">
+<meta property="og:updated_time" content="2020-04-12T05:42:50.320Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kernel pwn 环境搭建">
 <meta name="twitter:description" content="编译生成内核镜像先下载一个内核源码 ：https://mirrors.edge.kernel.org/pub/linux/kernel/我下载的是linux-4.9.tar.gz然后安装一些依赖12sudo apt-get updatesudo apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev">
@@ -429,7 +429,7 @@
 <h4 id="安装-qemu"><a href="#安装-qemu" class="headerlink" title="安装 qemu"></a>安装 qemu</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">安装QEMU的依赖库</span><br><span class="line">sudo apt-get install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev</span><br><span class="line">sudo apt-get install qemu</span><br><span class="line">测试输入qemu + tab 如果有很多实例回显，就说明安装成功</span><br></pre></td></tr></table></figure>
 <p><img src="\images\内核环境搭建\4.jpg" alt></p>
 <p>接着写一个shell脚本boot.sh用来启动qemu，运行内核 </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">qemu-system-x86_64 \</span><br><span class="line">-m 64M \</span><br><span class="line">-kernel ./bzImage \</span><br><span class="line">-initrd  ./rootfs.img \</span><br><span class="line">-append <span class="string">"root=/dev/ram rw oops=panic panic=1 kalsr"</span> \</span><br><span class="line">-netdev user,id=t0, -device e1000,netdev=t0,id=nic0 \</span><br><span class="line">-monitor /dev/null \</span><br><span class="line">-smp cores=2,threads=1 \</span><br><span class="line">-cpu kvm64,+smep \</span><br><span class="line"><span class="comment">#-S 启动gdb调试</span></span><br><span class="line"><span class="comment">#-gdb tcp:1234 等待gdb调试</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">qemu-system-x86_64 \</span><br><span class="line">-m 64M \</span><br><span class="line">-kernel ./bzImage \</span><br><span class="line">-initrd  ./rootfs.img \</span><br><span class="line">-append <span class="string">"root=/dev/ram rw oops=panic panic=1 kalsr"</span> \</span><br><span class="line">-netdev user,id=t0, -device e1000,netdev=t0,id=nic0 \</span><br><span class="line">-monitor /dev/null \</span><br><span class="line">-smp cores=2,threads=1 \</span><br><span class="line">-cpu kvm64,+smep \</span><br><span class="line"><span class="comment">#-S 启动gdb调试</span></span><br><span class="line"><span class="comment">#-gdb tcp::1234 等待gdb调试</span></span><br></pre></td></tr></table></figure>
 <p>将前面生成的bzImage，rootfs.img一起放到<code>_install</code>文件夹下，运行boot.sh</p>
 <p><img src="\images\内核环境搭建\5.jpg" alt></p>
 <p>这里解释一下shell命令中参数的意义</p>
@@ -583,7 +583,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -594,7 +594,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
