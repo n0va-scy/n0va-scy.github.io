@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-04-22T03:42:51.876Z</updated>
+  <updated>2020-05-17T14:49:58.696Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,24 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>pwn环境dockerWx</title>
+    <link href="http://yoursite.com/2020/05/15/pwn%E7%8E%AF%E5%A2%83docker%E5%8C%96/"/>
+    <id>http://yoursite.com/2020/05/15/pwn环境docker化/</id>
+    <published>2020-05-15T06:11:45.325Z</published>
+    <updated>2020-05-17T14:49:58.696Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;拉取镜像&quot;&gt;&lt;a href=&quot;#拉取镜像&quot; class=&quot;headerlink&quot; title=&quot;拉取镜像&quot;&gt;&lt;/a&gt;拉取镜像&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# docker pull ubuntu:18.04&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18.04: Pulling from library/ubuntu&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23884877105a: Pull complete &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;bc38caa0f5b9: Pull complete &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2910811b6c42: Pull complete &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36505266dcc6: Pull complete &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Digest: sha256:3235326357dfb65f1781dbc4df3b834546d8bf914e82cce58e6e6b676e23ce8f&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Status: Downloaded newer image &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; ubuntu:18.04&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;docker.io/library/ubuntu:18.04&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>虎符ctf部分pwn题解</title>
@@ -40,7 +58,7 @@
     <link href="http://yoursite.com/2020/04/13/%E8%A7%A3%E5%86%B3git%20clone%E4%B8%8B%E8%BD%BD%E6%85%A2%E9%97%AE%E9%A2%98/"/>
     <id>http://yoursite.com/2020/04/13/解决git clone下载慢问题/</id>
     <published>2020-04-13T07:12:36.544Z</published>
-    <updated>2020-04-13T07:21:42.469Z</updated>
+    <updated>2020-04-22T03:52:25.426Z</updated>
     
     <summary type="html">
     
@@ -48,8 +66,8 @@
       
         
         
-          &lt;p&gt;&lt;strong&gt;网上的修改本场host文件方法亲测不管用&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;通过码去下载是真的香 &lt;a href=&quot;https://gitee.com/&quot; target=&quot;_blank&quot;
+          &lt;p&gt;&lt;strong&gt;网上的修改本机host文件方法亲测不管用&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;通过码去云下载是真的香 &lt;a href=&quot;https://gitee.com/&quot; target=&quot;_blank&quot;
         
       
     
@@ -88,7 +106,7 @@
     <link href="http://yoursite.com/2020/03/31/re2dl_runtime_resolve/"/>
     <id>http://yoursite.com/2020/03/31/re2dl_runtime_resolve/</id>
     <published>2020-03-31T01:23:51.849Z</published>
-    <updated>2020-04-22T03:46:11.971Z</updated>
+    <updated>2020-04-24T11:22:51.322Z</updated>
     
     <summary type="html">
     
@@ -412,25 +430,6 @@
     
     
       <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Off-By-One之Asis CTF 2016 b00s</title>
-    <link href="http://yoursite.com/2020/03/14/Off-By-One%E4%B9%8BAsis%20CTF%202016%20b00s/"/>
-    <id>http://yoursite.com/2020/03/14/Off-By-One之Asis CTF 2016 b00s/</id>
-    <published>2020-03-14T11:41:49.922Z</published>
-    <updated>2019-05-09T12:17:53.182Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;题目介绍&quot;&gt;&lt;a href=&quot;#题目介绍&quot; class=&quot;headerlink&quot; title=&quot;题目介绍&quot;&gt;&lt;/a&gt;题目介绍&lt;/h2&gt;&lt;p&gt;题目是一个表单程序，功能是一个图书管理系统。&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1. Create a book&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2. Delete a book&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3. Edit a book&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4. Print book detail&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5. Change current author name&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6. Exit&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="堆" scheme="http://yoursite.com/categories/%E5%A0%86/"/>
-    
     
   </entry>
   
