@@ -81,22 +81,13 @@
 
 
 
-<meta name="description" content="一直说好的总结拖到现在也挺久了 基础栈溢出最简单的栈溢出就是一个get函数或者是一个read 函数，可以读入很长一段字节，而接收的变量并没有这么长，且存在后门函数，就可以直接覆盖ret地址为backdoor。如图，不需要考虑ebp  再进一步的栈溢出是需要传参数的情况，32位函数调用的参数放在栈中，而64位前5个参数分别放在rdi,rsi,rdx,rcx,r8,r9寄存器中，第7个开始才放栈中，所">
 <meta property="og:type" content="website">
-<meta property="og:title" content="栈溢出总结">
-<meta property="og:url" content="http://yoursite.com/栈溢出总结.html">
+<meta property="og:title" content="R4bb1t的ctf博客">
+<meta property="og:url" content="http://yoursite.com/tags/AFL/index.html">
 <meta property="og:site_name" content="R4bb1t的ctf博客">
-<meta property="og:description" content="一直说好的总结拖到现在也挺久了 基础栈溢出最简单的栈溢出就是一个get函数或者是一个read 函数，可以读入很长一段字节，而接收的变量并没有这么长，且存在后门函数，就可以直接覆盖ret地址为backdoor。如图，不需要考虑ebp  再进一步的栈溢出是需要传参数的情况，32位函数调用的参数放在栈中，而64位前5个参数分别放在rdi,rsi,rdx,rcx,r8,r9寄存器中，第7个开始才放栈中，所">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="f:/n0va/themes/next/source/images/summary/1.jpg">
-<meta property="og:image" content="f:/n0va/themes/next/source/images/summary/2.jpg">
-<meta property="og:image" content="f:/n0va/themes/next/source/images/summary/3.png">
-<meta property="og:image" content="f:/n0va/themes/next/source/images/summary/4.jpg">
-<meta property="og:updated_time" content="2019-04-04T13:22:24.284Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="栈溢出总结">
-<meta name="twitter:description" content="一直说好的总结拖到现在也挺久了 基础栈溢出最简单的栈溢出就是一个get函数或者是一个read 函数，可以读入很长一段字节，而接收的变量并没有这么长，且存在后门函数，就可以直接覆盖ret地址为backdoor。如图，不需要考虑ebp  再进一步的栈溢出是需要传参数的情况，32位函数调用的参数放在栈中，而64位前5个参数分别放在rdi,rsi,rdx,rcx,r8,r9寄存器中，第7个开始才放栈中，所">
-<meta name="twitter:image" content="f:/n0va/themes/next/source/images/summary/1.jpg">
+<meta name="twitter:title" content="R4bb1t的ctf博客">
 
 
 
@@ -126,13 +117,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/栈溢出总结.html">
+  <link rel="canonical" href="http://yoursite.com/tags/AFL/">
 
 
 
 
 
-  <title>栈溢出总结 | R4bb1t的ctf博客</title>
+  <title>标签: AFL | R4bb1t的ctf博客</title>
   
 
 
@@ -151,7 +142,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
@@ -286,48 +277,78 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-    
-    
-    <div class="post-block page">
-      <header class="post-header">
+  
+  
+  
+  <div class="post-block tag">
 
-	<h1 class="post-title" itemprop="name headline">栈溢出总结</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
-        
-        
-          <p>一直说好的总结拖到现在也挺久了</p>
-<h2 id="基础栈溢出"><a href="#基础栈溢出" class="headerlink" title="基础栈溢出"></a>基础栈溢出</h2><p>最简单的栈溢出就是一个get函数或者是一个read 函数，可以读入很长一段字节，而接收的变量并没有这么长，且存在后门函数，就可以直接覆盖ret地址为backdoor。如图，不需要考虑ebp</p>
-<p><img src="F:\n0va\themes\next\source\images\summary\1.jpg" alt></p>
-<p>再进一步的栈溢出是需要传参数的情况，32位函数调用的参数放在栈中，而64位前5个参数分别放在<code>rdi,rsi,rdx,rcx,r8,r9</code>寄存器中，第7个开始才放栈中，所以64位在调用函数时就需要找到<code>pop rdi;ret</code>这类似的gadget为传参服务。同样的对于后门函数backdoor也有一个返回地址</p>
-<p><img src="F:\n0va\themes\next\source\images\summary\2.jpg" alt></p>
-<p>64位程序的返回地址位置也是一样，只不过后不用放参数，都放在寄存器里</p>
-<p>接下来讲一讲连续函数调用的情况，相应题目可以去尝试<a href="https://ropemporium.com/" target="_blank" rel="noopener">ROP Emporium</a>的callme，对于函数连续调用，32位程序需要注意保持栈平衡，也就是说调用完call1在调用call2前要将call1的参数从栈中pop出去，才不会影响call2的调用及返回函数</p>
-<p>没有将参数弹出栈的栈分布情况</p>
-<p><img src="F:\n0va\themes\next\source\images\summary\3.png" alt></p>
-<p>将参数弹出栈保持栈平衡的栈分布情况</p>
-<p><img src="F:\n0va\themes\next\source\images\summary\4.jpg" alt></p>
-<p>更复杂一点的栈溢出就是ROP链的构造了</p>
-
-        
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>AFL<small>标签</small>
+        </h1>
       </div>
+
       
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2020/05/28/AFL源码分析计划1/" itemprop="url">
+              
+                <span itemprop="name">AFL源码分析计划1 -- afl-gcc.c</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2020-05-28T17:11:33+08:00" content="2020-05-28">
+          05-28
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
       
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2020/03/16/Fuzz初探/" itemprop="url">
+              
+                <span itemprop="name">Afl-Fuzz 初探</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2020-03-16T15:45:16+08:00" content="2020-03-16">
+          03-16
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
       
     </div>
-    
-    
-    
+
   </div>
+  
+  
+  
+
+  
 
 
           </div>
@@ -335,10 +356,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -359,17 +376,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -438,22 +446,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础栈溢出"><span class="nav-number">1.</span> <span class="nav-text">基础栈溢出</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -603,10 +595,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 

