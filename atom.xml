@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-05-28T10:01:16.825Z</updated>
+  <updated>2020-05-30T13:07:08.901Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,33 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>AFL源码分析计划2 -- afl-as.c</title>
+    <link href="http://yoursite.com/2020/05/30/AFL%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E8%AE%A1%E5%88%922/"/>
+    <id>http://yoursite.com/2020/05/30/AFL源码分析计划2/</id>
+    <published>2020-05-30T12:46:37.120Z</published>
+    <updated>2020-05-30T13:07:08.901Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;从main函数开始&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;u8* inst_ratio_str = getenv(&lt;span class=&quot;string&quot;&gt;&quot;AFL_INST_RATIO&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;先是从环境变量中拿了&lt;code&gt;AFL_INST_RATIO&lt;/code&gt;，这是插入指令的密度&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="fuzz" scheme="http://yoursite.com/categories/fuzz/"/>
+    
+    
+      <category term="AFL" scheme="http://yoursite.com/tags/AFL/"/>
+    
+  </entry>
+  
+  <entry>
     <title>AFL源码分析计划1 -- afl-gcc.c</title>
     <link href="http://yoursite.com/2020/05/28/AFL%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E8%AE%A1%E5%88%921/"/>
     <id>http://yoursite.com/2020/05/28/AFL源码分析计划1/</id>
     <published>2020-05-28T09:11:33.362Z</published>
-    <updated>2020-05-28T10:01:16.825Z</updated>
+    <updated>2020-05-30T12:48:26.299Z</updated>
     
     <summary type="html">
     
@@ -407,24 +429,6 @@
     </summary>
     
       <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>RoarCtf - pwn</title>
-    <link href="http://yoursite.com/2020/03/14/RoarCTF/"/>
-    <id>http://yoursite.com/2020/03/14/RoarCTF/</id>
-    <published>2020-03-14T11:41:49.961Z</published>
-    <updated>2019-10-18T12:47:29.397Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;easy-pwn&quot;&gt;&lt;a href=&quot;#easy-pwn&quot; class=&quot;headerlink&quot; title=&quot;easy_pwn&quot;&gt;&lt;/a&gt;easy_pwn&lt;/h2&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// off-by-one&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;__int64 __&lt;span class=&quot;function&quot;&gt;fastcall &lt;span class=&quot;title&quot;&gt;sub_E26&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;signed&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; a1, &lt;span class=&quot;keyword&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; a2)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  __int64 result; &lt;span class=&quot;comment&quot;&gt;// rax&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( a1 &amp;gt; a2 )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; a2;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( a2 - a1 == &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    LODWORD(result) = a1 + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;   &lt;span class=&quot;comment&quot;&gt;//off-by-one&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    LODWORD(result) = a1;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; result;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
     
     
       <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>

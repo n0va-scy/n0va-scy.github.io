@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="AFL,">
 
 
 
@@ -81,14 +81,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="tages">
-<meta property="og:url" content="http://yoursite.com/tages/index.html">
+<meta name="description" content="从main函数开始 1u8* inst_ratio_str = getenv(&quot;AFL_INST_RATIO&quot;); 先是从环境变量中拿了AFL_INST_RATIO，这是插入指令的密度">
+<meta name="keywords" content="AFL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AFL源码分析计划2 -- afl-as.c">
+<meta property="og:url" content="http://yoursite.com/2020/05/30/AFL源码分析计划2/index.html">
 <meta property="og:site_name" content="R4bb1t的ctf博客">
+<meta property="og:description" content="从main函数开始 1u8* inst_ratio_str = getenv(&quot;AFL_INST_RATIO&quot;); 先是从环境变量中拿了AFL_INST_RATIO，这是插入指令的密度">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-09T12:10:03.132Z">
+<meta property="og:updated_time" content="2020-05-30T13:07:08.901Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tages">
+<meta name="twitter:title" content="AFL源码分析计划2 -- afl-as.c">
+<meta name="twitter:description" content="从main函数开始 1u8* inst_ratio_str = getenv(&quot;AFL_INST_RATIO&quot;); 先是从环境变量中拿了AFL_INST_RATIO，这是插入指令的密度">
 
 
 
@@ -118,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tages/">
+  <link rel="canonical" href="http://yoursite.com/2020/05/30/AFL源码分析计划2/">
 
 
 
 
 
-  <title>tages | R4bb1t的ctf博客</title>
+  <title>AFL源码分析计划2 -- afl-as.c | R4bb1t的ctf博客</title>
   
 
 
@@ -280,33 +284,198 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/30/AFL源码分析计划2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="R4bb1t">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/n0va.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R4bb1t的ctf博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">tages</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">AFL源码分析计划2 -- afl-as.c</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-30T20:46:37+08:00">
+                2020-05-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-      </div>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/fuzz/" itemprop="url" rel="index">
+                    <span itemprop="name">fuzz</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>从main函数开始</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">u8* inst_ratio_str = getenv(<span class="string">"AFL_INST_RATIO"</span>);</span><br></pre></td></tr></table></figure>
+<p>先是从环境变量中拿了<code>AFL_INST_RATIO</code>，这是插入指令的密度</p>
+<a id="more"></a>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gettimeofday(&amp;tv, &amp;tz);</span><br></pre></td></tr></table></figure>
+<p>这里是根据时间和pid来随机化seed</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (inst_ratio_str) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">sscanf</span>(inst_ratio_str, <span class="string">"%u"</span>, &amp;inst_ratio) != <span class="number">1</span> || inst_ratio &gt; <span class="number">100</span>) </span><br><span class="line">    FATAL(<span class="string">"Bad value of AFL_INST_RATIO (must be between 0 and 100)"</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>把<code>inst_ratio_str</code>转为数字</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (getenv(<span class="string">"AFL_USE_ASAN"</span>) || getenv(<span class="string">"AFL_USE_MSAN"</span>)) &#123;</span><br><span class="line">  sanitizer = <span class="number">1</span>;</span><br><span class="line">  inst_ratio /= <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果使用ASAN或者MSAN的话，就会把插入指令的密度降低为1/3以加快速度。<a href="[https://z3r3f.gitee.io/2020/03/14/%E5%88%9D%E6%8E%A2ASAN%E3%80%81MSAN%E3%80%81TSAN/](https://z3r3f.gitee.io/2020/03/14/初探ASAN、MSAN、TSAN/">什么是ASAN呢</a></p>
+<p>)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!(pid = fork())) &#123;</span><br><span class="line"></span><br><span class="line">  execvp(as_params[<span class="number">0</span>], (<span class="keyword">char</span>**)as_params);</span><br><span class="line">  FATAL(<span class="string">"Oops, failed to execute '%s' - check your PATH"</span>, as_params[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果插入完指令后，会fork子进程，用来执行as，将汇编变成二进制</p>
+<p>再来看关键的函数add_instrumentation</p>
+<h2 id="add-instrumentation"><a href="#add-instrumentation" class="headerlink" title="add_instrumentation"></a>add_instrumentation</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (input_file) &#123;</span><br><span class="line"></span><br><span class="line">  inf = fopen(input_file, <span class="string">"r"</span>);</span><br><span class="line">  <span class="keyword">if</span> (!inf) PFATAL(<span class="string">"Unable to read '%s'"</span>, input_file);</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">else</span> inf = <span class="built_in">stdin</span>;</span><br></pre></td></tr></table></figure>
+<p>首先打开汇编代码文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">outfd = open(modified_file, O_WRONLY | O_EXCL | O_CREAT, <span class="number">0600</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (outfd &lt; <span class="number">0</span>) PFATAL(<span class="string">"Unable to write to '%s'"</span>, modified_file);</span><br><span class="line"></span><br><span class="line">outf = fdopen(outfd, <span class="string">"w"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!outf) PFATAL(<span class="string">"fdopen() failed"</span>);</span><br></pre></td></tr></table></figure>
+<p>再打开一个新的文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (fgets(line, MAX_LINE, inf)) &#123;</span><br></pre></td></tr></table></figure>
+<p>循环读第一行，进行判断</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!pass_thru &amp;&amp; !skip_intel &amp;&amp; !skip_app &amp;&amp; !skip_csect &amp;&amp; instr_ok &amp;&amp;</span><br><span class="line">    instrument_next &amp;&amp; line[<span class="number">0</span>] == <span class="string">'\t'</span> &amp;&amp; <span class="built_in">isalpha</span>(line[<span class="number">1</span>])) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">fprintf</span>(outf, use_64bit ? trampoline_fmt_64 : trampoline_fmt_32,</span><br><span class="line">          R(MAP_SIZE));</span><br><span class="line"></span><br><span class="line">  instrument_next = <span class="number">0</span>;</span><br><span class="line">  ins_lines++;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>进行一系列的判断，如果满足这些条件的话，就插入指令</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">fputs</span>(line, outf);</span><br></pre></td></tr></table></figure>
+<p>输出原来那一行</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (line[<span class="number">0</span>] == <span class="string">'\t'</span> &amp;&amp; line[<span class="number">1</span>] == <span class="string">'.'</span>) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* OpenBSD puts jump tables directly inline with the code, which is</span></span><br><span class="line"><span class="comment">     a bit annoying. They use a specific format of p2align directives</span></span><br><span class="line"><span class="comment">     around them, so we use that as a signal. */</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!clang_mode &amp;&amp; instr_ok &amp;&amp; !<span class="built_in">strncmp</span>(line + <span class="number">2</span>, <span class="string">"p2align "</span>, <span class="number">8</span>) &amp;&amp;</span><br><span class="line">      <span class="built_in">isdigit</span>(line[<span class="number">10</span>]) &amp;&amp; line[<span class="number">11</span>] == <span class="string">'\n'</span>) skip_next_label = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">strncmp</span>(line + <span class="number">2</span>, <span class="string">"text\n"</span>, <span class="number">5</span>) ||</span><br><span class="line">      !<span class="built_in">strncmp</span>(line + <span class="number">2</span>, <span class="string">"section\t.text"</span>, <span class="number">13</span>) ||</span><br><span class="line">      !<span class="built_in">strncmp</span>(line + <span class="number">2</span>, <span class="string">"section\t__TEXT,__text"</span>, <span class="number">21</span>) ||</span><br><span class="line">      !<span class="built_in">strncmp</span>(line + <span class="number">2</span>, <span class="string">"section __TEXT,__text"</span>, <span class="number">21</span>)) &#123;</span><br><span class="line">    instr_ok = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">continue</span>; </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">strncmp</span>(line + <span class="number">2</span>, <span class="string">"section\t"</span>, <span class="number">8</span>) ||</span><br><span class="line">      !<span class="built_in">strncmp</span>(line + <span class="number">2</span>, <span class="string">"section "</span>, <span class="number">8</span>) ||</span><br><span class="line">      !<span class="built_in">strncmp</span>(line + <span class="number">2</span>, <span class="string">"bss\n"</span>, <span class="number">4</span>) ||</span><br><span class="line">      !<span class="built_in">strncmp</span>(line + <span class="number">2</span>, <span class="string">"data\n"</span>, <span class="number">5</span>)) &#123;</span><br><span class="line">    instr_ok = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">continue</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>寻找.text段</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="built_in">strstr</span>(line, <span class="string">".code"</span>)) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">strstr</span>(line, <span class="string">".code32"</span>)) skip_csect = use_64bit;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">strstr</span>(line, <span class="string">".code64"</span>)) skip_csect = !use_64bit;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>判断32位还是64位</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这段注释大概意思是，在main函数，GCC aranch label,clang branch label,conditional branches处插入指令</span></span><br><span class="line">    <span class="comment">/* If we're in the right mood for instrumenting, check for function</span></span><br><span class="line"><span class="comment">       names or conditional labels. This is a bit messy, but in essence,</span></span><br><span class="line"><span class="comment">       we want to catch:</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">         ^main:      - function entry point (always instrumented)</span></span><br><span class="line"><span class="comment">         ^.L0:       - GCC branch label</span></span><br><span class="line"><span class="comment">         ^.LBB0_0:   - clang branch label (but only in clang mode)</span></span><br><span class="line"><span class="comment">         ^\tjnz foo  - conditional branches</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">       ...but not:</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">         ^# BB#0:    - clang comments</span></span><br><span class="line"><span class="comment">         ^ # BB#0:   - ditto</span></span><br><span class="line"><span class="comment">         ^.Ltmp0:    - clang non-branch labels</span></span><br><span class="line"><span class="comment">         ^.LC0       - GCC non-branch labels</span></span><br><span class="line"><span class="comment">         ^.LBB0_0:   - ditto (when in GCC mode)</span></span><br><span class="line"><span class="comment">         ^\tjmp foo  - non-conditional jumps</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">       Additionally, clang and GCC on MacOS X follow a different convention</span></span><br><span class="line"><span class="comment">       with no leading dots on labels, hence the weird maze of #ifdefs</span></span><br><span class="line"><span class="comment">       later on.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">     */</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (line[<span class="number">0</span>] == <span class="string">'\t'</span>) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (line[<span class="number">1</span>] == <span class="string">'j'</span> &amp;&amp; line[<span class="number">2</span>] != <span class="string">'m'</span> &amp;&amp; R(<span class="number">100</span>) &lt; inst_ratio) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">fprintf</span>(outf, use_64bit ? trampoline_fmt_64 : trampoline_fmt_32,</span><br><span class="line">            R(MAP_SIZE));</span><br><span class="line"></span><br><span class="line">    ins_lines++;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>找到<code>j</code>开头，但是每二个字母不是<code>m</code>的指令，比如<code>jne</code>,<code>jbe</code>,后面的<code>R(100)&lt;instr_ration</code>是根据概率来选择插入或者不插入。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (ins_lines)</span><br><span class="line">  <span class="built_in">fputs</span>(use_64bit ? main_payload_64 : main_payload_32, outf);</span><br></pre></td></tr></table></figure>
+<p>再往后看到这里，会插入<code>main_payload</code>(main_payload在头文件afl-as.h中)</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AFL/" rel="tag"># AFL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/28/AFL源码分析计划1/" rel="next" title="AFL源码分析计划1 -- afl-gcc.c">
+                <i class="fa fa-chevron-left"></i> AFL源码分析计划1 -- afl-gcc.c
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -339,8 +508,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -409,6 +587,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#add-instrumentation"><span class="nav-number">1.</span> <span class="nav-text">add_instrumentation</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
