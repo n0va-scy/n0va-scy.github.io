@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-05-30T13:07:08.901Z</updated>
+  <updated>2020-06-01T13:13:17.201Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AFL源码分析计划3 -- afl-as.h</title>
+    <link href="http://yoursite.com/2020/06/01/AFL%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E8%AE%A1%E5%88%923/"/>
+    <id>http://yoursite.com/2020/06/01/AFL源码分析计划3/</id>
+    <published>2020-06-01T12:49:27.598Z</published>
+    <updated>2020-06-01T13:13:17.201Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这个头文件里面放着的是汇编器编译汇编到二进制时插入的汇编代码。&lt;/p&gt;
+&lt;p&gt;这里只分析64位的&lt;/p&gt;
+&lt;h2 id=&quot;trampoline-fmt-64&quot;&gt;&lt;a href=&quot;#trampoline-fmt-64&quot; class=&quot;headerlink&quot; title=&quot;trampoline_fmt_64&quot;&gt;&lt;/a&gt;trampoline_fmt_64&lt;/h2&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; u8* trampoline_fmt_64 =&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;/* --- AFL TRAMPOLINE (64-BIT) --- */\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;.align 4\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;leaq -(128+24)(%%rsp), %%rsp\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;movq %%rdx,  0(%%rsp)\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;movq %%rcx,  8(%%rsp)\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;movq %%rax, 16(%%rsp)\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;movq $0x%08x, %%rcx\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;call __afl_maybe_log\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;movq 16(%%rsp), %%rax\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;movq  8(%%rsp), %%rcx\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;movq  0(%%rsp), %%rdx\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;leaq (128+24)(%%rsp), %%rsp\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;/* --- END --- */\n&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;\n&quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="fuzz" scheme="http://yoursite.com/categories/fuzz/"/>
+    
+    
+      <category term="AFL" scheme="http://yoursite.com/tags/AFL/"/>
+    
+  </entry>
   
   <entry>
     <title>AFL源码分析计划2 -- afl-as.c</title>
@@ -412,26 +434,6 @@
     
     
       <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>setcontext 函数</title>
-    <link href="http://yoursite.com/2020/03/14/setcontext/"/>
-    <id>http://yoursite.com/2020/03/14/setcontext/</id>
-    <published>2020-03-14T11:41:49.968Z</published>
-    <updated>2019-10-31T11:35:28.128Z</updated>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;ucontext.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setcontext&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;ucontext_t&lt;/span&gt; *ucp)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
     
   </entry>
   
