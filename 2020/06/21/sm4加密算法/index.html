@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="R4bb1t的ctf博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="概述SM4加密算法属于对称加密算法，2012年3月，国家密码管理局正式公布了包含SM4分组密码算法在内的《祖冲之序列密码算法》等6项密码行业标准。与DES和AES算法类似，SM4算法是一种分组密码算法。其分组长度为128bit，密钥长度也为128bit。加密算法与密钥扩展算法均采用32轮非线性迭代结构，以字（32位）为单位进行加密运算，每一次迭代运算均为一轮变换函数F。SM4算法加/解密算法的结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="国密加密算法sm4">
+<meta property="og:url" content="http://yoursite.com/2020/06/21/sm4加密算法/index.html">
+<meta property="og:site_name" content="R4bb1t的ctf博客">
+<meta property="og:description" content="概述SM4加密算法属于对称加密算法，2012年3月，国家密码管理局正式公布了包含SM4分组密码算法在内的《祖冲之序列密码算法》等6项密码行业标准。与DES和AES算法类似，SM4算法是一种分组密码算法。其分组长度为128bit，密钥长度也为128bit。加密算法与密钥扩展算法均采用32轮非线性迭代结构，以字（32位）为单位进行加密运算，每一次迭代运算均为一轮变换函数F。SM4算法加/解密算法的结构">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/SM4/1.png">
+<meta property="og:updated_time" content="2019-05-09T12:19:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="国密加密算法sm4">
+<meta name="twitter:description" content="概述SM4加密算法属于对称加密算法，2012年3月，国家密码管理局正式公布了包含SM4分组密码算法在内的《祖冲之序列密码算法》等6项密码行业标准。与DES和AES算法类似，SM4算法是一种分组密码算法。其分组长度为128bit，密钥长度也为128bit。加密算法与密钥扩展算法均采用32轮非线性迭代结构，以字（32位）为单位进行加密运算，每一次迭代运算均为一轮变换函数F。SM4算法加/解密算法的结构">
+<meta name="twitter:image" content="http://yoursite.com/images/SM4/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/21/sm4加密算法/">
+
+
+
+
+
+  <title>国密加密算法sm4 | R4bb1t的ctf博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">R4bb1t的ctf博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/sm4加密算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="R4bb1t">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/n0va.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R4bb1t的ctf博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">国密加密算法sm4</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
+                2020-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/crypto/" itemprop="url" rel="index">
+                    <span itemprop="name">crypto</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>SM4加密算法属于对称加密算法，2012年3月，国家密码管理局正式公布了包含SM4分组密码算法在内的《祖冲之序列密码算法》等6项密码行业标准。与DES和AES算法类似，SM4算法是一种分组密码算法。其分组长度为128bit，密钥长度也为128bit。加密算法与密钥扩展算法均采用32轮非线性迭代结构，以字（32位）为单位进行加密运算，每一次迭代运算均为一轮变换函数F。SM4算法加/解密算法的结构相同，只是使用轮密钥相反，其中解密轮密钥是加密轮密钥的逆序。</p>
+<p>SM4算法结构图：(图片来源网上)</p>
+<p><img src="\images\SM4\1.png" alt></p>
+<a id="more"></a>
+<h3 id="参数介绍"><a href="#参数介绍" class="headerlink" title="参数介绍"></a>参数介绍</h3><p>​    1、字节：由8位2进制数表示 ，字：由32位2进制数表示；</p>
+<p>​    2、S盒：固定的8bit输入、输出转换数组；</p>
+<p>​    3、加密密钥长度为128bit，表示为MK=（MK0,MK1,MK2,MK3），其中MKi为字。轮密钥表示为rki(i=0,1,2,3……31)为字。FK = (FK0,FK1,FK2,FK3)为系统 参数,CK = (CK0,CK1,CK2,……,CK31)为固定参数，都为字。</p>
+<h3 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h3><p>加密原理这里就不讲了，网上有不少详细的文章，下面直接开始算法的实现。</p>
+<p>在开始加密算法之前，先介绍几个宏定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将字符型数组b的第i到第i+3位的二进制拼接成一个4*8=32bit的整数，存入n中</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GET_ULONG_BE(n,b,i)                             \</span></span><br><span class="line">&#123;                                                       \</span><br><span class="line">    (n) = ( (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (b)[(i)    ] &lt;&lt; <span class="number">24</span> )        \</span><br><span class="line">        | ( (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (b)[(i) + <span class="number">1</span>] &lt;&lt; <span class="number">16</span> )        \</span><br><span class="line">        | ( (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (b)[(i) + <span class="number">2</span>] &lt;&lt;  <span class="number">8</span> )        \</span><br><span class="line">        | ( (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (b)[(i) + <span class="number">3</span>]       );       \</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="comment">//将整数n的32位的二进制表示转换为4个char的数组，存入数组b的第i到第i+3位</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> PUT_ULONG_BE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PUT_ULONG_BE(n,b,i)                             \</span></span><br><span class="line">&#123;                                                       \</span><br><span class="line">    (b)[(i)    ] = (<span class="keyword">unsigned</span> <span class="keyword">char</span>) ( (n) &gt;&gt; <span class="number">24</span> );       \</span><br><span class="line">    (b)[(i) + <span class="number">1</span>] = (<span class="keyword">unsigned</span> <span class="keyword">char</span>) ( (n) &gt;&gt; <span class="number">16</span> );       \</span><br><span class="line">    (b)[(i) + <span class="number">2</span>] = (<span class="keyword">unsigned</span> <span class="keyword">char</span>) ( (n) &gt;&gt;  <span class="number">8</span> );       \</span><br><span class="line">    (b)[(i) + <span class="number">3</span>] = (<span class="keyword">unsigned</span> <span class="keyword">char</span>) ( (n)       );       \</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="comment">//循环左移 的巧妙实现（SHL(x,n)可以得到左移n位之后的结果，然后与右移的结果((x) &gt;&gt; (32 - n))逐位或来将右边空缺的n位补齐，效率比较高。） </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  SHL(x,n) (((x) &amp; 0xFFFFFFFF) &lt;&lt; n)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ROTL(x,n) (SHL((x),n) | ((x) &gt;&gt; (32 - n)))</span></span><br><span class="line"><span class="comment">//交换</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SWAP(a,b) &#123; unsigned long t = a; a = b; b = t; t = 0; &#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="密钥调试算法"><a href="#密钥调试算法" class="headerlink" title="密钥调试算法"></a>密钥调试算法</h4><p>先建立一个结构体来保存上下文信息，即加密模式和各轮子密钥：(这个结构体我是定义在sm4.h头文件中)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> mode;                   <span class="comment">/*!&lt;  encrypt/decrypt   */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> sk[<span class="number">32</span>];       <span class="comment">/*!&lt;  SM4 subkeys       */</span></span><br><span class="line">&#125;</span><br><span class="line">sm4_context;</span><br></pre></td></tr></table></figure>
+<p>首先需要设置密钥，调用<code>sm4_setkey_enc(&amp;ctx,key);</code>函数，这个函数会设置mode为加密，并调用<code>sm4_setkey(ctx-&gt;sk,key);</code>函数来完成密钥的操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sm4_setkey_enc</span><span class="params">(sm4_context *ctx,<span class="keyword">unsigned</span> <span class="keyword">char</span> key[<span class="number">16</span>])</span></span>&#123;</span><br><span class="line">	ctx-&gt;mode = SM4_ENCRYPT;</span><br><span class="line">	sm4_setkey(ctx-&gt;sk,key);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sm4_setkey</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> SK[<span class="number">32</span>],<span class="keyword">unsigned</span> <span class="keyword">char</span> key[<span class="number">16</span>])</span></span>&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> MK[<span class="number">4</span>];</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> k[<span class="number">36</span>];</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//先通过宏将初始的密钥转换为4个32位bit的整数，并为计算各轮密钥预先准备好初始值</span></span><br><span class="line">	GET_ULONG_BE(MK[<span class="number">0</span>],key,<span class="number">0</span>);</span><br><span class="line">	GET_ULONG_BE(MK[<span class="number">1</span>],key,<span class="number">4</span>);</span><br><span class="line">	GET_ULONG_BE(MK[<span class="number">2</span>],key,<span class="number">8</span>);</span><br><span class="line">	GET_ULONG_BE(MK[<span class="number">3</span>],key,<span class="number">12</span>);</span><br><span class="line">	k[<span class="number">0</span>] = MK[<span class="number">0</span>]^FK[<span class="number">0</span>];</span><br><span class="line">	k[<span class="number">1</span>] = MK[<span class="number">1</span>]^FK[<span class="number">1</span>];</span><br><span class="line">	k[<span class="number">2</span>] = MK[<span class="number">2</span>]^FK[<span class="number">2</span>];</span><br><span class="line">	k[<span class="number">3</span>] = MK[<span class="number">3</span>]^FK[<span class="number">3</span>];</span><br><span class="line">	<span class="keyword">for</span>(;i&lt;<span class="number">32</span>;i++)&#123;</span><br><span class="line">		k[i+<span class="number">4</span>] = k[i]^sm4CaliRk(k[i+<span class="number">1</span>]^k[i+<span class="number">2</span>]^k[i+<span class="number">3</span>]^CK[i]);</span><br><span class="line">		SK[i] = k[i+<span class="number">4</span>];</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于第i轮的密钥SK[i]，其是由k[i]和对k[i+1]^k[i+2]^k[i+3]^CK[i]的复合变换T‘异或得到的：</p>
+<p><code>SK[i] = k[i+4] = k[i]^sm4CaliRk(k[i+1]^k[i+2]^k[i+3]^CK[i]);</code>函数<code>sm4CaliRk</code>就是变换T’,先进行Sbox的非线性替换，然后进行线性变换，线性变换L为：<code>rk = bb^(ROTL(bb, 13))^(ROTL(bb, 23));</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">sm4CaliRk</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> ka)</span></span>&#123; <span class="comment">//复合变换T</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> bb = <span class="number">0</span>; <span class="comment">//unsigned long 4字节( 32bit ) </span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> rk = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> a[<span class="number">4</span>];</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> b[<span class="number">4</span>];</span><br><span class="line">	PUT_ULONG_BE(ka,a,<span class="number">0</span>)  <span class="comment">//换转成8bit一个字符 </span></span><br><span class="line">	b[<span class="number">0</span>] = sm4Sbox(a[<span class="number">0</span>]);</span><br><span class="line">    b[<span class="number">1</span>] = sm4Sbox(a[<span class="number">1</span>]);</span><br><span class="line">    b[<span class="number">2</span>] = sm4Sbox(a[<span class="number">2</span>]);</span><br><span class="line">    b[<span class="number">3</span>] = sm4Sbox(a[<span class="number">3</span>]);</span><br><span class="line">	GET_ULONG_BE(bb,b,<span class="number">0</span>)  <span class="comment">//将变换结果转换为32bit的整数</span></span><br><span class="line">	<span class="comment">//对得到的32位整数bb进行线性变换	</span></span><br><span class="line">	rk = bb^ROTL(bb,<span class="number">13</span>)^ROTL(bb,<span class="number">23</span>);</span><br><span class="line">	<span class="keyword">return</span> rk;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至此，密钥就已经生成了</p>
+<h4 id="加密过程"><a href="#加密过程" class="headerlink" title="加密过程"></a>加密过程</h4><p>调用函数<code>void sm4_crypt_ecb( sm4_context *ctx,
+                   int mode,
+                   int length,
+                   unsigned char *input,
+                   unsigned char *output)</code>对密文input进行电码本模式加密(ECB)，加密的核心是调用了<code>static void sm4_one_round( unsigned long sk[32],
+                    unsigned char input[16],
+                    unsigned char output[16] )</code>函数对第一块密文进行加密</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sm4_crypt_ecb</span><span class="params">( sm4_context *ctx,</span></span></span><br><span class="line"><span class="function"><span class="params">				   <span class="keyword">int</span> mode,</span></span></span><br><span class="line"><span class="function"><span class="params">				   <span class="keyword">int</span> length,</span></span></span><br><span class="line"><span class="function"><span class="params">				   <span class="keyword">unsigned</span> <span class="keyword">char</span> *input,</span></span></span><br><span class="line"><span class="function"><span class="params">                   <span class="keyword">unsigned</span> <span class="keyword">char</span> *output)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>( length &gt; <span class="number">0</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        sm4_one_round( ctx-&gt;sk, input, output );</span><br><span class="line">        input  += <span class="number">16</span>;</span><br><span class="line">        output += <span class="number">16</span>;</span><br><span class="line">        length -= <span class="number">16</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sm4_one_round</span><span class="params">( <span class="keyword">unsigned</span> <span class="keyword">long</span> sk[<span class="number">32</span>],</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">unsigned</span> <span class="keyword">char</span> input[<span class="number">16</span>],</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">unsigned</span> <span class="keyword">char</span> output[<span class="number">16</span>] )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> ulbuf[<span class="number">36</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">memset</span>(ulbuf, <span class="number">0</span>, <span class="keyword">sizeof</span>(ulbuf));</span><br><span class="line">    GET_ULONG_BE( ulbuf[<span class="number">0</span>], input, <span class="number">0</span> )</span><br><span class="line">    GET_ULONG_BE( ulbuf[<span class="number">1</span>], input, <span class="number">4</span> )</span><br><span class="line">    GET_ULONG_BE( ulbuf[<span class="number">2</span>], input, <span class="number">8</span> )</span><br><span class="line">    GET_ULONG_BE( ulbuf[<span class="number">3</span>], input, <span class="number">12</span> )</span><br><span class="line">    <span class="keyword">while</span>(i&lt;<span class="number">32</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ulbuf[i+<span class="number">4</span>] = sm4F(ulbuf[i], ulbuf[i+<span class="number">1</span>], ulbuf[i+<span class="number">2</span>], ulbuf[i+<span class="number">3</span>], sk[i]);</span><br><span class="line"><span class="comment">// #ifdef _DEBUG</span></span><br><span class="line"><span class="comment">//          printf("rk(%02d) = 0x%08x,  X(%02d) = 0x%08x \n",i,sk[i], i, ulbuf[i+4] );</span></span><br><span class="line"><span class="comment">// #endif</span></span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">    PUT_ULONG_BE(ulbuf[<span class="number">35</span>],output,<span class="number">0</span>);</span><br><span class="line">    PUT_ULONG_BE(ulbuf[<span class="number">34</span>],output,<span class="number">4</span>);</span><br><span class="line">    PUT_ULONG_BE(ulbuf[<span class="number">33</span>],output,<span class="number">8</span>);</span><br><span class="line">    PUT_ULONG_BE(ulbuf[<span class="number">32</span>],output,<span class="number">12</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>sm4_one_round()函数中，先将128位的输入input转为四个32位的整数，放入ulbuf[4]中，然后迭代地调用函数<code>static unsigned long sm4F(unsigned long x0, unsigned long x1, unsigned long x2, unsigned long x3, unsigned long rk)</code>进行32轮加密，第一轮加密都需要使用之前的128位的结果ulbuf[i], ulbuf[i+1], ulbuf[i+2], ulbuf[i+3]和该轮的密钥 sk[i]，产生出该轮的密文ulbuf[i+4]，最后的密文存储在ulbuf[35]~ulbuf[32]中，转换为字符数组形式放入output 中。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一轮加密 </span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">sm4F</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> x0, <span class="keyword">unsigned</span> <span class="keyword">long</span> x1, <span class="keyword">unsigned</span> <span class="keyword">long</span> x2, <span class="keyword">unsigned</span> <span class="keyword">long</span> x3, <span class="keyword">unsigned</span> <span class="keyword">long</span> rk)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (x0^sm4Lt(x1^x2^x3^rk));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>sm4Lt()是一个合成变换，由非线性变换t和线性变换L复合而成：首先将输入的整数 ka 转换为8比特一个的字符，然后使用S盒进行线性变换，再将变换结果转为32比特的整数，最后对得到的32位整数bb进行线性变换：<code>c =bb^(ROTL(bb, 2))^(ROTL(bb, 10))^(ROTL(bb, 18))^(ROTL(bb, 24));</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">sm4Lt</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> ka)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> bb = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> c = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> a[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> b[<span class="number">4</span>];</span><br><span class="line">    PUT_ULONG_BE(ka,a,<span class="number">0</span>)</span><br><span class="line"><span class="comment">//    b[0] = sm4Sbox(a[0]);</span></span><br><span class="line"><span class="comment">//    b[1] = sm4Sbox(a[1]);</span></span><br><span class="line"><span class="comment">//    b[2] = sm4Sbox(a[2]);</span></span><br><span class="line"><span class="comment">//    b[3] = sm4Sbox(a[3]);</span></span><br><span class="line">    b[<span class="number">0</span>] = Sbox[a[<span class="number">0</span>]];</span><br><span class="line">    b[<span class="number">1</span>] = Sbox[a[<span class="number">1</span>]];</span><br><span class="line">    b[<span class="number">2</span>] = Sbox[a[<span class="number">2</span>]];</span><br><span class="line">    b[<span class="number">3</span>] = Sbox[a[<span class="number">3</span>]];</span><br><span class="line">    GET_ULONG_BE(bb,b,<span class="number">0</span>)</span><br><span class="line">    c =bb^(ROTL(bb, <span class="number">2</span>))^(ROTL(bb, <span class="number">10</span>))^(ROTL(bb, <span class="number">18</span>))^(ROTL(bb, <span class="number">24</span>));</span><br><span class="line">    <span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>整个加密过程就结束了，不过上面提到的是ECB的加密模式：又称电子密码本模式：Electronic codebook，是最简单的块密码加密模式，加密前根据加密块大小（如AES为128位）分成若干块，之后将每块使用相同的密钥单独加密，解密同理。这种加密不能很好地隐藏数据模式。</p>
+<p>SM4常见的也有另一种加密模式：CBC：密码分组链接（CBC，Cipher-block chaining）模式，由IBM于1976年发明，每个明文块先与前一个密文块进行异或后，再进行加密。在这种方法中，每个密文块都依赖于它前面的所有明文块。同时，为了保证每条消息的唯一性，在第一个块中需要使用初始化向量IV。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//CBC模式加解密 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sm4_crypt_cbc</span><span class="params">( sm4_context *ctx,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">int</span> mode,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">int</span> length,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">unsigned</span> <span class="keyword">char</span> iv[<span class="number">16</span>],</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">unsigned</span> <span class="keyword">char</span> *input,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">unsigned</span> <span class="keyword">char</span> *output )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> temp[<span class="number">16</span>];</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span>( mode == SM4_ENCRYPT )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>( length &gt; <span class="number">0</span> )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>( i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++ )</span><br><span class="line">                output[i] = (<span class="keyword">unsigned</span> <span class="keyword">char</span>)( input[i] ^ iv[i] );</span><br><span class="line"> </span><br><span class="line">            sm4_one_round( ctx-&gt;sk, output, output );</span><br><span class="line">            <span class="built_in">memcpy</span>( iv, output, <span class="number">16</span> );</span><br><span class="line"> </span><br><span class="line">            input  += <span class="number">16</span>;</span><br><span class="line">            output += <span class="number">16</span>;</span><br><span class="line">            length -= <span class="number">16</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="comment">/* SM4_DECRYPT */</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>( length &gt; <span class="number">0</span> )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">memcpy</span>( temp, input, <span class="number">16</span> );</span><br><span class="line">            sm4_one_round( ctx-&gt;sk, input, output );</span><br><span class="line"> </span><br><span class="line">            <span class="keyword">for</span>( i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++ )</span><br><span class="line">                output[i] = (<span class="keyword">unsigned</span> <span class="keyword">char</span>)( output[i] ^ iv[i] );</span><br><span class="line"> </span><br><span class="line">            <span class="built_in">memcpy</span>( iv, temp, <span class="number">16</span> );</span><br><span class="line"> </span><br><span class="line">            input  += <span class="number">16</span>;</span><br><span class="line">            output += <span class="number">16</span>;</span><br><span class="line">            length -= <span class="number">16</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="解密过程"><a href="#解密过程" class="headerlink" title="解密过程"></a>解密过程</h3><p>解密前，首先要通过void sm4_setkey_dec( sm4_context *ctx, unsigned char key[16] )函数设定解密时使用的key，这个函数还会将密钥的顺序倒置，然后调用sm4_crypt_ecb()即可解密。</p>
+<p>实际上，SM4的解密变换与加密变换结构相同，不同的仅仅是轮密钥的使用顺序相反。</p>
+<h3 id="完整的代码"><a href="#完整的代码" class="headerlink" title="完整的代码"></a>完整的代码</h3><p>sm4.h文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * \file sm4.h</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> XYSSL_SM4_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> XYSSL_SM4_H</span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SM4_ENCRYPT     1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SM4_DECRYPT     0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GET_ULONG_BE</span></span><br><span class="line"><span class="comment">//将字符型数组b的第i到第i+3位的二进制拼接成一个4*8=32bit的整数，存入n中</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> GET_ULONG_BE(n,b,i)                             \</span></span><br><span class="line">&#123;                                                       \</span><br><span class="line">    (n) = ( (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (b)[(i)    ] &lt;&lt; <span class="number">24</span> )        \</span><br><span class="line">        | ( (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (b)[(i) + <span class="number">1</span>] &lt;&lt; <span class="number">16</span> )        \</span><br><span class="line">        | ( (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (b)[(i) + <span class="number">2</span>] &lt;&lt;  <span class="number">8</span> )        \</span><br><span class="line">        | ( (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (b)[(i) + <span class="number">3</span>]       );       \</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="comment">//将整数n的32位的二进制表示转换为4个char的数组，存入数组b的第i到第i+3位</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> PUT_ULONG_BE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PUT_ULONG_BE(n,b,i)                             \</span></span><br><span class="line">&#123;                                                       \</span><br><span class="line">    (b)[(i)    ] = (<span class="keyword">unsigned</span> <span class="keyword">char</span>) ( (n) &gt;&gt; <span class="number">24</span> );       \</span><br><span class="line">    (b)[(i) + <span class="number">1</span>] = (<span class="keyword">unsigned</span> <span class="keyword">char</span>) ( (n) &gt;&gt; <span class="number">16</span> );       \</span><br><span class="line">    (b)[(i) + <span class="number">2</span>] = (<span class="keyword">unsigned</span> <span class="keyword">char</span>) ( (n) &gt;&gt;  <span class="number">8</span> );       \</span><br><span class="line">    (b)[(i) + <span class="number">3</span>] = (<span class="keyword">unsigned</span> <span class="keyword">char</span>) ( (n)       );       \</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="comment">//循环左移 的巧妙实现（SHL(x,n)可以得到左移n位之后的结果，然后与右移的结果((x) &gt;&gt; (32 - n))逐位或来将右边空缺的n位补齐，效率比较高。） </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  SHL(x,n) (((x) &amp; 0xFFFFFFFF) &lt;&lt; n)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ROTL(x,n) (SHL((x),n) | ((x) &gt;&gt; (32 - n)))</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SWAP(a,b) &#123; unsigned long t = a; a = b; b = t; t = 0; &#125;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * \brief          SM4 context structure</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> mode;                   <span class="comment">/*!&lt;  encrypt/decrypt   */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> sk[<span class="number">32</span>];       <span class="comment">/*!&lt;  SM4 subkeys       */</span></span><br><span class="line">&#125;</span><br><span class="line">sm4_context;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> &#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * \brief          SM4 key schedule (128-bit, encryption)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * \param ctx      SM4 context to be initialized</span></span><br><span class="line"><span class="comment"> * \param key      16-byte secret key</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sm4_setkey_enc</span><span class="params">( sm4_context *ctx, <span class="keyword">unsigned</span> <span class="keyword">char</span> key[<span class="number">16</span>] )</span></span>;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * \brief          SM4 key schedule (128-bit, decryption)</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * \param ctx      SM4 context to be initialized</span></span><br><span class="line"><span class="comment"> * \param key      16-byte secret key</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sm4_setkey_dec</span><span class="params">( sm4_context *ctx, <span class="keyword">unsigned</span> <span class="keyword">char</span> key[<span class="number">16</span>] )</span></span>;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * \brief          SM4-ECB block encryption/decryption</span></span><br><span class="line"><span class="comment"> * \param ctx      SM4 context</span></span><br><span class="line"><span class="comment"> * \param mode     SM4_ENCRYPT or SM4_DECRYPT</span></span><br><span class="line"><span class="comment"> * \param length   length of the input data</span></span><br><span class="line"><span class="comment"> * \param input    input block</span></span><br><span class="line"><span class="comment"> * \param output   output block</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sm4_crypt_ecb</span><span class="params">( sm4_context *ctx,</span></span></span><br><span class="line"><span class="function"><span class="params">				     <span class="keyword">int</span> mode,</span></span></span><br><span class="line"><span class="function"><span class="params">					 <span class="keyword">int</span> length,</span></span></span><br><span class="line"><span class="function"><span class="params">                     <span class="keyword">unsigned</span> <span class="keyword">char</span> *input,</span></span></span><br><span class="line"><span class="function"><span class="params">                     <span class="keyword">unsigned</span> <span class="keyword">char</span> *output)</span></span>;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * \brief          SM4-CBC buffer encryption/decryption</span></span><br><span class="line"><span class="comment"> * \param ctx      SM4 context</span></span><br><span class="line"><span class="comment"> * \param mode     SM4_ENCRYPT or SM4_DECRYPT</span></span><br><span class="line"><span class="comment"> * \param length   length of the input data</span></span><br><span class="line"><span class="comment"> * \param iv       initialization vector (updated after use)</span></span><br><span class="line"><span class="comment"> * \param input    buffer holding the input data</span></span><br><span class="line"><span class="comment"> * \param output   buffer holding the output data</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sm4_crypt_cbc</span><span class="params">( sm4_context *ctx,</span></span></span><br><span class="line"><span class="function"><span class="params">                     <span class="keyword">int</span> mode,</span></span></span><br><span class="line"><span class="function"><span class="params">                     <span class="keyword">int</span> length,</span></span></span><br><span class="line"><span class="function"><span class="params">                     <span class="keyword">unsigned</span> <span class="keyword">char</span> iv[<span class="number">16</span>],</span></span></span><br><span class="line"><span class="function"><span class="params">                     <span class="keyword">unsigned</span> <span class="keyword">char</span> *input,</span></span></span><br><span class="line"><span class="function"><span class="params">                     <span class="keyword">unsigned</span> <span class="keyword">char</span> *output )</span></span>;</span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"> </span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* sm4.h */</span></span></span><br></pre></td></tr></table></figure>
+<p>sm4.cpp</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"sm4.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"><span class="comment">//S盒 </span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> Sbox[<span class="number">256</span>] = &#123;  </span><br><span class="line">    <span class="number">0xd6</span>,<span class="number">0x90</span>,<span class="number">0xe9</span>,<span class="number">0xfe</span>,<span class="number">0xcc</span>,<span class="number">0xe1</span>,<span class="number">0x3d</span>,<span class="number">0xb7</span>,<span class="number">0x16</span>,<span class="number">0xb6</span>,<span class="number">0x14</span>,<span class="number">0xc2</span>,<span class="number">0x28</span>,<span class="number">0xfb</span>,<span class="number">0x2c</span>,<span class="number">0x05</span>,  </span><br><span class="line">    <span class="number">0x2b</span>,<span class="number">0x67</span>,<span class="number">0x9a</span>,<span class="number">0x76</span>,<span class="number">0x2a</span>,<span class="number">0xbe</span>,<span class="number">0x04</span>,<span class="number">0xc3</span>,<span class="number">0xaa</span>,<span class="number">0x44</span>,<span class="number">0x13</span>,<span class="number">0x26</span>,<span class="number">0x49</span>,<span class="number">0x86</span>,<span class="number">0x06</span>,<span class="number">0x99</span>,  </span><br><span class="line">    <span class="number">0x9c</span>,<span class="number">0x42</span>,<span class="number">0x50</span>,<span class="number">0xf4</span>,<span class="number">0x91</span>,<span class="number">0xef</span>,<span class="number">0x98</span>,<span class="number">0x7a</span>,<span class="number">0x33</span>,<span class="number">0x54</span>,<span class="number">0x0b</span>,<span class="number">0x43</span>,<span class="number">0xed</span>,<span class="number">0xcf</span>,<span class="number">0xac</span>,<span class="number">0x62</span>,  </span><br><span class="line">    <span class="number">0xe4</span>,<span class="number">0xb3</span>,<span class="number">0x1c</span>,<span class="number">0xa9</span>,<span class="number">0xc9</span>,<span class="number">0x08</span>,<span class="number">0xe8</span>,<span class="number">0x95</span>,<span class="number">0x80</span>,<span class="number">0xdf</span>,<span class="number">0x94</span>,<span class="number">0xfa</span>,<span class="number">0x75</span>,<span class="number">0x8f</span>,<span class="number">0x3f</span>,<span class="number">0xa6</span>,  </span><br><span class="line">    <span class="number">0x47</span>,<span class="number">0x07</span>,<span class="number">0xa7</span>,<span class="number">0xfc</span>,<span class="number">0xf3</span>,<span class="number">0x73</span>,<span class="number">0x17</span>,<span class="number">0xba</span>,<span class="number">0x83</span>,<span class="number">0x59</span>,<span class="number">0x3c</span>,<span class="number">0x19</span>,<span class="number">0xe6</span>,<span class="number">0x85</span>,<span class="number">0x4f</span>,<span class="number">0xa8</span>,  </span><br><span class="line">    <span class="number">0x68</span>,<span class="number">0x6b</span>,<span class="number">0x81</span>,<span class="number">0xb2</span>,<span class="number">0x71</span>,<span class="number">0x64</span>,<span class="number">0xda</span>,<span class="number">0x8b</span>,<span class="number">0xf8</span>,<span class="number">0xeb</span>,<span class="number">0x0f</span>,<span class="number">0x4b</span>,<span class="number">0x70</span>,<span class="number">0x56</span>,<span class="number">0x9d</span>,<span class="number">0x35</span>,  </span><br><span class="line">    <span class="number">0x1e</span>,<span class="number">0x24</span>,<span class="number">0x0e</span>,<span class="number">0x5e</span>,<span class="number">0x63</span>,<span class="number">0x58</span>,<span class="number">0xd1</span>,<span class="number">0xa2</span>,<span class="number">0x25</span>,<span class="number">0x22</span>,<span class="number">0x7c</span>,<span class="number">0x3b</span>,<span class="number">0x01</span>,<span class="number">0x21</span>,<span class="number">0x78</span>,<span class="number">0x87</span>,  </span><br><span class="line">    <span class="number">0xd4</span>,<span class="number">0x00</span>,<span class="number">0x46</span>,<span class="number">0x57</span>,<span class="number">0x9f</span>,<span class="number">0xd3</span>,<span class="number">0x27</span>,<span class="number">0x52</span>,<span class="number">0x4c</span>,<span class="number">0x36</span>,<span class="number">0x02</span>,<span class="number">0xe7</span>,<span class="number">0xa0</span>,<span class="number">0xc4</span>,<span class="number">0xc8</span>,<span class="number">0x9e</span>,  </span><br><span class="line">    <span class="number">0xea</span>,<span class="number">0xbf</span>,<span class="number">0x8a</span>,<span class="number">0xd2</span>,<span class="number">0x40</span>,<span class="number">0xc7</span>,<span class="number">0x38</span>,<span class="number">0xb5</span>,<span class="number">0xa3</span>,<span class="number">0xf7</span>,<span class="number">0xf2</span>,<span class="number">0xce</span>,<span class="number">0xf9</span>,<span class="number">0x61</span>,<span class="number">0x15</span>,<span class="number">0xa1</span>,  </span><br><span class="line">    <span class="number">0xe0</span>,<span class="number">0xae</span>,<span class="number">0x5d</span>,<span class="number">0xa4</span>,<span class="number">0x9b</span>,<span class="number">0x34</span>,<span class="number">0x1a</span>,<span class="number">0x55</span>,<span class="number">0xad</span>,<span class="number">0x93</span>,<span class="number">0x32</span>,<span class="number">0x30</span>,<span class="number">0xf5</span>,<span class="number">0x8c</span>,<span class="number">0xb1</span>,<span class="number">0xe3</span>,  </span><br><span class="line">    <span class="number">0x1d</span>,<span class="number">0xf6</span>,<span class="number">0xe2</span>,<span class="number">0x2e</span>,<span class="number">0x82</span>,<span class="number">0x66</span>,<span class="number">0xca</span>,<span class="number">0x60</span>,<span class="number">0xc0</span>,<span class="number">0x29</span>,<span class="number">0x23</span>,<span class="number">0xab</span>,<span class="number">0x0d</span>,<span class="number">0x53</span>,<span class="number">0x4e</span>,<span class="number">0x6f</span>,  </span><br><span class="line">    <span class="number">0xd5</span>,<span class="number">0xdb</span>,<span class="number">0x37</span>,<span class="number">0x45</span>,<span class="number">0xde</span>,<span class="number">0xfd</span>,<span class="number">0x8e</span>,<span class="number">0x2f</span>,<span class="number">0x03</span>,<span class="number">0xff</span>,<span class="number">0x6a</span>,<span class="number">0x72</span>,<span class="number">0x6d</span>,<span class="number">0x6c</span>,<span class="number">0x5b</span>,<span class="number">0x51</span>,  </span><br><span class="line">    <span class="number">0x8d</span>,<span class="number">0x1b</span>,<span class="number">0xaf</span>,<span class="number">0x92</span>,<span class="number">0xbb</span>,<span class="number">0xdd</span>,<span class="number">0xbc</span>,<span class="number">0x7f</span>,<span class="number">0x11</span>,<span class="number">0xd9</span>,<span class="number">0x5c</span>,<span class="number">0x41</span>,<span class="number">0x1f</span>,<span class="number">0x10</span>,<span class="number">0x5a</span>,<span class="number">0xd8</span>,  </span><br><span class="line">    <span class="number">0x0a</span>,<span class="number">0xc1</span>,<span class="number">0x31</span>,<span class="number">0x88</span>,<span class="number">0xa5</span>,<span class="number">0xcd</span>,<span class="number">0x7b</span>,<span class="number">0xbd</span>,<span class="number">0x2d</span>,<span class="number">0x74</span>,<span class="number">0xd0</span>,<span class="number">0x12</span>,<span class="number">0xb8</span>,<span class="number">0xe5</span>,<span class="number">0xb4</span>,<span class="number">0xb0</span>,  </span><br><span class="line">    <span class="number">0x89</span>,<span class="number">0x69</span>,<span class="number">0x97</span>,<span class="number">0x4a</span>,<span class="number">0x0c</span>,<span class="number">0x96</span>,<span class="number">0x77</span>,<span class="number">0x7e</span>,<span class="number">0x65</span>,<span class="number">0xb9</span>,<span class="number">0xf1</span>,<span class="number">0x09</span>,<span class="number">0xc5</span>,<span class="number">0x6e</span>,<span class="number">0xc6</span>,<span class="number">0x84</span>,  </span><br><span class="line">    <span class="number">0x18</span>,<span class="number">0xf0</span>,<span class="number">0x7d</span>,<span class="number">0xec</span>,<span class="number">0x3a</span>,<span class="number">0xdc</span>,<span class="number">0x4d</span>,<span class="number">0x20</span>,<span class="number">0x79</span>,<span class="number">0xee</span>,<span class="number">0x5f</span>,<span class="number">0x3e</span>,<span class="number">0xd7</span>,<span class="number">0xcb</span>,<span class="number">0x39</span>,<span class="number">0x48</span>  </span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//CK为固定参数 </span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> CK[<span class="number">32</span>] = &#123;  </span><br><span class="line">    <span class="number">0x00070e15</span>, <span class="number">0x1c232a31</span>, <span class="number">0x383f464d</span>, <span class="number">0x545b6269</span>,  </span><br><span class="line">    <span class="number">0x70777e85</span>, <span class="number">0x8c939aa1</span>, <span class="number">0xa8afb6bd</span>, <span class="number">0xc4cbd2d9</span>,  </span><br><span class="line">    <span class="number">0xe0e7eef5</span>, <span class="number">0xfc030a11</span>, <span class="number">0x181f262d</span>, <span class="number">0x343b4249</span>,  </span><br><span class="line">    <span class="number">0x50575e65</span>, <span class="number">0x6c737a81</span>, <span class="number">0x888f969d</span>, <span class="number">0xa4abb2b9</span>,  </span><br><span class="line">    <span class="number">0xc0c7ced5</span>, <span class="number">0xdce3eaf1</span>, <span class="number">0xf8ff060d</span>, <span class="number">0x141b2229</span>,  </span><br><span class="line">    <span class="number">0x30373e45</span>, <span class="number">0x4c535a61</span>, <span class="number">0x686f767d</span>, <span class="number">0x848b9299</span>,  </span><br><span class="line">    <span class="number">0xa0a7aeb5</span>, <span class="number">0xbcc3cad1</span>, <span class="number">0xd8dfe6ed</span>, <span class="number">0xf4fb0209</span>,  </span><br><span class="line">    <span class="number">0x10171e25</span>, <span class="number">0x2c333a41</span>, <span class="number">0x484f565d</span>, <span class="number">0x646b7279</span> &#125;;</span><br><span class="line"><span class="comment">//FK为系统参数 </span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> FK[<span class="number">4</span>] = &#123;<span class="number">0xa3b1bac6</span>,<span class="number">0x56aa3350</span>,<span class="number">0x677d9197</span>,<span class="number">0xb27022dc</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> <span class="title">sm4Sbox</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span> inch)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> *pTable = (<span class="keyword">unsigned</span> <span class="keyword">char</span> *)Sbox;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> retVal = (<span class="keyword">unsigned</span> <span class="keyword">char</span>)(pTable[inch]);</span><br><span class="line">    <span class="keyword">return</span> retVal;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//已知加密密钥MK，求轮转密钥rk</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">sm4CaliRk</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> ka)</span></span>&#123; <span class="comment">//复合变换T</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> bb = <span class="number">0</span>; <span class="comment">//unsigned long 4字节( 32bit ) </span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> rk = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> a[<span class="number">4</span>];</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> b[<span class="number">4</span>];</span><br><span class="line">	PUT_ULONG_BE(ka,a,<span class="number">0</span>)  <span class="comment">//换转成8bit一个字符 </span></span><br><span class="line">	b[<span class="number">0</span>] = sm4Sbox(a[<span class="number">0</span>]);</span><br><span class="line">    b[<span class="number">1</span>] = sm4Sbox(a[<span class="number">1</span>]);</span><br><span class="line">    b[<span class="number">2</span>] = sm4Sbox(a[<span class="number">2</span>]);</span><br><span class="line">    b[<span class="number">3</span>] = sm4Sbox(a[<span class="number">3</span>]);</span><br><span class="line">	GET_ULONG_BE(bb,b,<span class="number">0</span>)  <span class="comment">//将变换结果转换为32bit的整数</span></span><br><span class="line">	<span class="comment">//对得到的32位整数bb进行线性变换	</span></span><br><span class="line">	rk = bb^ROTL(bb,<span class="number">13</span>)^ROTL(bb,<span class="number">23</span>);</span><br><span class="line">	<span class="keyword">return</span> rk;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sm4_setkey</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> SK[<span class="number">32</span>],<span class="keyword">unsigned</span> <span class="keyword">char</span> key[<span class="number">16</span>])</span></span>&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> MK[<span class="number">4</span>];</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> k[<span class="number">36</span>];</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> i = <span class="number">0</span>;</span><br><span class="line">	GET_ULONG_BE(MK[<span class="number">0</span>],key,<span class="number">0</span>);</span><br><span class="line">	GET_ULONG_BE(MK[<span class="number">1</span>],key,<span class="number">4</span>);</span><br><span class="line">	GET_ULONG_BE(MK[<span class="number">2</span>],key,<span class="number">8</span>);</span><br><span class="line">	GET_ULONG_BE(MK[<span class="number">3</span>],key,<span class="number">12</span>);</span><br><span class="line">	k[<span class="number">0</span>] = MK[<span class="number">0</span>]^FK[<span class="number">0</span>];</span><br><span class="line">	k[<span class="number">1</span>] = MK[<span class="number">1</span>]^FK[<span class="number">1</span>];</span><br><span class="line">	k[<span class="number">2</span>] = MK[<span class="number">2</span>]^FK[<span class="number">2</span>];</span><br><span class="line">	k[<span class="number">3</span>] = MK[<span class="number">3</span>]^FK[<span class="number">3</span>];</span><br><span class="line">	<span class="keyword">for</span>(;i&lt;<span class="number">32</span>;i++)&#123;</span><br><span class="line">		k[i+<span class="number">4</span>] = k[i]^sm4CaliRk(k[i+<span class="number">1</span>]^k[i+<span class="number">2</span>]^k[i+<span class="number">3</span>]^CK[i]);</span><br><span class="line">		SK[i] = k[i+<span class="number">4</span>];</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sm4_setkey_enc</span><span class="params">(sm4_context *ctx,<span class="keyword">unsigned</span> <span class="keyword">char</span> key[<span class="number">16</span>])</span></span>&#123;</span><br><span class="line">	ctx-&gt;mode = SM4_ENCRYPT;</span><br><span class="line">	sm4_setkey(ctx-&gt;sk,key);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">sm4Lt</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> ka)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> bb = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> c = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> a[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> b[<span class="number">4</span>];</span><br><span class="line">    PUT_ULONG_BE(ka,a,<span class="number">0</span>)</span><br><span class="line"><span class="comment">//    b[0] = sm4Sbox(a[0]);</span></span><br><span class="line"><span class="comment">//    b[1] = sm4Sbox(a[1]);</span></span><br><span class="line"><span class="comment">//    b[2] = sm4Sbox(a[2]);</span></span><br><span class="line"><span class="comment">//    b[3] = sm4Sbox(a[3]);</span></span><br><span class="line">    b[<span class="number">0</span>] = Sbox[a[<span class="number">0</span>]];</span><br><span class="line">    b[<span class="number">1</span>] = Sbox[a[<span class="number">1</span>]];</span><br><span class="line">    b[<span class="number">2</span>] = Sbox[a[<span class="number">2</span>]];</span><br><span class="line">    b[<span class="number">3</span>] = Sbox[a[<span class="number">3</span>]];</span><br><span class="line">    GET_ULONG_BE(bb,b,<span class="number">0</span>)</span><br><span class="line">    c =bb^(ROTL(bb, <span class="number">2</span>))^(ROTL(bb, <span class="number">10</span>))^(ROTL(bb, <span class="number">18</span>))^(ROTL(bb, <span class="number">24</span>));</span><br><span class="line">    <span class="keyword">return</span> c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//一轮加密 </span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">sm4F</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> x0, <span class="keyword">unsigned</span> <span class="keyword">long</span> x1, <span class="keyword">unsigned</span> <span class="keyword">long</span> x2, <span class="keyword">unsigned</span> <span class="keyword">long</span> x3, <span class="keyword">unsigned</span> <span class="keyword">long</span> rk)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (x0^sm4Lt(x1^x2^x3^rk));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sm4_one_round</span><span class="params">( <span class="keyword">unsigned</span> <span class="keyword">long</span> sk[<span class="number">32</span>],</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">unsigned</span> <span class="keyword">char</span> input[<span class="number">16</span>],</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">unsigned</span> <span class="keyword">char</span> output[<span class="number">16</span>] )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> ulbuf[<span class="number">36</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">memset</span>(ulbuf, <span class="number">0</span>, <span class="keyword">sizeof</span>(ulbuf));</span><br><span class="line">    GET_ULONG_BE( ulbuf[<span class="number">0</span>], input, <span class="number">0</span> )</span><br><span class="line">    GET_ULONG_BE( ulbuf[<span class="number">1</span>], input, <span class="number">4</span> )</span><br><span class="line">    GET_ULONG_BE( ulbuf[<span class="number">2</span>], input, <span class="number">8</span> )</span><br><span class="line">    GET_ULONG_BE( ulbuf[<span class="number">3</span>], input, <span class="number">12</span> )</span><br><span class="line">    <span class="keyword">while</span>(i&lt;<span class="number">32</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ulbuf[i+<span class="number">4</span>] = sm4F(ulbuf[i], ulbuf[i+<span class="number">1</span>], ulbuf[i+<span class="number">2</span>], ulbuf[i+<span class="number">3</span>], sk[i]);</span><br><span class="line"><span class="comment">// #ifdef _DEBUG</span></span><br><span class="line"><span class="comment">//          printf("rk(%02d) = 0x%08x,  X(%02d) = 0x%08x \n",i,sk[i], i, ulbuf[i+4] );</span></span><br><span class="line"><span class="comment">// #endif</span></span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">    PUT_ULONG_BE(ulbuf[<span class="number">35</span>],output,<span class="number">0</span>);</span><br><span class="line">    PUT_ULONG_BE(ulbuf[<span class="number">34</span>],output,<span class="number">4</span>);</span><br><span class="line">    PUT_ULONG_BE(ulbuf[<span class="number">33</span>],output,<span class="number">8</span>);</span><br><span class="line">    PUT_ULONG_BE(ulbuf[<span class="number">32</span>],output,<span class="number">12</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//ECB模式 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sm4_crypt_ecb</span><span class="params">( sm4_context *ctx,</span></span></span><br><span class="line"><span class="function"><span class="params">				   <span class="keyword">int</span> mode,</span></span></span><br><span class="line"><span class="function"><span class="params">				   <span class="keyword">int</span> length,</span></span></span><br><span class="line"><span class="function"><span class="params">				   <span class="keyword">unsigned</span> <span class="keyword">char</span> *input,</span></span></span><br><span class="line"><span class="function"><span class="params">                   <span class="keyword">unsigned</span> <span class="keyword">char</span> *output)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>( length &gt; <span class="number">0</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        sm4_one_round( ctx-&gt;sk, input, output );</span><br><span class="line">        input  += <span class="number">16</span>;</span><br><span class="line">        output += <span class="number">16</span>;</span><br><span class="line">        length -= <span class="number">16</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//ECB模式解密密钥 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sm4_setkey_dec</span><span class="params">( sm4_context *ctx, <span class="keyword">unsigned</span> <span class="keyword">char</span> key[<span class="number">16</span>] )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">	ctx-&gt;mode = SM4_ENCRYPT;</span><br><span class="line">    sm4_setkey( ctx-&gt;sk, key );</span><br><span class="line">    <span class="keyword">for</span>( i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i ++ )</span><br><span class="line">    &#123;</span><br><span class="line">        SWAP( ctx-&gt;sk[ i ], ctx-&gt;sk[ <span class="number">31</span>-i] );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//CBC模式加解密 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sm4_crypt_cbc</span><span class="params">( sm4_context *ctx,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">int</span> mode,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">int</span> length,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">unsigned</span> <span class="keyword">char</span> iv[<span class="number">16</span>],</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">unsigned</span> <span class="keyword">char</span> *input,</span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">unsigned</span> <span class="keyword">char</span> *output )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> temp[<span class="number">16</span>];</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span>( mode == SM4_ENCRYPT )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>( length &gt; <span class="number">0</span> )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>( i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++ )</span><br><span class="line">                output[i] = (<span class="keyword">unsigned</span> <span class="keyword">char</span>)( input[i] ^ iv[i] );</span><br><span class="line"> </span><br><span class="line">            sm4_one_round( ctx-&gt;sk, output, output );</span><br><span class="line">            <span class="built_in">memcpy</span>( iv, output, <span class="number">16</span> );</span><br><span class="line"> </span><br><span class="line">            input  += <span class="number">16</span>;</span><br><span class="line">            output += <span class="number">16</span>;</span><br><span class="line">            length -= <span class="number">16</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="comment">/* SM4_DECRYPT */</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>( length &gt; <span class="number">0</span> )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">memcpy</span>( temp, input, <span class="number">16</span> );</span><br><span class="line">            sm4_one_round( ctx-&gt;sk, input, output );</span><br><span class="line"> </span><br><span class="line">            <span class="keyword">for</span>( i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++ )</span><br><span class="line">                output[i] = (<span class="keyword">unsigned</span> <span class="keyword">char</span>)( output[i] ^ iv[i] );</span><br><span class="line"> </span><br><span class="line">            <span class="built_in">memcpy</span>( iv, temp, <span class="number">16</span> );</span><br><span class="line"> </span><br><span class="line">            input  += <span class="number">16</span>;</span><br><span class="line">            output += <span class="number">16</span>;</span><br><span class="line">            length -= <span class="number">16</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> key[<span class="number">16</span>] = &#123;<span class="number">0x01</span>,<span class="number">0x23</span>,<span class="number">0x45</span>,<span class="number">0x67</span>,<span class="number">0x89</span>,<span class="number">0xab</span>,<span class="number">0xcd</span>,<span class="number">0xef</span>,<span class="number">0xfe</span>,<span class="number">0xdc</span>,<span class="number">0xba</span>,<span class="number">0x98</span>,<span class="number">0x76</span>,<span class="number">0x54</span>,<span class="number">0x32</span>,<span class="number">0x10</span>&#125;;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> input[<span class="number">16</span>] = &#123;<span class="number">0x01</span>,<span class="number">0x23</span>,<span class="number">0x45</span>,<span class="number">0x67</span>,<span class="number">0x89</span>,<span class="number">0xab</span>,<span class="number">0xcd</span>,<span class="number">0xef</span>,<span class="number">0xfe</span>,<span class="number">0xdc</span>,<span class="number">0xba</span>,<span class="number">0x98</span>,<span class="number">0x76</span>,<span class="number">0x54</span>,<span class="number">0x32</span>,<span class="number">0x10</span>&#125;;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> output[<span class="number">16</span>];</span><br><span class="line">	sm4_context ctx;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> i;</span><br><span class="line">	<span class="comment">//encrypt</span></span><br><span class="line">	sm4_setkey_enc(&amp;ctx,key);</span><br><span class="line">	sm4_crypt_ecb(&amp;ctx,<span class="number">1</span>,<span class="number">16</span>,input,output);</span><br><span class="line">	<span class="comment">//加密结果 </span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"加密结果：\n"</span>); </span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>;i&lt; <span class="number">16</span>;i ++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%02x "</span>,output[i]);</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	sm4_setkey_dec(&amp;ctx,key);</span><br><span class="line">	sm4_crypt_ecb(&amp;ctx,<span class="number">0</span>,<span class="number">16</span>,output,output);</span><br><span class="line">	<span class="comment">//解密结果 </span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"解密结果：\n"</span>); </span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>;i&lt; <span class="number">16</span>;i ++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%02x "</span>,output[i]);</span><br><span class="line">	&#125; </span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>参数文章：<a href="https://blog.csdn.net/cg129054036/article/details/83012721" target="_blank" rel="noopener">https://blog.csdn.net/cg129054036/article/details/83012721</a></p>
+<p><a href="https://blog.csdn.net/cg129054036/article/details/83016958" target="_blank" rel="noopener">https://blog.csdn.net/cg129054036/article/details/83016958</a></p>
+<p><a href="https://blog.csdn.net/archimekai/article/details/53095993" target="_blank" rel="noopener">https://blog.csdn.net/archimekai/article/details/53095993</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/21/shellcode的艺术/" rel="next" title="shellcode 的艺术">
+                <i class="fa fa-chevron-left"></i> shellcode 的艺术
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/21/TokyoWesterns-Asterisk-Alloc/" rel="prev" title="TokyoWesterns -- Asterisk_Alloc">
+                TokyoWesterns -- Asterisk_Alloc <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/n0va.jpg" alt="R4bb1t">
+            
+              <p class="site-author-name" itemprop="name">R4bb1t</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友链
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xi4or0uji.github.io/" title="Xi4or0uji" target="_blank">Xi4or0uji</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://gdufs-king.github.io/" title="V1ctor" target="_blank">V1ctor</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://z3r3f.gitee.io/" title="23r3f" target="_blank">23r3f</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://zszcr.github.io/" title="zs0zrc" target="_blank">zs0zrc</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://dittozzz.top/" title="ditto" target="_blank">ditto</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ch4r1l3.github.io/" title="ch4r1l3" target="_blank">ch4r1l3</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://nightrainy.github.io/" title="知世" target="_blank">知世</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数介绍"><span class="nav-number">2.</span> <span class="nav-text">参数介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加密"><span class="nav-number">3.</span> <span class="nav-text">加密</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#密钥调试算法"><span class="nav-number">3.1.</span> <span class="nav-text">密钥调试算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#加密过程"><span class="nav-number">3.2.</span> <span class="nav-text">加密过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解密过程"><span class="nav-number">4.</span> <span class="nav-text">解密过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整的代码"><span class="nav-number">5.</span> <span class="nav-text">完整的代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">R4bb1t</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

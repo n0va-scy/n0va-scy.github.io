@@ -90,7 +90,7 @@
 <meta property="og:description" content="最近经常遇到没有show函数的堆了，吃了不少没有地址的亏，在这里记录一下泄露的方法 其实主要思路就是修改stdout的flag位为0xfbad1800,并且将_IO_write_base的最后一个字节改小，从而实现多输出一些内容，这些内容里面就包含了libc地址。 为什么flag要改成0xfbad1800，看源码：">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/piture/32.jpg">
-<meta property="og:updated_time" content="2019-09-25T05:10:07.680Z">
+<meta property="og:updated_time" content="2019-09-25T05:10:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IO_FILE泄露libc">
 <meta name="twitter:description" content="最近经常遇到没有show函数的堆了，吃了不少没有地址的亏，在这里记录一下泄露的方法 其实主要思路就是修改stdout的flag位为0xfbad1800,并且将_IO_write_base的最后一个字节改小，从而实现多输出一些内容，这些内容里面就包含了libc地址。 为什么flag要改成0xfbad1800，看源码：">
@@ -465,8 +465,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/03/14/2019-红帽杯/" rel="prev" title="2019红帽杯wp">
-                2019红帽杯wp <i class="fa fa-chevron-right"></i>
+              <a href="/2020/06/21/10.26星盟awd/" rel="prev" title="10.26星盟awd之magic_heap">
+                10.26星盟awd之magic_heap <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -546,7 +546,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -557,7 +557,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -568,7 +568,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

