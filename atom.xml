@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-11-10T02:39:08.346Z</updated>
+  <updated>2020-11-10T02:52:59.455Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,17 +21,14 @@
     <link href="http://yoursite.com/2020/10/26/2020bytectf/"/>
     <id>http://yoursite.com/2020/10/26/2020bytectf/</id>
     <published>2020-10-26T12:56:13.592Z</published>
-    <updated>2020-11-10T02:39:08.346Z</updated>
+    <updated>2020-11-10T02:52:59.455Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2 id=&quot;gun&quot;&gt;&lt;a href=&quot;#gun&quot; class=&quot;headerlink&quot; title=&quot;gun&quot;&gt;&lt;/a&gt;gun&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;\images\2020bytectf\1.jpg&quot;
-        
-      
+      &lt;h2 id=&quot;gun&quot;&gt;&lt;a href=&quot;#gun&quot; class=&quot;headerlink&quot; title=&quot;gun&quot;&gt;&lt;/a&gt;gun&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;\images\2020bytectf\1.jpg&quot; alt=&quot;1&quot;&gt;&lt;/p&gt;
+&lt;p&gt;保护全开，且沙箱限制了只能使用open,read,write,exit4个函数&lt;/p&gt;
+&lt;p&gt;总共有3个功能，买子弹，上膛，发射，购买时可以给子弹命名，发射时会输出 子弹名字&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1.Shoot&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2.Load &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3.Buy  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4.Exit &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Action&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
@@ -47,17 +44,13 @@
     <link href="http://yoursite.com/2020/10/23/cve-2020-14364%20qemu%E9%80%83%E9%80%B8%E6%BC%8F%E6%B4%9E/"/>
     <id>http://yoursite.com/2020/10/23/cve-2020-14364 qemu逃逸漏洞/</id>
     <published>2020-10-23T08:41:06.422Z</published>
-    <updated>2020-11-10T02:38:38.657Z</updated>
+    <updated>2020-11-10T02:53:16.616Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2 id=&quot;编译&quot;&gt;&lt;a href=&quot;#编译&quot; class=&quot;headerlink&quot;
-        
-      
+      &lt;h2 id=&quot;编译&quot;&gt;&lt;a href=&quot;#编译&quot; class=&quot;headerlink&quot; title=&quot;编译&quot;&gt;&lt;/a&gt;编译&lt;/h2&gt;&lt;p&gt;本文使用的是&lt;code&gt;qemu-2.10.1&lt;/code&gt;，&lt;code&gt;linux-4.10.10&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;编译qemu时关闭优化并开启调试信息，方便调试&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;cd&lt;/span&gt; qemu-2.10.1/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;CFLAGS=&lt;span class=&quot;string&quot;&gt;&quot;-no-pie -fno-stack-protector -z execstack&quot;&lt;/span&gt; ./configure --&lt;span class=&quot;built_in&quot;&gt;enable&lt;/span&gt;-debug --&lt;span class=&quot;built_in&quot;&gt;disable&lt;/span&gt;-strip&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
@@ -114,27 +107,6 @@
   </entry>
   
   <entry>
-    <title>第五**空间pwn部分wp</title>
-    <link href="http://yoursite.com/2020/06/21/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4/"/>
-    <id>http://yoursite.com/2020/06/21/第五空间/</id>
-    <published>2020-06-21T07:11:22.781Z</published>
-    <updated>2020-03-16T07:21:16.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;发现太久没有写博客了，就放一下刚打完的被喷得怪可怜的第5**空间的一点wp吧。&lt;/p&gt;
-&lt;h2 id=&quot;立雪&quot;&gt;&lt;a href=&quot;#立雪&quot; class=&quot;headerlink&quot; title=&quot;立雪&quot;&gt;&lt;/a&gt;立雪&lt;/h2&gt;&lt;p&gt;edit 函数没有对size进行检测，所以可以任意长度的堆溢出&lt;/p&gt;
-&lt;p&gt;​         &lt;img src=&quot;\images\第五空间\1.png&quot; alt&gt;       &lt;/p&gt;
-&lt;p&gt;而且程序存在后门函数，unlink到0x602088修改为0xffff即可(其实最快速的做法是unsortedbin attack到&lt;code&gt;0x602088&lt;/code&gt;)&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
     <title>解决git clone下载慢或失败问题</title>
     <link href="http://yoursite.com/2020/06/21/%E8%A7%A3%E5%86%B3git%20clone%E4%B8%8B%E8%BD%BD%E6%85%A2%E9%97%AE%E9%A2%98/"/>
     <id>http://yoursite.com/2020/06/21/解决git clone下载慢问题/</id>
@@ -154,6 +126,27 @@
     
     </summary>
     
+    
+  </entry>
+  
+  <entry>
+    <title>第五**空间pwn部分wp</title>
+    <link href="http://yoursite.com/2020/06/21/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4/"/>
+    <id>http://yoursite.com/2020/06/21/第五空间/</id>
+    <published>2020-06-21T07:11:22.781Z</published>
+    <updated>2020-03-16T07:21:16.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;发现太久没有写博客了，就放一下刚打完的被喷得怪可怜的第5**空间的一点wp吧。&lt;/p&gt;
+&lt;h2 id=&quot;立雪&quot;&gt;&lt;a href=&quot;#立雪&quot; class=&quot;headerlink&quot; title=&quot;立雪&quot;&gt;&lt;/a&gt;立雪&lt;/h2&gt;&lt;p&gt;edit 函数没有对size进行检测，所以可以任意长度的堆溢出&lt;/p&gt;
+&lt;p&gt;​         &lt;img src=&quot;\images\第五空间\1.png&quot; alt&gt;       &lt;/p&gt;
+&lt;p&gt;而且程序存在后门函数，unlink到0x602088修改为0xffff即可(其实最快速的做法是unsortedbin attack到&lt;code&gt;0x602088&lt;/code&gt;)&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
     
   </entry>
   
