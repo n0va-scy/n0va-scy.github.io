@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-12-26T14:51:01.997Z</updated>
+  <updated>2021-01-01T03:21:52.885Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2020 pwnhub 双蛋内部赛</title>
+    <link href="http://yoursite.com/2021/01/01/2020%20pwnhub%20%E5%86%85%E9%83%A8%E8%B5%9B/"/>
+    <id>http://yoursite.com/2021/01/01/2020 pwnhub 内部赛/</id>
+    <published>2021-01-01T03:17:18.408Z</published>
+    <updated>2021-01-01T03:21:52.885Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;StupidNote&quot;&gt;&lt;a href=&quot;#StupidNote&quot; class=&quot;headerlink&quot; title=&quot;StupidNote&quot;&gt;&lt;/a&gt;StupidNote&lt;/h2&gt;&lt;p&gt;glibc2.31下的off-by-null，禁用了execve，并且加了点料&lt;/p&gt;
+&lt;p&gt;这里的off-by-null藏得很深，我也是在放出hint后才找到的&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;\images\pwnhub\1.png&quot; alt=&quot;1&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>2020 pwnhub 公开赛 -- easypwn</title>
@@ -62,17 +84,13 @@
     <link href="http://yoursite.com/2020/11/27/2020nu1lctf/"/>
     <id>http://yoursite.com/2020/11/27/2020nu1lctf/</id>
     <published>2020-11-27T02:01:29.447Z</published>
-    <updated>2020-11-27T02:09:26.714Z</updated>
+    <updated>2021-01-01T03:10:36.063Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h2 id=&quot;easywrite&quot;&gt;&lt;a href=&quot;#easywrite&quot; class=&quot;headerlink&quot; title=&quot;easywrite&quot;&gt;&lt;/a&gt;easywrite&lt;/h2&gt;&lt;p&gt;程序保护全开，给了libc，有个任意地址写，然后再malloc(0x30)
-        
-      
+      &lt;h2 id=&quot;easywrite&quot;&gt;&lt;a href=&quot;#easywrite&quot; class=&quot;headerlink&quot; title=&quot;easywrite&quot;&gt;&lt;/a&gt;easywrite&lt;/h2&gt;&lt;p&gt;程序保护全开，给了libc，有个任意地址写，然后再malloc(0x30) read and free(ptr)&lt;/p&gt;
+&lt;p&gt;利用思路：写tcache_ptr，修改tcache[0x40] 为 free_hook-0x10，之后覆盖free_hook-0x10为”/bin/sh\x00”，free_hook为system；free(ptr) get shell&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;\images\2020nu1lctf\1.png&quot; alt=&quot;1&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -414,24 +432,6 @@
     
     
       <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>pwn环境docker化</title>
-    <link href="http://yoursite.com/2020/06/21/pwn%E7%8E%AF%E5%A2%83docker%E5%8C%96/"/>
-    <id>http://yoursite.com/2020/06/21/pwn环境docker化/</id>
-    <published>2020-06-21T07:11:22.771Z</published>
-    <updated>2020-06-09T02:38:26.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;拉取镜像&quot;&gt;&lt;a href=&quot;#拉取镜像&quot; class=&quot;headerlink&quot; title=&quot;拉取镜像&quot;&gt;&lt;/a&gt;拉取镜像&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# docker pull ubuntu:18.04&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18.04: Pulling from library/ubuntu&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23884877105a: Pull complete &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;bc38caa0f5b9: Pull complete &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2910811b6c42: Pull complete &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36505266dcc6: Pull complete &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Digest: sha256:3235326357dfb65f1781dbc4df3b834546d8bf914e82cce58e6e6b676e23ce8f&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Status: Downloaded newer image &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; ubuntu:18.04&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;docker.io/library/ubuntu:18.04&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
     
   </entry>
   
