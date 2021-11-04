@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-10-14T07:20:31.988Z</updated>
+  <updated>2021-11-04T14:16:03.533Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,49 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>第四届强网拟态赛</title>
+    <link href="http://yoursite.com/2021/11/04/%E7%AC%AC%E5%9B%9B%E5%B1%8A%E5%BC%BA%E7%BD%91%E6%8B%9F%E6%80%81/"/>
+    <id>http://yoursite.com/2021/11/04/第四届强网拟态/</id>
+    <published>2021-11-04T06:55:34.356Z</published>
+    <updated>2021-11-04T14:16:03.533Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;bitflip&quot;&gt;&lt;a href=&quot;#bitflip&quot; class=&quot;headerlink&quot; title=&quot;bitflip&quot;&gt;&lt;/a&gt;bitflip&lt;/h2&gt;&lt;p&gt;edit函数中存在off-by-one漏洞，版本glibc-2.27&lt;/p&gt;
+&lt;p&gt;add函数将malloc的size限制在了0x50内，不过可以通过off-by-one修改下一个chunk的size实现堆叠，进而释放0x410以上大小的堆，拿到libc&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2021广东省强网杯</title>
+    <link href="http://yoursite.com/2021/10/27/2021%E5%B9%BF%E4%B8%9C%E7%9C%81%E5%BC%BA%E7%BD%91%E6%9D%AF/"/>
+    <id>http://yoursite.com/2021/10/27/2021广东省强网杯/</id>
+    <published>2021-10-27T05:57:44.694Z</published>
+    <updated>2021-10-27T06:36:22.438Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;girlfriend&quot;&gt;&lt;a href=&quot;#girlfriend&quot; class=&quot;headerlink&quot; title=&quot;girlfriend&quot;&gt;&lt;/a&gt;girlfriend&lt;/h2&gt;&lt;p&gt;程序中存在许多花指令，但是都是一样的类型&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;\images\2021广东省强网杯\1.jpg&quot; alt=&quot;1&quot;&gt;&lt;/p&gt;
+&lt;p&gt;妨碍反编译，先去花&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>2021 pwnhub【迎中秋】公开赛</title>
@@ -242,27 +285,6 @@
   </entry>
   
   <entry>
-    <title>第五**空间pwn部分wp</title>
-    <link href="http://yoursite.com/2020/06/21/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4/"/>
-    <id>http://yoursite.com/2020/06/21/第五空间/</id>
-    <published>2020-06-21T07:11:22.781Z</published>
-    <updated>2020-03-16T07:21:16.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;发现太久没有写博客了，就放一下刚打完的被喷得怪可怜的第5**空间的一点wp吧。&lt;/p&gt;
-&lt;h2 id=&quot;立雪&quot;&gt;&lt;a href=&quot;#立雪&quot; class=&quot;headerlink&quot; title=&quot;立雪&quot;&gt;&lt;/a&gt;立雪&lt;/h2&gt;&lt;p&gt;edit 函数没有对size进行检测，所以可以任意长度的堆溢出&lt;/p&gt;
-&lt;p&gt;​         &lt;img src=&quot;\images\第五空间\1.png&quot; alt&gt;       &lt;/p&gt;
-&lt;p&gt;而且程序存在后门函数，unlink到0x602088修改为0xffff即可(其实最快速的做法是unsortedbin attack到&lt;code&gt;0x602088&lt;/code&gt;)&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
     <title>解决git clone下载慢或失败问题</title>
     <link href="http://yoursite.com/2020/06/21/%E8%A7%A3%E5%86%B3git%20clone%E4%B8%8B%E8%BD%BD%E6%85%A2%E9%97%AE%E9%A2%98/"/>
     <id>http://yoursite.com/2020/06/21/解决git clone下载慢问题/</id>
@@ -282,6 +304,27 @@
     
     </summary>
     
+    
+  </entry>
+  
+  <entry>
+    <title>第五**空间pwn部分wp</title>
+    <link href="http://yoursite.com/2020/06/21/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4/"/>
+    <id>http://yoursite.com/2020/06/21/第五空间/</id>
+    <published>2020-06-21T07:11:22.781Z</published>
+    <updated>2020-03-16T07:21:16.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;发现太久没有写博客了，就放一下刚打完的被喷得怪可怜的第5**空间的一点wp吧。&lt;/p&gt;
+&lt;h2 id=&quot;立雪&quot;&gt;&lt;a href=&quot;#立雪&quot; class=&quot;headerlink&quot; title=&quot;立雪&quot;&gt;&lt;/a&gt;立雪&lt;/h2&gt;&lt;p&gt;edit 函数没有对size进行检测，所以可以任意长度的堆溢出&lt;/p&gt;
+&lt;p&gt;​         &lt;img src=&quot;\images\第五空间\1.png&quot; alt&gt;       &lt;/p&gt;
+&lt;p&gt;而且程序存在后门函数，unlink到0x602088修改为0xffff即可(其实最快速的做法是unsortedbin attack到&lt;code&gt;0x602088&lt;/code&gt;)&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
     
   </entry>
   
@@ -401,47 +444,6 @@
     
       <category term="crypto" scheme="http://yoursite.com/categories/crypto/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>shellcode 的艺术</title>
-    <link href="http://yoursite.com/2020/06/21/shellcode%E7%9A%84%E8%89%BA%E6%9C%AF/"/>
-    <id>http://yoursite.com/2020/06/21/shellcode的艺术/</id>
-    <published>2020-06-21T07:11:22.775Z</published>
-    <updated>2019-10-30T12:18:32.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这里总结一下shellcode的各种类型&lt;/p&gt;
-&lt;h2 id=&quot;一、直接调用&quot;&gt;&lt;a href=&quot;#一、直接调用&quot; class=&quot;headerlink&quot; title=&quot;一、直接调用&quot;&gt;&lt;/a&gt;一、直接调用&lt;/h2&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; argc, &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; *argv[])&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; s[&lt;span class=&quot;number&quot;&gt;0x500&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	gets(s);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	((&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt;(*)(&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt;))s)();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="pwn" scheme="http://yoursite.com/categories/pwn/"/>
-    
-    
-      <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>setcontext 函数</title>
-    <link href="http://yoursite.com/2020/06/21/setcontext/"/>
-    <id>http://yoursite.com/2020/06/21/setcontext/</id>
-    <published>2020-06-21T07:11:22.774Z</published>
-    <updated>2019-10-31T11:35:30.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;ucontext.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setcontext&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;ucontext_t&lt;/span&gt; *ucp)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
     
   </entry>
   
