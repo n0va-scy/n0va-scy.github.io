@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-11-04T14:16:03.533Z</updated>
+  <updated>2021-11-19T12:02:32.816Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,120 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>pwnable.kr 之 uaf</title>
+    <link href="http://yoursite.com/2021/11/19/pwnable.kr%20%E4%B9%8B%20uaf/"/>
+    <id>http://yoursite.com/2021/11/19/pwnable.kr 之 uaf/</id>
+    <published>2021-11-19T11:51:59.872Z</published>
+    <updated>2021-11-19T12:02:32.816Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;题如其名，不过是c++的uaf漏洞，还好给了源码，不至于去IDA里面看那么丑的伪代码&lt;/p&gt;
+&lt;p&gt;程序中有后门&lt;code&gt;give_shell&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;结构体中有函数指针，&lt;code&gt;introduce&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;free&lt;/code&gt;选项delete后没有清空指针存在UAF&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;after&lt;/code&gt;选项中会new 一个新的空间，从文件中将内容读入&lt;/p&gt;
+&lt;p&gt;通过跟踪分析程序可知，存放着指针的堆块大小为0x20&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pwnable.kr 之 cmd</title>
+    <link href="http://yoursite.com/2021/11/19/pwnable.kr%20%E4%B9%8B%20cmd/"/>
+    <id>http://yoursite.com/2021/11/19/pwnable.kr 之 cmd/</id>
+    <published>2021-11-19T08:52:02.370Z</published>
+    <updated>2021-11-19T09:07:32.800Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;cmd1&quot;&gt;&lt;a href=&quot;#cmd1&quot; class=&quot;headerlink&quot; title=&quot;cmd1&quot;&gt;&lt;/a&gt;cmd1&lt;/h2&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;string.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;filter&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt;* cmd)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; r=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        r += &lt;span class=&quot;built_in&quot;&gt;strstr&lt;/span&gt;(cmd, &lt;span class=&quot;string&quot;&gt;&quot;flag&quot;&lt;/span&gt;)!=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        r += &lt;span class=&quot;built_in&quot;&gt;strstr&lt;/span&gt;(cmd, &lt;span class=&quot;string&quot;&gt;&quot;sh&quot;&lt;/span&gt;)!=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        r += &lt;span class=&quot;built_in&quot;&gt;strstr&lt;/span&gt;(cmd, &lt;span class=&quot;string&quot;&gt;&quot;tmp&quot;&lt;/span&gt;)!=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; r;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; argc, &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt;* argv[], &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt;** envp)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        putenv(&lt;span class=&quot;string&quot;&gt;&quot;PATH=/thankyouverymuch&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(filter(argv[&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;])) &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        system( argv[&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;] );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pwnable.kr 之 lotto</title>
+    <link href="http://yoursite.com/2021/11/19/pwnable.kr%20%E4%B9%8B%20lotto/"/>
+    <id>http://yoursite.com/2021/11/19/pwnable.kr 之 lotto/</id>
+    <published>2021-11-19T07:40:17.434Z</published>
+    <updated>2021-11-19T08:27:36.093Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;ssh &lt;a href=&quot;mailto:lotto@pwnable.kr&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;lotto@pwnable.kr&lt;/a&gt; -p2222 (pw:guest)&lt;/p&gt;
+&lt;p&gt;这是一个游戏，猜对6个数就能拿到flag。&lt;/p&gt;
+&lt;p&gt;通过源码了解到这6个随机数是从&lt;code&gt;/dev/urandom&lt;/code&gt;中取出来的，而且范围在1~46之间，虽然 这是个伪随机，但是想要爆破难度还是挺大的。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pwnable.kr 之 coin1</title>
+    <link href="http://yoursite.com/2021/11/18/pwnable.kr%20%E4%B9%8B%20coin1/"/>
+    <id>http://yoursite.com/2021/11/18/pwnable.kr 之 coin1/</id>
+    <published>2021-11-18T09:38:59.117Z</published>
+    <updated>2021-11-19T06:59:58.567Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;coin1&quot;&gt;&lt;a href=&quot;#coin1&quot; class=&quot;headerlink&quot; title=&quot;coin1&quot;&gt;&lt;/a&gt;coin1&lt;/h2&gt;&lt;p&gt;二分法，100次就行了，得在60秒内完成&lt;/p&gt;
+&lt;p&gt;题目也提示了，如果本地超时的话可以去服务器上跑。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ssh fd@pwnable.kr -p2222 (pw:guest)&lt;/code&gt;，到&lt;code&gt;/tmp&lt;/code&gt;下，服务器上有pwntools，将下面脚本中的&lt;code&gt;pwnable.kr&lt;/code&gt;改成&lt;code&gt;127.0.0.1&lt;/code&gt;跑，飞快&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pwnable.kr 之 shellshock</title>
+    <link href="http://yoursite.com/2021/11/18/pwnable.kr%20%E4%B9%8B%20shellshock/"/>
+    <id>http://yoursite.com/2021/11/18/pwnable.kr 之 shellshock/</id>
+    <published>2021-11-18T06:24:50.847Z</published>
+    <updated>2021-11-18T07:44:21.061Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;shellshock&quot;&gt;&lt;a href=&quot;#shellshock&quot; class=&quot;headerlink&quot; title=&quot;shellshock&quot;&gt;&lt;/a&gt;shellshock&lt;/h2&gt;&lt;h3 id=&quot;什么是shellshock&quot;&gt;&lt;a href=&quot;#什么是shellshock&quot; class=&quot;headerlink&quot; title=&quot;什么是shellshock&quot;&gt;&lt;/a&gt;什么是shellshock&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;bash 版本 &amp;lt;= 4.1&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;1、普通shell变量和bash&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;shellshock@pwnable:~$ gu=&lt;span class=&quot;string&quot;&gt;&quot;hacker&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;shellshock@pwnable:~$ &lt;span class=&quot;built_in&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;variable&quot;&gt;$gu&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;hacker&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;shellshock@pwnable:~$ ./bash&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;shellshock@pwnable:~$ &lt;span class=&quot;built_in&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;variable&quot;&gt;$gu&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;shellshock@pwnable:~$&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;从上述实验得出：bash子进程没有继承普通shell变量gu。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>第四届强网拟态赛</title>
@@ -344,105 +458,6 @@
     </summary>
     
       <category term="re" scheme="http://yoursite.com/categories/re/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>docker内搭建2.29pwn环境遇到的坑</title>
-    <link href="http://yoursite.com/2020/06/21/%E6%90%AD%E5%BB%BA2.29pwn%E7%8E%AF%E5%A2%83%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/"/>
-    <id>http://yoursite.com/2020/06/21/搭建2.29pwn环境遇到的坑/</id>
-    <published>2020-06-21T07:11:22.779Z</published>
-    <updated>2020-06-09T02:34:26.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;update-404&quot;&gt;&lt;a href=&quot;#update-404&quot; class=&quot;headerlink&quot; title=&quot;update 404&quot;&gt;&lt;/a&gt;update 404&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Ign:1 http://security.ubuntu.com/ubuntu disco-security InRelease&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Ign:2 http://archive.ubuntu.com/ubuntu disco InRelease&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Err:3 http://security.ubuntu.com/ubuntu disco-security Release&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  404  Not Found [IP: 91.189.91.38 80]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Ign:4 http://archive.ubuntu.com/ubuntu disco-updates InRelease&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Ign:5 http://archive.ubuntu.com/ubuntu disco-backports InRelease&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Err:6 http://archive.ubuntu.com/ubuntu disco Release&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  404  Not Found [IP: 91.189.88.152 80]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Err:7 http://archive.ubuntu.com/ubuntu disco-updates Release&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  404  Not Found [IP: 91.189.88.152 80]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Err:8 http://archive.ubuntu.com/ubuntu disco-backports Release&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  404  Not Found [IP: 91.189.88.152 80]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Reading package lists... Done&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;E: The repository &lt;span class=&quot;string&quot;&gt;&#39;http://security.ubuntu.com/ubuntu disco-security Release&#39;&lt;/span&gt; does not have a Release file.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;N: Updating from such a repository can&lt;span class=&quot;string&quot;&gt;&#39;t be done securely, and is therefore disabled by default.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;string&quot;&gt;N: See apt-secure(8) manpage for repository creation and user configuration details.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;string&quot;&gt;E: The repository &#39;&lt;/span&gt;http://archive.ubuntu.com/ubuntu disco Release&lt;span class=&quot;string&quot;&gt;&#39; does not have a Release file.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;string&quot;&gt;N: Updating from such a repository can&#39;&lt;/span&gt;t be &lt;span class=&quot;keyword&quot;&gt;done&lt;/span&gt; securely, and is therefore disabled by default.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;N: See apt-secure(8) manpage &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; repository creation and user configuration details.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;E: The repository &lt;span class=&quot;string&quot;&gt;&#39;http://archive.ubuntu.com/ubuntu disco-updates Release&#39;&lt;/span&gt; does not have a Release file.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;N: Updating from such a repository can&lt;span class=&quot;string&quot;&gt;&#39;t be done securely, and is therefore disabled by default.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;string&quot;&gt;N: See apt-secure(8) manpage for repository creation and user configuration details.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;string&quot;&gt;E: The repository &#39;&lt;/span&gt;http://archive.ubuntu.com/ubuntu disco-backports Release&lt;span class=&quot;string&quot;&gt;&#39; does not have a Release file.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;string&quot;&gt;N: Updating from such a repository can&#39;&lt;/span&gt;t be &lt;span class=&quot;keyword&quot;&gt;done&lt;/span&gt; securely, and is therefore disabled by default.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;N: See apt-secure(8) manpage &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; repository creation and user configuration details.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>UNCTF-orwheap</title>
-    <link href="http://yoursite.com/2020/06/21/UNCTF-orwheap/"/>
-    <id>http://yoursite.com/2020/06/21/UNCTF-orwheap/</id>
-    <published>2020-06-21T07:11:22.778Z</published>
-    <updated>2019-10-31T11:39:54.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ seccomp-tools dump ./pwn &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; line  CODE  JT   JF      K&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;=================================&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0000: 0x20 0x00 0x00 0x00000004  A = arch&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0001: 0x15 0x00 0x09 0xc000003e  if (A != ARCH_X86_64) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0002: 0x20 0x00 0x00 0x00000000  A = sys_number&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0003: 0x35 0x07 0x00 0x40000000  if (A &amp;gt;= 0x40000000) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0004: 0x15 0x06 0x00 0x0000003b  if (A == execve) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0005: 0x15 0x00 0x04 0x00000001  if (A != write) goto 0010&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0006: 0x20 0x00 0x00 0x00000024  A = count &amp;gt;&amp;gt; 32 # write(fd, buf, count)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0007: 0x15 0x00 0x02 0x00000000  if (A != 0x0) goto 0010&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0008: 0x20 0x00 0x00 0x00000020  A = count # write(fd, buf, count)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0009: 0x15 0x01 0x00 0x00000010  if (A == 0x10) goto 0011&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0010: 0x06 0x00 0x00 0x7fff0000  return ALLOW&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0011: 0x06 0x00 0x00 0x00000000  return KILL&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>巅峰极客 pwn 题解</title>
-    <link href="http://yoursite.com/2020/06/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2/"/>
-    <id>http://yoursite.com/2020/06/21/巅峰极客/</id>
-    <published>2020-06-21T07:11:22.778Z</published>
-    <updated>2019-11-07T08:50:04.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;pwn&quot;&gt;&lt;a href=&quot;#pwn&quot; class=&quot;headerlink&quot; title=&quot;pwn&quot;&gt;&lt;/a&gt;pwn&lt;/h2&gt;&lt;p&gt;很骚的一题，又是将system禁用的堆类型题目&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ seccomp-tools dump ./pwn2 &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; line  CODE  JT   JF      K&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;=================================&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0000: 0x20 0x00 0x00 0x00000004  A = arch&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0001: 0x15 0x00 0x06 0xc000003e  if (A != ARCH_X86_64) goto 0008&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0002: 0x20 0x00 0x00 0x00000000  A = sys_number&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0003: 0x35 0x04 0x00 0x40000000  if (A &amp;gt;= 0x40000000) goto 0008&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0004: 0x15 0x04 0x00 0x00000001  if (A == write) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0005: 0x15 0x03 0x00 0x00000000  if (A == read) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0006: 0x15 0x02 0x00 0x00000002  if (A == open) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0007: 0x15 0x01 0x00 0x0000003c  if (A == exit) goto 0009&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0008: 0x06 0x00 0x00 0x00000000  return KILL&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; 0009: 0x06 0x00 0x00 0x7fff0000  return ALLOW&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>TokyoWesterns -- Asterisk_Alloc</title>
-    <link href="http://yoursite.com/2020/06/21/TokyoWesterns-Asterisk-Alloc/"/>
-    <id>http://yoursite.com/2020/06/21/TokyoWesterns-Asterisk-Alloc/</id>
-    <published>2020-06-21T07:11:22.777Z</published>
-    <updated>2019-11-08T14:19:04.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;很有意思的一题，主要考察realloc函数&lt;br&gt;checksec:保护全开，libc2.27，引入了tcache 机制&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Arch:     amd64-64-little&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   RELRO:    Full RELRO&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   Stack:    Canary found&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   NX:       NX enabled&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   PIE:      PIE enabled&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>国密加密算法sm4</title>
-    <link href="http://yoursite.com/2020/06/21/sm4%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/"/>
-    <id>http://yoursite.com/2020/06/21/sm4加密算法/</id>
-    <published>2020-06-21T07:11:22.776Z</published>
-    <updated>2019-05-09T12:19:28.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;p&gt;SM4加密算法属于对称加密算法，2012年3月，国家密码管理局正式公布了包含SM4分组密码算法在内的《祖冲之序列密码算法》等6项密码行业标准。与DES和AES算法类似，SM4算法是一种分组密码算法。其分组长度为128bit，密钥长度也为128bit。加密算法与密钥扩展算法均采用32轮非线性迭代结构，以字（32位）为单位进行加密运算，每一次迭代运算均为一轮变换函数F。SM4算法加/解密算法的结构相同，只是使用轮密钥相反，其中解密轮密钥是加密轮密钥的逆序。&lt;/p&gt;
-&lt;p&gt;SM4算法结构图：(图片来源网上)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;\images\SM4\1.png&quot; alt&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="crypto" scheme="http://yoursite.com/categories/crypto/"/>
     
     
   </entry>
