@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-11-29T03:37:55.017Z</updated>
+  <updated>2021-11-29T11:31:44.398Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,68 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>pwnable.kr 之 unlink</title>
+    <link href="http://yoursite.com/2021/11/29/pwnable.kr%20%E4%B9%8B%20unlink/"/>
+    <id>http://yoursite.com/2021/11/29/pwnable.kr 之 unlink/</id>
+    <published>2021-11-29T11:26:05.629Z</published>
+    <updated>2021-11-29T11:31:44.398Z</updated>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;27&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;28&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;29&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;31&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;32&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;33&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;34&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;35&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;36&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;37&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;38&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;39&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;40&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;41&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;42&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;43&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;#&lt;span class=&quot;meta-keyword&quot;&gt;include&lt;/span&gt; &lt;span class=&quot;meta-string&quot;&gt;&amp;lt;string.h&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;tagOBJ&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;tagOBJ&lt;/span&gt;* &lt;span class=&quot;title&quot;&gt;fd&lt;/span&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;tagOBJ&lt;/span&gt;* &lt;span class=&quot;title&quot;&gt;bk&lt;/span&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt; buf[&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;OBJ;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;shell&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	system(&lt;span class=&quot;string&quot;&gt;&quot;/bin/sh&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;unlink&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(OBJ* P)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	OBJ* BK;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	OBJ* FD;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	BK=P-&amp;gt;bk;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	FD=P-&amp;gt;fd;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	FD-&amp;gt;bk=BK;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	BK-&amp;gt;fd=FD;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; argc, &lt;span class=&quot;keyword&quot;&gt;char&lt;/span&gt;* argv[])&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;built_in&quot;&gt;malloc&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;1024&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	OBJ* A = (OBJ*)&lt;span class=&quot;built_in&quot;&gt;malloc&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;sizeof&lt;/span&gt;(OBJ));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	OBJ* B = (OBJ*)&lt;span class=&quot;built_in&quot;&gt;malloc&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;sizeof&lt;/span&gt;(OBJ));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	OBJ* C = (OBJ*)&lt;span class=&quot;built_in&quot;&gt;malloc&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;sizeof&lt;/span&gt;(OBJ));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;// double linked list: A &amp;lt;-&amp;gt; B &amp;lt;-&amp;gt; C&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	A-&amp;gt;fd = B;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	B-&amp;gt;bk = A;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	B-&amp;gt;fd = C;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	C-&amp;gt;bk = B;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;built_in&quot;&gt;printf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;here is stack address leak: %p\n&quot;&lt;/span&gt;, &amp;amp;A);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;built_in&quot;&gt;printf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;here is heap address leak: %p\n&quot;&lt;/span&gt;, A);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;built_in&quot;&gt;printf&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;now that you have leaks, get shell!\n&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;// heap overflow!&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	gets(A-&amp;gt;buf);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;// exploit this unlink!&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	unlink(B);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;有后门函数，且堆溢出&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pwnablr.kr 之 asm</title>
+    <link href="http://yoursite.com/2021/11/29/pwnable.kr%20%E4%B9%8B%20asm/"/>
+    <id>http://yoursite.com/2021/11/29/pwnable.kr 之 asm/</id>
+    <published>2021-11-29T08:42:54.292Z</published>
+    <updated>2021-11-29T08:47:39.785Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;用了沙箱，只开启了，open,read,write,exit，4个函数，并且在执行我们的shellcode前还清空了所有寄存器，但是这不影响，照常写shellcode。只是这flag的名字嘛，真长！&lt;/p&gt;
+&lt;p&gt;可以用pwntools，shellcraft模块&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pwnablr.kr 之 memcpy</title>
+    <link href="http://yoursite.com/2021/11/29/pwnable.kr%20%E4%B9%8B%20memcpy/"/>
+    <id>http://yoursite.com/2021/11/29/pwnable.kr 之 memcpy/</id>
+    <published>2021-11-29T08:14:02.613Z</published>
+    <updated>2021-11-29T08:56:33.882Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;先看源码：&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>pwnhub[11月公开赛] pwn2</title>
@@ -391,75 +453,6 @@
     
     
       <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>路由器漏洞挖掘入门之栈溢出</title>
-    <link href="http://yoursite.com/2020/06/21/%E8%B7%AF%E7%94%B1%E5%99%A8%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E5%85%A5%E9%97%A8%E4%B9%8B%E6%A0%88%E6%BA%A2%E5%87%BA/"/>
-    <id>http://yoursite.com/2020/06/21/路由器漏洞挖掘入门之栈溢出/</id>
-    <published>2020-06-21T07:11:22.782Z</published>
-    <updated>2020-04-15T06:14:32.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;x86和MIPS指令集的差异&quot;&gt;&lt;a href=&quot;#x86和MIPS指令集的差异&quot; class=&quot;headerlink&quot; title=&quot;x86和MIPS指令集的差异&quot;&gt;&lt;/a&gt;x86和MIPS指令集的差异&lt;/h2&gt;&lt;p&gt;1、MIPS指令系统大量使用寄存器，包括返回地址也是存放在ra寄存器中的&lt;/p&gt;
-&lt;p&gt;2、没有堆栈直接操作的指令，也就是就没有push 和pop 指令&lt;/p&gt;
-&lt;p&gt;3、所有指令都是32位编码，也就是说所有的数据和指令都是4字节对齐&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;由于MIPS固定指令长度，造成其编译后的二进制文件和内存占用空间比x86的要大&lt;/p&gt;
-&lt;p&gt;MIPS指令集使用uclibc C标准库，x86使用libc的C标准库&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;MIPS的指令用法和两者的差异可以参考&lt;a href=&quot;https://blog.csdn.net/gujing001/article/details/8476685&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="IOT" scheme="http://yoursite.com/categories/IOT/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>第五**空间pwn部分wp</title>
-    <link href="http://yoursite.com/2020/06/21/%E7%AC%AC%E4%BA%94%E7%A9%BA%E9%97%B4/"/>
-    <id>http://yoursite.com/2020/06/21/第五空间/</id>
-    <published>2020-06-21T07:11:22.781Z</published>
-    <updated>2020-03-16T07:21:16.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;发现太久没有写博客了，就放一下刚打完的被喷得怪可怜的第5**空间的一点wp吧。&lt;/p&gt;
-&lt;h2 id=&quot;立雪&quot;&gt;&lt;a href=&quot;#立雪&quot; class=&quot;headerlink&quot; title=&quot;立雪&quot;&gt;&lt;/a&gt;立雪&lt;/h2&gt;&lt;p&gt;edit 函数没有对size进行检测，所以可以任意长度的堆溢出&lt;/p&gt;
-&lt;p&gt;​         &lt;img src=&quot;\images\第五空间\1.png&quot; alt&gt;       &lt;/p&gt;
-&lt;p&gt;而且程序存在后门函数，unlink到0x602088修改为0xffff即可(其实最快速的做法是unsortedbin attack到&lt;code&gt;0x602088&lt;/code&gt;)&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>解决git clone下载慢或失败问题</title>
-    <link href="http://yoursite.com/2020/06/21/%E8%A7%A3%E5%86%B3git%20clone%E4%B8%8B%E8%BD%BD%E6%85%A2%E9%97%AE%E9%A2%98/"/>
-    <id>http://yoursite.com/2020/06/21/解决git clone下载慢问题/</id>
-    <published>2020-06-21T07:11:22.781Z</published>
-    <updated>2020-04-22T03:52:26.000Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;p&gt;&lt;strong&gt;网上的修改本机host文件方法亲测不管用&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;通过码去云下载是真的香 &lt;a href=&quot;https://gitee.com/&quot; target=&quot;_blank&quot;
-        
-      
-    
-    </summary>
-    
     
   </entry>
   
