@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2021-11-29T11:31:44.398Z</updated>
+  <updated>2021-11-30T09:22:49.540Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,51 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>pwnable.kr 之 brain fuck</title>
+    <link href="http://yoursite.com/2021/11/30/pwnable.kr%20%E4%B9%8B%20brain%20fuck/"/>
+    <id>http://yoursite.com/2021/11/30/pwnable.kr 之 brain fuck/</id>
+    <published>2021-11-30T09:18:17.201Z</published>
+    <updated>2021-11-30T09:22:49.540Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;brain fuck，类似vm吧，可以进行读写，移位，加减操作。&lt;/p&gt;
+&lt;p&gt;所以移位操作和读写操作结合起来其实就是任意地址写，且got表可写。&lt;/p&gt;
+&lt;p&gt;思路：&lt;/p&gt;
+&lt;p&gt;先通任意地址读，读取got表上的libc地址，然后通过任意地址写将putchar@got修改为main，返回到main函数。&lt;/p&gt;
+&lt;p&gt;第二次输入的时候修改putchar@got为onegadget即可&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pwnable.kr 之 horcruxes</title>
+    <link href="http://yoursite.com/2021/11/30/pwnable.kr%20%E4%B9%8B%20horcruxes/"/>
+    <id>http://yoursite.com/2021/11/30/pwnable.kr 之 horcruxes/</id>
+    <published>2021-11-30T07:24:07.023Z</published>
+    <updated>2021-11-30T07:31:54.257Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;gets(s)栈溢出，且没有canary，没有PIE&lt;/p&gt;
+&lt;p&gt;本来想的是通过栈溢出直接跳到 if 内部输出flag，不过其地址为&lt;code&gt;0x80A010B&lt;/code&gt;结合gets函数遇到回车(‘\x0a’)结束输入的特性，无法将地址&lt;code&gt;0x80A010B&lt;/code&gt;写到返回地址上去。这个一步到位的方法pass。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>pwnable.kr 之 unlink</title>
@@ -404,48 +449,6 @@
 &lt;p&gt;保护全开，且沙箱限制了只能使用open,read,write,exit4个函数&lt;/p&gt;
 &lt;p&gt;总共有3个功能，买子弹，上膛，发射，购买时可以给子弹命名，发射时会输出 子弹名字&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1.Shoot&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2.Load &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3.Buy  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4.Exit &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Action&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="pwn" scheme="http://yoursite.com/categories/pwn/"/>
-    
-    
-      <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>cve-2020-14364 qemu逃逸漏洞分析</title>
-    <link href="http://yoursite.com/2020/10/23/cve-2020-14364%20qemu%E9%80%83%E9%80%B8%E6%BC%8F%E6%B4%9E/"/>
-    <id>http://yoursite.com/2020/10/23/cve-2020-14364 qemu逃逸漏洞/</id>
-    <published>2020-10-23T08:41:06.422Z</published>
-    <updated>2020-11-10T02:53:16.616Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;编译&quot;&gt;&lt;a href=&quot;#编译&quot; class=&quot;headerlink&quot; title=&quot;编译&quot;&gt;&lt;/a&gt;编译&lt;/h2&gt;&lt;p&gt;本文使用的是&lt;code&gt;qemu-2.10.1&lt;/code&gt;，&lt;code&gt;linux-4.10.10&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;编译qemu时关闭优化并开启调试信息，方便调试&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;cd&lt;/span&gt; qemu-2.10.1/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;CFLAGS=&lt;span class=&quot;string&quot;&gt;&quot;-no-pie -fno-stack-protector -z execstack&quot;&lt;/span&gt; ./configure --&lt;span class=&quot;built_in&quot;&gt;enable&lt;/span&gt;-debug --&lt;span class=&quot;built_in&quot;&gt;disable&lt;/span&gt;-strip&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="漏洞" scheme="http://yoursite.com/categories/%E6%BC%8F%E6%B4%9E/"/>
-    
-    
-      <category term="cve" scheme="http://yoursite.com/tags/cve/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>第三届“强网”拟态精英挑战赛pwn全解</title>
-    <link href="http://yoursite.com/2020/06/23/%E7%AC%AC%E4%B8%89%E5%B1%8A%E2%80%9C%E5%BC%BA%E7%BD%91%E2%80%9D%E6%8B%9F%E6%80%81%E5%9B%BD%E9%99%85%E7%B2%BE%E8%8B%B1%E6%8C%91%E6%88%98%E8%B5%9B/"/>
-    <id>http://yoursite.com/2020/06/23/第三届“强网”拟态国际精英挑战赛/</id>
-    <published>2020-06-23T05:11:13.704Z</published>
-    <updated>2020-06-23T05:31:28.511Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;easy-stack&quot;&gt;&lt;a href=&quot;#easy-stack&quot; class=&quot;headerlink&quot; title=&quot;easy_stack&quot;&gt;&lt;/a&gt;easy_stack&lt;/h2&gt;&lt;p&gt;格式化字符串泄漏canary后和libc，gets栈溢出&lt;/p&gt;
     
     </summary>
     
