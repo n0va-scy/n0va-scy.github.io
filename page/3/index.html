@@ -292,6 +292,153 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/pwnable.kr 之 md5 calculator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="R4bb1t">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/n0va.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R4bb1t的ctf博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/02/14/pwnable.kr 之 md5 calculator/" itemprop="url">pwnable.kr 之 md5 calculator</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-14T15:35:59+08:00">
+                2022-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ctf/" itemprop="url" rel="index">
+                    <span itemprop="name">ctf</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>这题蛮有意思的，虽然叫 md5 calculator，但是跟md5算法没什么关系，主要考查的是伪随机。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_hash</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i; <span class="comment">// [esp+0h] [ebp-38h]</span></span><br><span class="line">  <span class="keyword">char</span> v2[<span class="number">4</span>]; <span class="comment">// [esp+Ch] [ebp-2Ch]</span></span><br><span class="line">  <span class="keyword">int</span> v3; <span class="comment">// [esp+10h] [ebp-28h]</span></span><br><span class="line">  <span class="keyword">int</span> v4; <span class="comment">// [esp+14h] [ebp-24h]</span></span><br><span class="line">  <span class="keyword">int</span> v5; <span class="comment">// [esp+18h] [ebp-20h]</span></span><br><span class="line">  <span class="keyword">int</span> v6; <span class="comment">// [esp+1Ch] [ebp-1Ch]</span></span><br><span class="line">  <span class="keyword">int</span> v7; <span class="comment">// [esp+20h] [ebp-18h]</span></span><br><span class="line">  <span class="keyword">int</span> v8; <span class="comment">// [esp+24h] [ebp-14h]</span></span><br><span class="line">  <span class="keyword">int</span> v9; <span class="comment">// [esp+28h] [ebp-10h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> canary; <span class="comment">// [esp+2Ch] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  canary = __readgsdword(<span class="number">0x14</span>u);</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt;= <span class="number">7</span>; ++i )</span><br><span class="line">    *(_DWORD *)&amp;v2[<span class="number">4</span> * i] = rand();</span><br><span class="line">  <span class="keyword">return</span> v6 - v8 + v9 + canary + v4 - v5 + v3 + v7;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2022/02/14/pwnable.kr 之 md5 calculator/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/pwnable.kr 之 lotto/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -440,153 +587,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/pwnable.kr 之 md5 calculator/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="R4bb1t">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/n0va.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R4bb1t的ctf博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/02/14/pwnable.kr 之 md5 calculator/" itemprop="url">pwnable.kr 之 md5 calculator</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-14T15:35:59+08:00">
-                2022-02-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ctf/" itemprop="url" rel="index">
-                    <span itemprop="name">ctf</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>这题蛮有意思的，虽然叫 md5 calculator，但是跟md5算法没什么关系，主要考查的是伪随机。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">my_hash</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i; <span class="comment">// [esp+0h] [ebp-38h]</span></span><br><span class="line">  <span class="keyword">char</span> v2[<span class="number">4</span>]; <span class="comment">// [esp+Ch] [ebp-2Ch]</span></span><br><span class="line">  <span class="keyword">int</span> v3; <span class="comment">// [esp+10h] [ebp-28h]</span></span><br><span class="line">  <span class="keyword">int</span> v4; <span class="comment">// [esp+14h] [ebp-24h]</span></span><br><span class="line">  <span class="keyword">int</span> v5; <span class="comment">// [esp+18h] [ebp-20h]</span></span><br><span class="line">  <span class="keyword">int</span> v6; <span class="comment">// [esp+1Ch] [ebp-1Ch]</span></span><br><span class="line">  <span class="keyword">int</span> v7; <span class="comment">// [esp+20h] [ebp-18h]</span></span><br><span class="line">  <span class="keyword">int</span> v8; <span class="comment">// [esp+24h] [ebp-14h]</span></span><br><span class="line">  <span class="keyword">int</span> v9; <span class="comment">// [esp+28h] [ebp-10h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> canary; <span class="comment">// [esp+2Ch] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  canary = __readgsdword(<span class="number">0x14</span>u);</span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt;= <span class="number">7</span>; ++i )</span><br><span class="line">    *(_DWORD *)&amp;v2[<span class="number">4</span> * i] = rand();</span><br><span class="line">  <span class="keyword">return</span> v6 - v8 + v9 + canary + v4 - v5 + v3 + v7;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2022/02/14/pwnable.kr 之 md5 calculator/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/pwnable.kr 之 memcpy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -683,6 +683,157 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2022/02/14/pwnable.kr 之 memcpy/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/pwnable.kr 之 shellshock/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="R4bb1t">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/n0va.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="R4bb1t的ctf博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/02/14/pwnable.kr 之 shellshock/" itemprop="url">pwnable.kr 之 shellshock</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-14T15:35:59+08:00">
+                2022-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ctf/" itemprop="url" rel="index">
+                    <span itemprop="name">ctf</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="shellshock"><a href="#shellshock" class="headerlink" title="shellshock"></a>shellshock</h2><h3 id="什么是shellshock"><a href="#什么是shellshock" class="headerlink" title="什么是shellshock"></a>什么是shellshock</h3><blockquote>
+<p>bash 版本 &lt;= 4.1</p>
+</blockquote>
+<p>1、普通shell变量和bash</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">shellshock@pwnable:~$ gu=<span class="string">"hacker"</span></span><br><span class="line">shellshock@pwnable:~$ <span class="built_in">echo</span> <span class="variable">$gu</span></span><br><span class="line">hacker</span><br><span class="line">shellshock@pwnable:~$ ./bash</span><br><span class="line">shellshock@pwnable:~$ <span class="built_in">echo</span> <span class="variable">$gu</span></span><br><span class="line"></span><br><span class="line">shellshock@pwnable:~$</span><br></pre></td></tr></table></figure>
+<p>从上述实验得出：bash子进程没有继承普通shell变量gu。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2022/02/14/pwnable.kr 之 shellshock/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -884,7 +1035,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/pwnable.kr 之 shellshock/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/pwnhub_easypwn/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -903,7 +1054,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2022/02/14/pwnable.kr 之 shellshock/" itemprop="url">pwnable.kr 之 shellshock</a></h1>
+                <a class="post-title-link" href="/2022/02/14/pwnhub_easypwn/" itemprop="url">2020 pwnhub 公开赛 -- easypwn</a></h1>
         
 
         <div class="post-meta">
@@ -938,8 +1089,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ctf/" itemprop="url" rel="index">
-                    <span itemprop="name">ctf</span>
+                  <a href="/categories/pwn/" itemprop="url" rel="index">
+                    <span itemprop="name">pwn</span>
                   </a>
                 </span>
 
@@ -976,15 +1127,11 @@
 
       
         
-          <h2 id="shellshock"><a href="#shellshock" class="headerlink" title="shellshock"></a>shellshock</h2><h3 id="什么是shellshock"><a href="#什么是shellshock" class="headerlink" title="什么是shellshock"></a>什么是shellshock</h3><blockquote>
-<p>bash 版本 &lt;= 4.1</p>
-</blockquote>
-<p>1、普通shell变量和bash</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">shellshock@pwnable:~$ gu=<span class="string">"hacker"</span></span><br><span class="line">shellshock@pwnable:~$ <span class="built_in">echo</span> <span class="variable">$gu</span></span><br><span class="line">hacker</span><br><span class="line">shellshock@pwnable:~$ ./bash</span><br><span class="line">shellshock@pwnable:~$ <span class="built_in">echo</span> <span class="variable">$gu</span></span><br><span class="line"></span><br><span class="line">shellshock@pwnable:~$</span><br></pre></td></tr></table></figure>
-<p>从上述实验得出：bash子进程没有继承普通shell变量gu。</p>
+          <p>蛮有意思的一题，格式化字符串，0x18个字节，2次机会，数据写在栈上；</p>
+<p>很显然需要构造循环多次利用格式化字符串漏洞，第一次用来泄漏地址，第二次修改返回地址为main,回到printf处继续利用</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2022/02/14/pwnable.kr 之 shellshock/#more" rel="contents">
+            <a class="btn" href="/2022/02/14/pwnhub_easypwn/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1328,153 +1475,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/pwnhub_easypwn/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="R4bb1t">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/n0va.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="R4bb1t的ctf博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/02/14/pwnhub_easypwn/" itemprop="url">2020 pwnhub 公开赛 -- easypwn</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-14T15:35:59+08:00">
-                2022-02-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/pwn/" itemprop="url" rel="index">
-                    <span itemprop="name">pwn</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>蛮有意思的一题，格式化字符串，0x18个字节，2次机会，数据写在栈上；</p>
-<p>很显然需要构造循环多次利用格式化字符串漏洞，第一次用来泄漏地址，第二次修改返回地址为main,回到printf处继续利用</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2022/02/14/pwnhub_easypwn/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/pwn入门之ROP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1628,7 +1628,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/Hitcon-Training(下)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/02/14/Hitcon-Training(上)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="R4bb1t">
@@ -1647,7 +1647,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2022/02/14/Hitcon-Training(下)/" itemprop="url">Hitcon-Training lab10~lab15</a></h1>
+                <a class="post-title-link" href="/2022/02/14/Hitcon-Training(上)/" itemprop="url">Hitcon-Training lab1~lab9</a></h1>
         
 
         <div class="post-meta">
@@ -1682,8 +1682,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/堆/" itemprop="url" rel="index">
-                    <span itemprop="name">堆</span>
+                  <a href="/categories/ctf/" itemprop="url" rel="index">
+                    <span itemprop="name">ctf</span>
                   </a>
                 </span>
 
@@ -1720,15 +1720,14 @@
 
       
         
-          <h2 id="lab10"><a href="#lab10" class="headerlink" title="lab10"></a>lab10</h2><p>这一题开始就是堆的范畴了</p>
-<h3 id="题目介绍"><a href="#题目介绍" class="headerlink" title="题目介绍"></a>题目介绍</h3><p>程序只开启了NX保护</p>
-<p><img src="\images\堆\14.jpg" alt></p>
-<p>有三个功能，分别是add，delete跟print</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">----------------------</span><br><span class="line"> <span class="number">1.</span> Add note          </span><br><span class="line"> <span class="number">2.</span> Delete note       </span><br><span class="line"> <span class="number">3.</span> Print note        </span><br><span class="line"> <span class="number">4.</span> Exit              </span><br><span class="line">----------------------</span><br></pre></td></tr></table></figure>
-<p>先一看一下add:</p>
+          <h2 id="lab1"><a href="#lab1" class="headerlink" title="lab1"></a>lab1</h2><p>方法1：逆向破解，因为题目给了.c文件，里面有key和cipher可以直接用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">key = <span class="string">"Do_you_know_why_my_teammate_Orange_is_so_angry???"</span></span><br><span class="line">cipher = [<span class="number">7</span>, <span class="number">59</span>, <span class="number">25</span>, <span class="number">2</span>, <span class="number">11</span>, <span class="number">16</span>, <span class="number">61</span>, <span class="number">30</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">18</span>, <span class="number">45</span>, <span class="number">40</span>, <span class="number">89</span>, <span class="number">10</span>, <span class="number">0</span>, <span class="number">30</span>, <span class="number">22</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">85</span>, <span class="number">22</span>, <span class="number">8</span>, <span class="number">31</span>, <span class="number">7</span>, <span class="number">1</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">126</span>, <span class="number">28</span>, <span class="number">62</span>, <span class="number">10</span>, <span class="number">30</span>, <span class="number">11</span>, <span class="number">107</span>, <span class="number">4</span>, <span class="number">66</span>, <span class="number">60</span>, <span class="number">44</span>, <span class="number">91</span>, <span class="number">49</span>, <span class="number">85</span>, <span class="number">2</span>, <span class="number">30</span>, <span class="number">33</span>, <span class="number">16</span>, <span class="number">76</span>, <span class="number">30</span>, <span class="number">66</span>]</span><br><span class="line">flag = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(cipher)):</span><br><span class="line">	flag += chr(cipher[i]^ord(key[i]))</span><br><span class="line"><span class="keyword">print</span> flag</span><br></pre></td></tr></table></figure></p>
+<p>方法2：利用gdb动态调试，可以在已生成password且未输入magic的情况下获得password的值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">在0x80486e7处下断点，可以看到ebp - 0x80就是password存放的地方</span><br><span class="line">► 0x80486e7 &lt;get_flag+332&gt;    lea    eax, [ebp - 0x80]</span><br><span class="line">  0x80486ea &lt;get_flag+335&gt;    push   eax</span><br><span class="line">  0x80486eb &lt;get_flag+336&gt;    push   dword ptr [ebp - 0x74]</span><br><span class="line">  0x80486ee &lt;get_flag+339&gt;    call   read@plt &lt;0x8048410&gt;</span><br><span class="line">再运行到0x8048712处，可以查看 ebp - 0x80的值 </span><br><span class="line">pwndbg&gt; x/wx ($ebp -0x80)</span><br><span class="line">0xffffcd08:	0x4f77e43c</span><br><span class="line">转成十进制，输入就能得到flag</span><br><span class="line">pwndbg&gt; c</span><br><span class="line">Continuing.</span><br><span class="line">1333257276  </span><br><span class="line">CTF&#123;debugger_1s_so_p0werful_1n_dyn4m1c_4n4lySis!&#125;[Inferior 1 (process 7593) exited normally]</span><br></pre></td></tr></table></figure></p>
+<p>方法3：<br>同样利用gdb调试，但是这次不用获取password的值而直接在if跳转前设置eip的值指向flag输出的for 循环即可</p>
+<p><img src="\images\hitcon-training\1.png" alt="image.png"></p>
+<p><img src="\images\hitcon-training\2.png" alt="image.png"></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2022/02/14/Hitcon-Training(下)/#more" rel="contents">
+            <a class="btn" href="/2022/02/14/Hitcon-Training(上)/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
