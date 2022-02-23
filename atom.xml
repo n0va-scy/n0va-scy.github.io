@@ -38,27 +38,6 @@
   </entry>
   
   <entry>
-    <title>第四届强网拟态赛</title>
-    <link href="http://yoursite.com/2022/02/14/%E7%AC%AC%E5%9B%9B%E5%B1%8A%E5%BC%BA%E7%BD%91%E6%8B%9F%E6%80%81/"/>
-    <id>http://yoursite.com/2022/02/14/第四届强网拟态/</id>
-    <published>2022-02-14T07:35:59.624Z</published>
-    <updated>2021-11-04T14:16:03.533Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;bitflip&quot;&gt;&lt;a href=&quot;#bitflip&quot; class=&quot;headerlink&quot; title=&quot;bitflip&quot;&gt;&lt;/a&gt;bitflip&lt;/h2&gt;&lt;p&gt;edit函数中存在off-by-one漏洞，版本glibc-2.27&lt;/p&gt;
-&lt;p&gt;add函数将malloc的size限制在了0x50内，不过可以通过off-by-one修改下一个chunk的size实现堆叠，进而释放0x410以上大小的堆，拿到libc&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
     <title>解决git clone下载慢或失败问题</title>
     <link href="http://yoursite.com/2022/02/14/%E8%A7%A3%E5%86%B3git%20clone%E4%B8%8B%E8%BD%BD%E6%85%A2%E9%97%AE%E9%A2%98/"/>
     <id>http://yoursite.com/2022/02/14/解决git clone下载慢问题/</id>
@@ -107,6 +86,45 @@
   </entry>
   
   <entry>
+    <title>第四届强网拟态赛</title>
+    <link href="http://yoursite.com/2022/02/14/%E7%AC%AC%E5%9B%9B%E5%B1%8A%E5%BC%BA%E7%BD%91%E6%8B%9F%E6%80%81/"/>
+    <id>http://yoursite.com/2022/02/14/第四届强网拟态/</id>
+    <published>2022-02-14T07:35:59.624Z</published>
+    <updated>2021-11-04T14:16:03.533Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;bitflip&quot;&gt;&lt;a href=&quot;#bitflip&quot; class=&quot;headerlink&quot; title=&quot;bitflip&quot;&gt;&lt;/a&gt;bitflip&lt;/h2&gt;&lt;p&gt;edit函数中存在off-by-one漏洞，版本glibc-2.27&lt;/p&gt;
+&lt;p&gt;add函数将malloc的size限制在了0x50内，不过可以通过off-by-one修改下一个chunk的size实现堆叠，进而释放0x410以上大小的堆，拿到libc&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RoarCtf - pwn</title>
+    <link href="http://yoursite.com/2022/02/14/RoarCTF/"/>
+    <id>http://yoursite.com/2022/02/14/RoarCTF/</id>
+    <published>2022-02-14T07:35:59.608Z</published>
+    <updated>2019-10-18T12:47:30.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;easy-pwn&quot;&gt;&lt;a href=&quot;#easy-pwn&quot; class=&quot;headerlink&quot; title=&quot;easy_pwn&quot;&gt;&lt;/a&gt;easy_pwn&lt;/h2&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// off-by-one&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;__int64 __&lt;span class=&quot;function&quot;&gt;fastcall &lt;span class=&quot;title&quot;&gt;sub_E26&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;signed&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; a1, &lt;span class=&quot;keyword&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; a2)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  __int64 result; &lt;span class=&quot;comment&quot;&gt;// rax&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( a1 &amp;gt; a2 )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; a2;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( a2 - a1 == &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    LODWORD(result) = a1 + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;   &lt;span class=&quot;comment&quot;&gt;//off-by-one&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    LODWORD(result) = a1;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; result;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
+    
+  </entry>
+  
+  <entry>
     <title>TokyoWesterns -- Asterisk_Alloc</title>
     <link href="http://yoursite.com/2022/02/14/TokyoWesterns-Asterisk-Alloc/"/>
     <id>http://yoursite.com/2022/02/14/TokyoWesterns-Asterisk-Alloc/</id>
@@ -140,24 +158,6 @@
     </summary>
     
       <category term="ctf" scheme="http://yoursite.com/categories/ctf/"/>
-    
-    
-      <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>RoarCtf - pwn</title>
-    <link href="http://yoursite.com/2022/02/14/RoarCTF/"/>
-    <id>http://yoursite.com/2022/02/14/RoarCTF/</id>
-    <published>2022-02-14T07:35:59.608Z</published>
-    <updated>2019-10-18T12:47:30.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;easy-pwn&quot;&gt;&lt;a href=&quot;#easy-pwn&quot; class=&quot;headerlink&quot; title=&quot;easy_pwn&quot;&gt;&lt;/a&gt;easy_pwn&lt;/h2&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// off-by-one&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;__int64 __&lt;span class=&quot;function&quot;&gt;fastcall &lt;span class=&quot;title&quot;&gt;sub_E26&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;signed&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; a1, &lt;span class=&quot;keyword&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; a2)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  __int64 result; &lt;span class=&quot;comment&quot;&gt;// rax&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( a1 &amp;gt; a2 )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; a2;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ( a2 - a1 == &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; )&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    LODWORD(result) = a1 + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;   &lt;span class=&quot;comment&quot;&gt;//off-by-one&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    LODWORD(result) = a1;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; result;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
     
     
       <category term="pwn" scheme="http://yoursite.com/tags/pwn/"/>
@@ -228,26 +228,6 @@
   </entry>
   
   <entry>
-    <title>国密加密算法sm4</title>
-    <link href="http://yoursite.com/2022/02/14/sm4%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/"/>
-    <id>http://yoursite.com/2022/02/14/sm4加密算法/</id>
-    <published>2022-02-14T07:35:59.608Z</published>
-    <updated>2019-05-09T12:19:28.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;p&gt;SM4加密算法属于对称加密算法，2012年3月，国家密码管理局正式公布了包含SM4分组密码算法在内的《祖冲之序列密码算法》等6项密码行业标准。与DES和AES算法类似，SM4算法是一种分组密码算法。其分组长度为128bit，密钥长度也为128bit。加密算法与密钥扩展算法均采用32轮非线性迭代结构，以字（32位）为单位进行加密运算，每一次迭代运算均为一轮变换函数F。SM4算法加/解密算法的结构相同，只是使用轮密钥相反，其中解密轮密钥是加密轮密钥的逆序。&lt;/p&gt;
-&lt;p&gt;SM4算法结构图：(图片来源网上)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;\images\SM4\1.png&quot; alt&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="crypto" scheme="http://yoursite.com/categories/crypto/"/>
-    
-    
-  </entry>
-  
-  <entry>
     <title>巅峰极客 pwn 题解</title>
     <link href="http://yoursite.com/2022/02/14/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2/"/>
     <id>http://yoursite.com/2022/02/14/巅峰极客/</id>
@@ -269,22 +249,22 @@
   </entry>
   
   <entry>
-    <title>第三届“强网”拟态精英挑战赛pwn全解</title>
-    <link href="http://yoursite.com/2022/02/14/%E7%AC%AC%E4%B8%89%E5%B1%8A%E2%80%9C%E5%BC%BA%E7%BD%91%E2%80%9D%E6%8B%9F%E6%80%81%E5%9B%BD%E9%99%85%E7%B2%BE%E8%8B%B1%E6%8C%91%E6%88%98%E8%B5%9B/"/>
-    <id>http://yoursite.com/2022/02/14/第三届“强网”拟态国际精英挑战赛/</id>
+    <title>国密加密算法sm4</title>
+    <link href="http://yoursite.com/2022/02/14/sm4%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/"/>
+    <id>http://yoursite.com/2022/02/14/sm4加密算法/</id>
     <published>2022-02-14T07:35:59.608Z</published>
-    <updated>2020-06-23T05:31:28.511Z</updated>
+    <updated>2019-05-09T12:19:28.000Z</updated>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;easy-stack&quot;&gt;&lt;a href=&quot;#easy-stack&quot; class=&quot;headerlink&quot; title=&quot;easy_stack&quot;&gt;&lt;/a&gt;easy_stack&lt;/h2&gt;&lt;p&gt;格式化字符串泄漏canary后和libc，gets栈溢出&lt;/p&gt;
+      &lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;p&gt;SM4加密算法属于对称加密算法，2012年3月，国家密码管理局正式公布了包含SM4分组密码算法在内的《祖冲之序列密码算法》等6项密码行业标准。与DES和AES算法类似，SM4算法是一种分组密码算法。其分组长度为128bit，密钥长度也为128bit。加密算法与密钥扩展算法均采用32轮非线性迭代结构，以字（32位）为单位进行加密运算，每一次迭代运算均为一轮变换函数F。SM4算法加/解密算法的结构相同，只是使用轮密钥相反，其中解密轮密钥是加密轮密钥的逆序。&lt;/p&gt;
+&lt;p&gt;SM4算法结构图：(图片来源网上)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;\images\SM4\1.png&quot; alt&gt;&lt;/p&gt;
     
     </summary>
     
-      <category term="pwn" scheme="http://yoursite.com/categories/pwn/"/>
+      <category term="crypto" scheme="http://yoursite.com/categories/crypto/"/>
     
-    
-      <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
     
   </entry>
   
@@ -323,6 +303,26 @@
     
       <category term="re" scheme="http://yoursite.com/categories/re/"/>
     
+    
+  </entry>
+  
+  <entry>
+    <title>第三届“强网”拟态精英挑战赛pwn全解</title>
+    <link href="http://yoursite.com/2022/02/14/%E7%AC%AC%E4%B8%89%E5%B1%8A%E2%80%9C%E5%BC%BA%E7%BD%91%E2%80%9D%E6%8B%9F%E6%80%81%E5%9B%BD%E9%99%85%E7%B2%BE%E8%8B%B1%E6%8C%91%E6%88%98%E8%B5%9B/"/>
+    <id>http://yoursite.com/2022/02/14/第三届“强网”拟态国际精英挑战赛/</id>
+    <published>2022-02-14T07:35:59.608Z</published>
+    <updated>2020-06-23T05:31:28.511Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;easy-stack&quot;&gt;&lt;a href=&quot;#easy-stack&quot; class=&quot;headerlink&quot; title=&quot;easy_stack&quot;&gt;&lt;/a&gt;easy_stack&lt;/h2&gt;&lt;p&gt;格式化字符串泄漏canary后和libc，gets栈溢出&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="pwn" scheme="http://yoursite.com/categories/pwn/"/>
+    
+    
+      <category term="ctf" scheme="http://yoursite.com/tags/ctf/"/>
     
   </entry>
   
